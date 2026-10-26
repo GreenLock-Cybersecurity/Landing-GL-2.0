@@ -1,0 +1,10 @@
+name = "greenlock-leads"
+main = "worker.js"
+compatibility_date = "2026-10-01"
+
+[vars]
+ALLOWED_ORIGINS = "https://greenlock.tech,https://www.greenlock.tech"
+
+[[kv_namespaces]]
+binding = "RATE"
+id = "PON_AQUI_EL_ID_DEL_KV"
