@@ -1,21 +1,26 @@
 ---
 // Sección para captar partners (MSSP, consultoras tecnológicas, compliance y
 // derecho digital) que quieran ofrecer nuestros servicios a sus clientes.
+import { Image } from 'astro:assets';
+import msspImg from '@assets/partner-mssp.png';
+import consultoriaImg from '@assets/partner-consultoria.png';
+import complianceImg from '@assets/partner-compliance.png';
+
 const profiles = [
   {
     title: 'MSSP y proveedores IT',
     desc: 'Añade pentesting, Red Team y ciberseguridad continua a tu oferta gestionada sin montar un equipo ofensivo propio.',
-    icon: 'M5.25 14.25h13.5m-13.5 0a3 3 0 0 1-3-3m3 3a3 3 0 1 0 0 6h13.5a3 3 0 1 0 0-6m-16.5-3a3 3 0 0 1 3-3h13.5a3 3 0 0 1 3 3m-19.5 0a4.5 4.5 0 0 1 .9-2.7L5.737 5.1a3.375 3.375 0 0 1 2.7-1.35h7.126c1.062 0 2.062.5 2.7 1.35l2.587 3.45a4.5 4.5 0 0 1 .9 2.7m0 0a3 3 0 0 1-3 3m0 3h.008v.008h-.008v-.008Zm0-6h.008v.008h-.008v-.008Zm-3 6h.008v.008h-.008v-.008Zm0-6h.008v.008h-.008v-.008Z',
+    img: msspImg,
   },
   {
     title: 'Consultoría tecnológica',
-    desc: 'Cierra tus proyectos con una auditoría de seguridad independiente que respalde lo que entregas a tu cliente.',
-    icon: 'M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5',
+    desc: 'Incorpora nuestros servicios de ciberseguridad a tu catálogo y ofrécelos a tus clientes con tu marca, sin ampliar tu equipo.',
+    img: consultoriaImg,
   },
   {
     title: 'Compliance y derecho digital',
     desc: 'NIS2, ENS, ISO 27001 o peritajes OSINT: aporta la evidencia técnica que tus informes y expedientes necesitan.',
-    icon: 'M12 3v17.25m0 0c-1.472 0-2.882.265-4.185.75M12 20.25c1.472 0 2.882.265 4.185.75M18.75 4.5a.75.75 0 0 1 .75.75v.75H4.5v-.75a.75.75 0 0 1 .75-.75h13.5Zm-3.75 0V3m-6 1.5V3m-.75 4.5h7.5m-9.75 0h12l-1.5 6.75h-9l-1.5-6.75Z',
+    img: complianceImg,
   },
 ];
 
@@ -30,14 +35,14 @@ const ctaHref =
 ---
 
 <section id="partners" class="bg-[#f3f4f6]">
-  <div class="container-custom" style="padding-top: 2.5rem; padding-bottom: 2.5rem;">
+  <div class="container-custom" style="padding-top: 6rem; padding-bottom: 6rem;">
 
     <div class="mb-16 max-w-3xl mx-auto text-center">
       <p class="uppercase mb-4" style="color: #22c55e; font-size: clamp(1.25rem, 2.4vw, 1.625rem); font-weight: 700; letter-spacing: 0.04em;">
         Programa de Partners
       </p>
       <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-dark-900 mb-5 leading-tight">
-        Ofrece ciberseguridad ofensiva a tus clientes <span style="color: #22c55e;">sin montar un equipo.</span>
+        Ofrece ciberseguridad a tus clientes <span style="color: #22c55e;">sin montar un equipo.</span>
       </h2>
       <p class="text-lg text-dark-500 leading-relaxed">
         Si eres MSSP, consultora tecnológica o despacho de compliance y derecho digital, incorpora nuestros servicios a tu catálogo. Tú mantienes la relación con tu cliente; nosotros ponemos el equipo técnico.
@@ -47,11 +52,7 @@ const ctaHref =
     <div class="pt-grid">
       {profiles.map((p) => (
         <div class="pt-card">
-          <div class="pt-icon">
-            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" d={p.icon} />
-            </svg>
-          </div>
+          <Image src={p.img} alt="" height={250} densities={[1, 2]} class="pt-img" loading="lazy" decoding="async" />
           <h3 class="pt-title">{p.title}</h3>
           <p class="pt-desc">{p.desc}</p>
         </div>
@@ -68,9 +69,14 @@ const ctaHref =
     </ul>
 
     <div class="pt-foot">
-      <a href={ctaHref} data-ref="WEB-PARTNER" target="_blank" rel="noopener noreferrer" class="pt-cta">
-        Hazte Partner por WhatsApp
-      </a>
+      <div class="pt-ctas">
+        <button type="button" class="gl-btn-primary pt-cta" data-open="partner">
+          Quiero ser partner
+        </button>
+        <a href={ctaHref} data-ref="WEB-PARTNER" target="_blank" rel="noopener noreferrer" class="gl-btn-ghost pt-cta pt-cta--ghost">
+          Contáctanos
+        </a>
+      </div>
       <p class="pt-foot-note">Te respondemos en menos de 24 h con las condiciones del programa.</p>
     </div>
 
@@ -97,18 +103,12 @@ const ctaHref =
   }
   .pt-card:hover { border-color: #22c55e; }
 
-  .pt-icon {
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    background: #f0fdf4;
-    color: #16a34a;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 18px;
+  .pt-img {
+    width: 220px;
+    height: 250px;
+    object-fit: contain;
+    margin: -12px 0 12px;
   }
-  .pt-icon svg { width: 28px; height: 28px; }
 
   .pt-title {
     font-size: 18px;
@@ -151,25 +151,19 @@ const ctaHref =
     text-align: center;
     margin-top: 44px;
   }
-  .pt-cta {
-    display: inline-flex;
-    align-items: center;
+  .pt-ctas {
+    display: flex;
+    flex-wrap: wrap;
     justify-content: center;
+    gap: 14px;
+  }
+  .pt-cta {
     padding: 16px 32px;
-    border-radius: 0;
-    white-space: nowrap;
     font-size: 16px;
-    font-weight: 600;
-    color: #fff;
-    text-decoration: none;
-    border: none;
-    background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
-    transition: background 0.2s ease, transform 0.2s ease;
+    white-space: nowrap;
+    cursor: pointer;
   }
-  .pt-cta:hover {
-    background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
-    transform: translateY(-1px);
-  }
+  .pt-cta--ghost { padding: 14px 32px; }
   .pt-foot-note {
     margin-top: 14px;
     font-size: 13.5px;

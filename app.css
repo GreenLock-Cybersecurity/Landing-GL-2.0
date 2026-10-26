@@ -621,3 +621,15 @@ code, pre, kbd, samp {
 }
 .gl-badge-brand { background: #f0fdf4; color: #16a34a; }
 .gl-badge-dark { background: #F1F5F9; color: #475569; }
+
+/* ---- LEAD MODALS — animaciones del pop up, los modales, la mascota
+   y el anillo del header (LeadModals.astro + Header.astro) ---- */
+@keyframes glFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@keyframes glRing{0%{transform:scale(1);opacity:.7}100%{transform:scale(1.25,1.7);opacity:0}}
+@keyframes glPeek{0%{transform:translateY(120%)}70%{transform:translateY(-5%)}100%{transform:translateY(0)}}
+@keyframes glWave{0%,100%{transform:rotate(0)}25%{transform:rotate(-6deg)}75%{transform:rotate(6deg)}}
+@keyframes glFade{from{opacity:0}to{opacity:1}}
+@keyframes glPop{from{opacity:0;transform:translateY(24px) scale(.96)}to{opacity:1;transform:none}}
+@keyframes glInUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes glRadar{0%{transform:translate(-50%,-50%) scale(.4);opacity:.8}100%{transform:translate(-50%,-50%) scale(1.6);opacity:0}}
+@keyframes glSpring{0%{opacity:0;transform:translateY(60px) scale(.9)}60%{opacity:1;transform:translateY(-8px) scale(1.01)}100%{transform:none}}

@@ -5,7 +5,7 @@ import logoImg from '@assets/icons/Logo.webp';
 // Anclas a secciones de la propia landing (scroll interno)
 const navLinks = [
   { label: 'Auditoría', href: '/#servicios' },
-  { label: 'Ciberinteligencia', href: '/#osint' },
+  { label: 'Investigaciones', href: '/#osint' },
   { label: 'Casos', href: '/#casos' },
   { label: 'Equipo', href: '/#equipo' },
   { label: 'Blog', href: '/#blog' },
@@ -75,9 +75,11 @@ const navLinks = [
       <div class="flex items-center gap-3">
         <a
           href="/#partners"
-          class="hidden sm:inline-flex items-center px-6 py-2.5 rounded-none font-semibold text-sm uppercase tracking-wider transition-all header-cta-btn"
+          class="relative hidden sm:inline-flex items-center px-6 py-2.5 rounded-none font-semibold text-sm uppercase tracking-wider transition-all header-cta-btn"
           style="background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%); border: none; color: #fff;"
         >
+          <!-- Anillo pulsante: lo activa LeadModals (clase is-pulsing) al aparecer la mascota de partners -->
+          <span class="header-cta-ring" aria-hidden="true"></span>
           Hazte Partner
         </a>
 
@@ -321,6 +323,19 @@ const navLinks = [
   }
   .announcement-close-btn:hover { color: #fff; }
   .announcement-short { display: none; }
+
+  .header-cta-ring {
+    display: none;
+    position: absolute;
+    inset: 0;
+    border: 2px solid #22c55e;
+    pointer-events: none;
+    animation: glRing 1.6s ease-out infinite;
+  }
+  .header-cta-btn.is-pulsing .header-cta-ring { display: block; }
+  @media (prefers-reduced-motion: reduce) {
+    .header-cta-ring { animation: none; }
+  }
 
   @media (max-width: 640px) {
     .announcement-link {

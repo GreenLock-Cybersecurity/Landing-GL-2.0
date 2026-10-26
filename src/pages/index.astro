@@ -9,6 +9,7 @@ import BlogRecent from '@components/home/BlogRecent.astro';
 import TrustBar from '@components/home/TrustBar.astro';
 import FinalCTA from '@components/home/FinalCTA.astro';
 import PartnerSection from '@components/home/PartnerSection.astro';
+import LeadModals from '@components/home/LeadModals.astro';
 
 // Service structured data for SEO
 const serviceSchema = {
@@ -55,23 +56,40 @@ const serviceSchema = {
           description: 'Revisión y auditoría continua de los sistemas del cliente para mantenerlos protegidos de forma permanente.',
         },
       },
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: 'Investigación OSINT e informe pericial',
+          description: 'Identificamos quién está detrás de estafas, marcas falsas y cuentas anónimas, con un informe pericial listo para denunciar.',
+        },
+      },
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: 'Informe gratuito de exposición digital',
+          description: 'Análisis gratuito de las principales exposiciones de tu negocio en internet.',
+        },
+      },
     ],
   },
 };
 ---
 
 <BaseLayout
-  title="GreenLock Cybersecurity | Ciberseguridad y Consultoría Tecnológica"
-  description="Pentesting, Red Team y auditorías de seguridad ejecutados por profesionales certificados CRTO, BSCP y eJPT. Para empresas que no se pueden permitir fallar."
+  title="GreenLock | Auditoría de ciberseguridad, pentesting e investigación OSINT para empresas"
+  description="Auditoría de ciberseguridad, pentesting y red team para pymes y empresas en España. Investigación OSINT de estafas y suplantación de marca con informe pericial. Informe de exposición digital gratuito."
   schemas={[serviceSchema]}
 >
   <Hero />
   <CaseStudyHighlight />
   <ServicesGrid />
-  <TrustBar />
   <OsintService />
+  <PartnerSection />
+  <TrustBar />
   <Team />
   <BlogRecent />
-  <PartnerSection />
   <FinalCTA />
+  <LeadModals />
 </BaseLayout>
