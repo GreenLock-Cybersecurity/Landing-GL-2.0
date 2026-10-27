@@ -1,0 +1,898 @@
+---
+// Captación de leads de la home: pop up de informe gratuito, modales de
+// contacto (asesoría, OSINT y auditoría), modal de partner y mascota con
+// bocadillo. Se montan una sola vez en index.astro y se abren con
+// delegación de clics sobre [data-open="asesoria|osint|auditoria|partner|informe"]
+// (opcional: data-opt="N" para la opción marcada de entrada).
+// Los formularios llevan data-astro-reload para que el router de
+// ViewTransitions no intercepte el submit (lo gestiona el script de abajo).
+import type { ImageMetadata } from 'astro';
+import { Image } from 'astro:assets';
+import { LEAD_LIMITS, LEAD_OPTIONS } from '@lib/leads';
+import heroImg from '@assets/Hero-GL.webp';
+import detectiveImg from '@assets/detective.png';
+import img360 from '@assets/360.webp';
+import marcaImg from '@assets/marca.png';
+import llaveImg from '@assets/partner-llave.png';
+
+interface Field {
+  name: keyof typeof LEAD_LIMITS;
+  placeholder: string;
+  required?: boolean;
+  type?: 'email' | 'tel';
+  autocomplete?: string;
+  textarea?: boolean;
+}
+
+interface LeadModal {
+  key: 'asesoria' | 'osint' | 'auditoria' | 'partner';
+  eyebrow: string;
+  title: string;
+  /** Pregunta encima de las opciones */
+  hint?: string;
+  options: readonly string[];
+  /** Opción marcada por defecto */
+  selected: number;
+  /** Una opción por fila (asesoría) */
+  stacked?: boolean;
+  /** max-width 520px (partner) en vez de 540px */
+  narrow?: boolean;
+  fields: Field[];
+  submit: string;
+  wa?: { href: string; ref: string };
+  successImg: ImageMetadata;
+  successText: string;
+}
+
+const WA = 'https://wa.me/34603358517?text=';
+
+const name: Field = { name: 'name', placeholder: 'Tu nombre', required: true, autocomplete: 'name' };
+const empresa: Field = { name: 'empresa', placeholder: 'Empresa', required: true, autocomplete: 'organization' };
+const email: Field = { name: 'email', placeholder: 'Email', required: true, type: 'email', autocomplete: 'email' };
+const phone: Field = { name: 'phone', placeholder: 'Teléfono (opcional)', type: 'tel', autocomplete: 'tel' };
+const message = (placeholder: string, required = false): Field => ({ name: 'message', placeholder, required, textarea: true });
+
+const modals: LeadModal[] = [
+  {
+    key: 'asesoria',
+    eyebrow: 'Asesoramiento sin compromiso',
+    title: 'Hablemos de tu seguridad',
+    hint: '¿Qué necesitas?',
+    options: LEAD_OPTIONS.asesoria,
+    selected: 2,
+    stacked: true,
+    fields: [name, empresa, email, phone, message('Cuéntanos qué te preocupa o qué ha pasado (opcional)')],
+    submit: 'Quiero hablar con vosotros',
+    wa: { href: `${WA}Hola%2C%20me%20interesa%20informaci%C3%B3n%20sobre%20ciberseguridad%20para%20mi%20empresa`, ref: 'WEB-MODAL-ASESORIA' },
+    successImg: heroImg,
+    successText: 'Te contactaremos en menos de 24 horas.',
+  },
+  {
+    key: 'osint',
+    eyebrow: 'Investigación · Confidencial',
+    title: 'Cuéntanos tu caso',
+    hint: '¿Qué ha pasado?',
+    options: LEAD_OPTIONS.osint,
+    selected: 0,
+    fields: [name, email, phone, message('Cuéntanos brevemente qué ha pasado', true)],
+    submit: 'Enviar mi caso',
+    wa: { href: `${WA}Hola%2C%20quiero%20contaros%20mi%20caso%20(investigaci%C3%B3n)`, ref: 'WEB-MODAL-OSINT' },
+    successImg: detectiveImg,
+    successText: 'Te contactaremos en menos de 24 horas.',
+  },
+  {
+    key: 'auditoria',
+    eyebrow: 'Auditoría de ciberseguridad',
+    title: 'Solicita tu auditoría',
+    hint: '¿Qué te interesa?',
+    options: LEAD_OPTIONS.auditoria,
+    selected: 0,
+    fields: [name, empresa, email, phone, message('Algo que debamos saber (opcional)')],
+    submit: 'Solicitar auditoría',
+    wa: { href: `${WA}Hola%2C%20me%20gustar%C3%ADa%20solicitar%20una%20auditor%C3%ADa%20de%20seguridad%20para%20mi%20empresa`, ref: 'WEB-MODAL-AUDITORIA' },
+    successImg: img360,
+    successText: 'Te contactaremos en menos de 24 horas.',
+  },
+  {
+    key: 'partner',
+    eyebrow: 'Programa de Partners',
+    title: 'Te enviamos las condiciones en menos de 24 h',
+    options: LEAD_OPTIONS.partner,
+    selected: 0,
+    narrow: true,
+    fields: [
+      name,
+      { ...empresa, placeholder: 'Nombre de tu empresa o despacho' },
+      { ...email, placeholder: 'Email profesional' },
+    ],
+    submit: 'Recibir condiciones',
+    successImg: marcaImg,
+    successText: 'Te enviaremos las condiciones del programa en menos de 24 h.',
+  },
+];
+---
+
+<!-- 8.1 Pop up «Informe gratuito» -->
+<div class="lm-overlay lm-overlay--soft" data-lm-overlay="informe" hidden>
+  <div class="lm-popup" role="dialog" aria-modal="true" aria-labelledby="lm-title-informe" tabindex="-1">
+    <button type="button" class="lm-close lm-close--popup" data-lm-close aria-label="Cerrar">×</button>
+
+    <div class="lm-pop-visual" aria-hidden="true">
+      <span class="lm-radar"></span>
+      <span class="lm-radar"></span>
+      <span class="lm-radar"></span>
+      <Image src={img360} alt="" width={136} densities={[1, 2]} class="lm-pop-mascot" loading="lazy" decoding="async" />
+      <span class="lm-pop-tag">GRATIS</span>
+    </div>
+
+    <div class="lm-pop-body">
+      <form class="lm-form lm-form--popup" data-lm-form="informe" data-astro-reload>
+        <input class="lm-hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <h3 class="lm-pop-title" id="lm-title-informe">¿Tu negocio está <span>expuesto?</span></h3>
+        <p class="lm-pop-lead">Analizamos las principales exposiciones de tu negocio en internet para saber si necesitas reforzar tu ciberseguridad. Gratis.</p>
+        <input class="lm-input lm-input--soft" name="domain" required maxlength={LEAD_LIMITS.domain} placeholder="Web de tu empresa" aria-label="Web de tu empresa" inputmode="url" autocomplete="url" />
+        <input class="lm-input lm-input--soft" name="email" type="email" required maxlength={LEAD_LIMITS.email} placeholder="Tu email de trabajo" aria-label="Tu email de trabajo" autocomplete="email" />
+        <input class="lm-input lm-input--soft" name="name" required maxlength={LEAD_LIMITS.name} placeholder="Tu nombre" aria-label="Tu nombre" autocomplete="name" />
+        <button type="submit" class="gl-btn-primary lm-submit lm-submit--popup">Compruébalo gratis</button>
+        <p class="lm-error lm-error--center" role="alert" hidden>No se ha podido enviar. Inténtalo de nuevo.</p>
+        <p class="lm-pop-note">Te contactaremos en menos de 24 horas.</p>
+        <button type="button" class="lm-later" data-lm-close>Ahora no</button>
+      </form>
+
+      <div class="lm-done lm-done--popup" tabindex="-1" hidden>
+        <div class="lm-check">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+        </div>
+        <h3 class="lm-done-title lm-done-title--popup">¡Recibido!</h3>
+        <p class="lm-done-text lm-done-text--popup">Te contactaremos en menos de 24 horas para quedar y enseñártelo.</p>
+        <button type="button" class="lm-continue" data-lm-close>Seguir navegando</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 8.2 Modales de contacto (asesoría, OSINT, auditoría) y 8.3 modal de partner -->
+{modals.map((m) => (
+  <div class="lm-overlay" data-lm-overlay={m.key} hidden>
+    <div
+      class:list={['lm-card', m.narrow && 'lm-card--narrow']}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby={`lm-title-${m.key}`}
+      tabindex="-1"
+    >
+      <button type="button" class="lm-close" data-lm-close aria-label="Cerrar">×</button>
+
+      <form class="lm-form" data-lm-form={m.key} data-default-opt={m.selected} data-astro-reload>
+        <input class="lm-hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <p class="lm-eyebrow">{m.eyebrow}</p>
+        <h3 class="lm-title" id={`lm-title-${m.key}`}>{m.title}</h3>
+        {m.hint && <p class="lm-hint" id={`lm-hint-${m.key}`}>{m.hint}</p>}
+
+        <div
+          class:list={['lm-opts', m.stacked && 'lm-opts--stacked']}
+          role="radiogroup"
+          aria-labelledby={m.hint ? `lm-hint-${m.key}` : `lm-title-${m.key}`}
+        >
+          {m.options.map((label, i) => (
+            <label class="lm-opt">
+              <input type="radio" name="opt" value={i} checked={i === m.selected} />
+              <span>{label}</span>
+            </label>
+          ))}
+        </div>
+
+        {m.fields.map((f) => f.textarea ? (
+          <textarea
+            class="lm-input lm-textarea"
+            name={f.name}
+            rows="4"
+            required={f.required}
+            maxlength={LEAD_LIMITS[f.name]}
+            placeholder={f.placeholder}
+            aria-label={f.placeholder}
+          ></textarea>
+        ) : (
+          <input
+            class="lm-input"
+            name={f.name}
+            type={f.type ?? 'text'}
+            required={f.required}
+            maxlength={LEAD_LIMITS[f.name]}
+            placeholder={f.placeholder}
+            aria-label={f.placeholder}
+            autocomplete={f.autocomplete}
+          />
+        ))}
+
+        <button type="submit" class="gl-btn-primary lm-submit">{m.submit}</button>
+        <p class="lm-error" role="alert" hidden>No se ha podido enviar. Inténtalo de nuevo.</p>
+        {m.wa && (
+          <p class="lm-foot">
+            Te contactaremos en menos de 24 horas. ·
+            <a href={m.wa.href} data-ref={m.wa.ref} target="_blank" rel="noopener noreferrer">Prefiero WhatsApp</a>
+          </p>
+        )}
+      </form>
+
+      <div class="lm-done" tabindex="-1" hidden>
+        <Image src={m.successImg} alt="" width={130} densities={[1, 2]} class="lm-done-img" loading="lazy" decoding="async" />
+        <h3 class="lm-done-title">¡Gracias!</h3>
+        <p class="lm-done-text">{m.successText}</p>
+      </div>
+    </div>
+  </div>
+))}
+
+<!-- 8.4 Mascota con bocadillo (partners) -->
+<aside class="lm-mascot" data-lm-mascot aria-label="Programa de Partners" hidden>
+  <div class="lm-mascot-figure">
+    <Image src={llaveImg} alt="" width={180} densities={[1, 2]} class="lm-mascot-img" loading="lazy" decoding="async" />
+  </div>
+  <div class="lm-bubble">
+    <button type="button" class="lm-bubble-close" data-lm-mascot-close aria-label="Cerrar">×</button>
+    <div class="lm-bubble-tag">PROGRAMA DE PARTNERS</div>
+    <p class="lm-bubble-text">¿Tus clientes te piden ciberseguridad? Ofrécela con nuestro equipo técnico.</p>
+    <button type="button" class="gl-btn-primary lm-bubble-cta" data-open="partner">Hazte partner</button>
+    <span class="lm-bubble-tip" aria-hidden="true"></span>
+  </div>
+</aside>
+
+<script>
+  import { submitLead, type LeadMode } from '@lib/leads';
+
+  const INFORME_DELAY_MS = 40_000;
+  const SEEN_INFORME = 'gl_informe_shown';
+  const SEEN_MASCOT = 'gl_partner_mascot_shown';
+
+  function seen(key: string) {
+    try { return sessionStorage.getItem(key) === '1'; } catch { return false; }
+  }
+  function markSeen(key: string) {
+    try { sessionStorage.setItem(key, '1'); } catch { /* sin sessionStorage: solo esta visita */ }
+  }
+
+  let teardown: (() => void) | null = null;
+
+  function initLeadModals() {
+    teardown?.();
+    teardown = null;
+
+    if (!document.querySelector('[data-lm-overlay]')) return;
+
+    const ac = new AbortController();
+    const { signal } = ac;
+    const timers: number[] = [];
+    const mascot = document.querySelector<HTMLElement>('[data-lm-mascot]');
+    let current: HTMLElement | null = null;
+    let lastFocus: HTMLElement | null = null;
+    let pressOnBackdrop = false;
+    let partnersObserver: IntersectionObserver | null = null;
+
+    const dialogOf = (overlay: HTMLElement) => overlay.querySelector<HTMLElement>('[role="dialog"]');
+
+    function hideMascot() {
+      if (mascot) mascot.hidden = true;
+    }
+
+    function open(key: string, opt?: number) {
+      const overlay = document.querySelector<HTMLElement>(`[data-lm-overlay="${key}"]`);
+      if (!overlay) return;
+      if (current && current !== overlay) close(false);
+      hideMascot();
+
+      const form = overlay.querySelector<HTMLFormElement>('[data-lm-form]');
+      if (form) {
+        const fallback = form.dataset.defaultOpt ?? '0';
+        const radio =
+          form.querySelector<HTMLInputElement>(`input[name="opt"][value="${opt ?? fallback}"]`) ??
+          form.querySelector<HTMLInputElement>(`input[name="opt"][value="${fallback}"]`);
+        if (radio) radio.checked = true;
+        const error = form.querySelector<HTMLElement>('.lm-error');
+        if (error) error.hidden = true;
+      }
+
+      if (!current) lastFocus = document.activeElement as HTMLElement | null;
+      overlay.hidden = false;
+      current = overlay;
+      document.body.style.overflow = 'hidden';
+      dialogOf(overlay)?.focus({ preventScroll: true });
+    }
+
+    function close(restoreFocus = true) {
+      if (!current) return;
+      current.hidden = true;
+      current = null;
+      document.body.style.overflow = '';
+      if (restoreFocus) lastFocus?.focus?.({ preventScroll: true });
+    }
+
+    // 8.1 — una vez por sesión, nunca encima de otro modal.
+    // Abrirlo a mano (FinalCTA) también cuenta como visto.
+    function autoInforme() {
+      if (current || seen(SEEN_INFORME)) return;
+      markSeen(SEEN_INFORME);
+      open('informe');
+    }
+
+    // 8.4 — una vez por sesión, al llegar a #partners.
+    function showMascot() {
+      if (!mascot || current || seen(SEEN_MASCOT)) return;
+      markSeen(SEEN_MASCOT);
+      partnersObserver?.disconnect();
+      mascot.hidden = false;
+      document.querySelector('.header-cta-btn')?.classList.add('is-pulsing');
+    }
+
+    document.addEventListener('pointerdown', (e) => {
+      pressOnBackdrop = !!current && e.target === current;
+    }, { signal });
+
+    document.addEventListener('click', (e) => {
+      const target = e.target as HTMLElement;
+
+      const opener = target.closest<HTMLElement>('[data-open]');
+      if (opener) {
+        e.preventDefault();
+        const key = opener.dataset.open || '';
+        if (key === 'informe') markSeen(SEEN_INFORME);
+        open(key, opener.dataset.opt !== undefined ? Number(opener.dataset.opt) : undefined);
+        return;
+      }
+      if (target.closest('[data-lm-close]')) { close(); return; }
+      if (target.closest('[data-lm-mascot-close]')) { hideMascot(); return; }
+      if (current && target === current && pressOnBackdrop) close();
+    }, { signal });
+
+    document.addEventListener('keydown', (e) => {
+      if (!current) return;
+      if (e.key === 'Escape') { close(); return; }
+      if (e.key !== 'Tab') return;
+
+      // Mantiene el foco dentro del modal abierto
+      const dialog = dialogOf(current);
+      if (!dialog) return;
+      const items = Array.from(
+        dialog.querySelectorAll<HTMLElement>('a[href], button:not([disabled]), input:not([tabindex="-1"]), textarea'),
+      ).filter((el) => el.offsetParent !== null);
+      if (!items.length) return;
+      const first = items[0];
+      const last = items[items.length - 1];
+      const active = document.activeElement;
+      if (e.shiftKey && (active === first || active === dialog)) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && active === last) { e.preventDefault(); first.focus(); }
+    }, { signal });
+
+    document.addEventListener('submit', async (e) => {
+      const form = (e.target as HTMLElement).closest<HTMLFormElement>('[data-lm-form]');
+      if (!form) return;
+      e.preventDefault();
+      if (form.dataset.sending) return;
+
+      const mode = form.dataset.lmForm as LeadMode;
+      const button = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+      const error = form.querySelector<HTMLElement>('.lm-error');
+      const label = button?.textContent ?? '';
+
+      form.dataset.sending = '1';
+      if (button) { button.disabled = true; button.textContent = 'Enviando…'; }
+      if (error) error.hidden = true;
+
+      const data = new FormData(form);
+      const values: Record<string, string> = {};
+      data.forEach((value, key) => { if (key !== 'opt' && typeof value === 'string') values[key] = value; });
+      const ok = await submitLead(mode, values, Number(data.get('opt') ?? 0));
+
+      delete form.dataset.sending;
+      if (button) { button.disabled = false; button.textContent = label; }
+
+      if (ok) {
+        const done = form.parentElement?.querySelector<HTMLElement>(':scope > .lm-done');
+        form.hidden = true;
+        if (done) { done.hidden = false; done.focus({ preventScroll: true }); }
+      } else if (error) {
+        error.hidden = false;
+      }
+    }, { signal });
+
+    // Ganchos del pop up de informe: 40 s, pasar Servicios o intención de salida
+    timers.push(window.setTimeout(autoInforme, INFORME_DELAY_MS));
+
+    window.addEventListener('scroll', () => {
+      const services = document.getElementById('servicios');
+      if (services && services.getBoundingClientRect().bottom < window.innerHeight * 0.35) autoInforme();
+    }, { passive: true, signal });
+
+    if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+      document.documentElement.addEventListener('mouseleave', (e) => {
+        if (e.clientY <= 0) autoInforme();
+      }, { signal });
+    }
+
+    const partners = document.getElementById('partners');
+    if (partners && mascot && !seen(SEEN_MASCOT)) {
+      partnersObserver = new IntersectionObserver((entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) showMascot();
+      }, { threshold: 0.25 });
+      partnersObserver.observe(partners);
+    }
+
+    teardown = () => {
+      ac.abort();
+      timers.forEach((t) => clearTimeout(t));
+      partnersObserver?.disconnect();
+      if (current) document.body.style.overflow = '';
+    };
+  }
+
+  initLeadModals();
+  document.addEventListener('astro:after-swap', initLeadModals);
+</script>
+
+<style>
+  /* ---- Capa de fondo común ---- */
+  .lm-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 90;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(3, 7, 18, 0.7);
+    -webkit-backdrop-filter: blur(3px);
+    backdrop-filter: blur(3px);
+    animation: glFade 0.3s ease;
+  }
+  .lm-overlay--soft {
+    overflow: auto;
+    background: rgba(15, 23, 42, 0.35);
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
+  }
+
+  [role="dialog"]:focus,
+  .lm-done:focus {
+    outline: none;
+  }
+
+  .lm-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 3;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    background: #f3f4f6;
+    font-size: 20px;
+    line-height: 1;
+    color: #334155;
+    cursor: pointer;
+  }
+  .lm-close--popup {
+    width: 34px;
+    height: 34px;
+    background: rgba(255, 255, 255, 0.9);
+    color: #64748b;
+    transition: color 0.2s;
+  }
+  .lm-close--popup:hover { color: #111827; }
+
+  /* Honeypot antispam: fuera de pantalla */
+  .lm-hp {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+  }
+
+  .lm-form {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .lm-input {
+    width: 100%;
+    border: 1px solid #d1d5db;
+    border-radius: 0;
+    background: #fff;
+    padding: 15px;
+    font-size: 16px;
+    color: #111827;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+  }
+  .lm-input::placeholder { color: #6b7280; }
+  .lm-input:focus,
+  .lm-input:focus-visible {
+    outline: none;
+    border-color: #22c55e;
+    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2);
+  }
+  .lm-textarea { resize: vertical; }
+
+  .lm-submit {
+    width: 100%;
+    padding: 17px;
+    font-size: 18px;
+    cursor: pointer;
+  }
+  .lm-submit:disabled {
+    opacity: 0.75;
+    cursor: progress;
+    transform: none;
+  }
+
+  .lm-error {
+    margin: 0;
+    font-size: 13.5px;
+    color: #dc2626;
+  }
+  .lm-error--center { text-align: center; }
+
+  /* ---- 8.1 Pop up «Informe gratuito» ---- */
+  .lm-popup {
+    position: relative;
+    margin: auto;
+    width: 100%;
+    max-width: 440px;
+    background: #fff;
+    overflow: hidden;
+    box-shadow: 0 30px 70px -20px rgba(15, 23, 42, 0.45);
+    animation: glSpring 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  }
+
+  .lm-pop-visual {
+    position: relative;
+    height: 150px;
+    background: linear-gradient(180deg, #f0fdf4, #fff);
+    overflow: hidden;
+  }
+  .lm-radar {
+    position: absolute;
+    left: 50%;
+    top: 55%;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    border: 2px solid rgba(34, 197, 94, 0.45);
+    animation: glRadar 2.4s ease-out infinite;
+  }
+  .lm-radar:nth-child(2) { animation-delay: 0.8s; }
+  .lm-radar:nth-child(3) { animation-delay: 1.6s; }
+  .lm-pop-mascot {
+    position: absolute;
+    left: 50%;
+    top: 12px;
+    width: 136px;
+    height: auto;
+    margin-left: -68px;
+    animation: glFloat 4s ease-in-out infinite;
+  }
+  .lm-pop-tag {
+    position: absolute;
+    left: 24px;
+    top: 24px;
+    background: #fff;
+    border: 1px solid #d1fae5;
+    color: #15803d;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    padding: 6px 10px;
+    box-shadow: 0 6px 16px -8px rgba(22, 163, 74, 0.5);
+    animation: glInUp 0.5s 0.5s both;
+  }
+
+  .lm-pop-body { padding: 8px 28px 28px; }
+  .lm-form--popup { gap: 12px; }
+
+  .lm-pop-title {
+    margin: 0;
+    text-align: center;
+    font-size: 25px;
+    line-height: 1.2;
+    font-weight: 700;
+    color: #030712;
+    animation: glInUp 0.5s 0.3s both;
+  }
+  .lm-pop-title span { color: #22c55e; }
+  .lm-pop-lead {
+    margin: 0 0 10px;
+    text-align: center;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #64748b;
+    animation: glInUp 0.5s 0.4s both;
+  }
+
+  .lm-input--soft {
+    border-color: #e5e7eb;
+    background: #f9fafb;
+    padding: 14px 15px;
+    font-size: 15.5px;
+  }
+  .lm-input--soft:focus,
+  .lm-input--soft:focus-visible {
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.18);
+  }
+
+  .lm-submit--popup {
+    margin-top: 4px;
+    padding: 16px;
+    font-size: 17px;
+    box-shadow: 0 10px 24px -10px rgba(22, 163, 74, 0.6);
+  }
+
+  .lm-pop-note {
+    margin: 0;
+    text-align: center;
+    font-size: 13.5px;
+    color: #64748b;
+  }
+  .lm-later {
+    background: none;
+    border: 0;
+    font-size: 13.5px;
+    color: #94a3b8;
+    cursor: pointer;
+  }
+  .lm-later:hover { color: #64748b; }
+
+  .lm-done--popup {
+    gap: 10px;
+    padding: 8px 0 4px;
+    animation: glFade 0.4s ease;
+  }
+  .lm-check {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: #22c55e;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: glSpring 0.6s both;
+  }
+  .lm-check svg { width: 26px; height: 26px; }
+  .lm-done-title--popup { font-size: 23px; }
+  .lm-done-text--popup { line-height: 1.55; }
+  .lm-continue {
+    margin-top: 8px;
+    background: #030712;
+    color: #fff;
+    border: 0;
+    padding: 13px 26px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .lm-continue:hover { background: #1e293b; }
+
+  /* ---- 8.2 / 8.3 Modales de contacto y partner ---- */
+  .lm-card {
+    position: relative;
+    width: 100%;
+    max-width: 540px;
+    max-height: calc(100vh - 40px);
+    max-height: calc(100dvh - 40px);
+    overflow: auto;
+    background: #fff;
+    padding: 36px 32px;
+    box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.6);
+    animation: glPop 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .lm-card--narrow { max-width: 520px; }
+
+  .lm-eyebrow {
+    margin: 0;
+    color: #22c55e;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .lm-title {
+    margin: 0;
+    font-size: 26px;
+    line-height: 1.2;
+    font-weight: 700;
+    color: #030712;
+  }
+  .lm-hint {
+    margin: 0;
+    font-size: 14.5px;
+    font-weight: 500;
+    color: #334155;
+  }
+
+  .lm-opts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .lm-opt {
+    position: relative;
+    flex: 0 0 auto;
+    max-width: 100%;
+  }
+  .lm-opts--stacked .lm-opt { flex: 1 1 100%; }
+  .lm-opt input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .lm-opt span {
+    display: block;
+    padding: 10px 14px;
+    border: 1px solid #d1d5db;
+    background: #fff;
+    color: #111827;
+    font-size: 14px;
+    line-height: 1.4;
+    text-align: left;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .lm-opt input:checked + span {
+    border-color: #22c55e;
+    background: #f0fdf4;
+  }
+  .lm-opt input:focus-visible + span {
+    outline: 2px solid var(--color-brand-500);
+    outline-offset: 2px;
+  }
+
+  .lm-foot {
+    margin: 0;
+    font-size: 13.5px;
+    color: #64748b;
+  }
+  .lm-foot a {
+    color: #16a34a;
+    font-weight: 500;
+    text-decoration: none;
+  }
+  .lm-foot a:hover { color: #15803d; }
+
+  /* Pantallas de éxito */
+  .lm-done {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 12px;
+  }
+  .lm-done-img {
+    width: 130px;
+    height: 130px;
+    object-fit: contain;
+  }
+  .lm-done-title {
+    margin: 0;
+    font-size: 26px;
+    font-weight: 700;
+    color: #030712;
+  }
+  .lm-done-text {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.6;
+    color: #64748b;
+  }
+
+  /* ---- 8.4 Mascota con bocadillo ---- */
+  .lm-mascot {
+    position: fixed;
+    left: 24px;
+    bottom: 0;
+    z-index: 80;
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+    max-width: calc(100vw - 36px);
+    pointer-events: none;
+  }
+  .lm-mascot-figure,
+  .lm-bubble {
+    pointer-events: auto;
+  }
+  .lm-mascot-figure {
+    flex: none;
+    width: 180px;
+    animation: glPeek 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  }
+  .lm-mascot-img {
+    display: block;
+    width: 100%;
+    height: auto;
+    transform-origin: bottom center;
+    animation: glWave 2.4s 1s ease-in-out 2;
+  }
+  .lm-bubble {
+    position: relative;
+    min-width: 0;
+    margin-bottom: 110px;
+    max-width: 290px;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    padding: 20px 20px 18px;
+    box-shadow: 0 24px 50px -20px rgba(0, 0, 0, 0.35);
+    animation: glPop 0.5s 0.6s both cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .lm-bubble-close {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    width: 28px;
+    height: 28px;
+    border: 0;
+    background: none;
+    font-size: 18px;
+    color: #94a3b8;
+    cursor: pointer;
+  }
+  .lm-bubble-close:hover { color: #334155; }
+  .lm-bubble-tag {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: #16a34a;
+  }
+  .lm-bubble-text {
+    margin: 8px 0 14px;
+    font-size: 16.5px;
+    line-height: 1.4;
+    font-weight: 500;
+    color: #111827;
+  }
+  .lm-bubble-cta {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  .lm-bubble-tip {
+    position: absolute;
+    left: -8px;
+    bottom: 28px;
+    width: 14px;
+    height: 14px;
+    background: #fff;
+    border-left: 1px solid #e5e7eb;
+    border-bottom: 1px solid #e5e7eb;
+    transform: rotate(45deg);
+  }
+
+  @media (max-width: 639px) {
+    /* 16px evita el zoom automático de iOS al enfocar el campo */
+    .lm-input--soft { font-size: 16px; }
+
+    .lm-mascot-figure { width: 120px; }
+    .lm-bubble {
+      max-width: 220px;
+      margin-bottom: 70px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .lm-radar {
+      animation: none;
+      transform: translate(-50%, -50%) scale(0.8);
+      opacity: 0.4;
+    }
+    .lm-pop-mascot { animation: none; }
+  }
+</style>

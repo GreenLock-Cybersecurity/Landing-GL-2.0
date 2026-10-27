@@ -3,88 +3,163 @@ import { Image } from 'astro:assets';
 import heroImg from '@assets/Hero-GL.webp';
 ---
 
-<section class="relative overflow-hidden bg-[#f3f4f6]">
+<section class="hero">
+  <!-- Círculo blanco de fondo -->
+  <div class="hero-circle" aria-hidden="true"></div>
 
-  <div class="relative z-10 container-custom pb-12 md:pb-16 lg:pb-20" style="padding-top: clamp(7rem, 10vw, 10rem);">
-    <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+  <div class="hero-content container-custom">
+    <h1 class="hero-title">
+      Protege tu empresa
+      <span class="hero-title-soft">antes de perder dinero y clientes.</span>
+    </h1>
 
-      <!-- Left: Copy -->
-      <div>
-        <h1 class="text-4xl md:text-5xl xl:text-[3.5rem] mb-6 leading-[1.1] tracking-tight">
-          <span class="text-dark-950 font-bold">Protege tu empresa</span>
-          <br/>
-          <span class="text-dark-700" style="font-weight: 300;">antes de perder dinero y clientes</span>
-        </h1>
+    <Image
+      src={heroImg}
+      alt="Protección de ciberseguridad empresarial - GreenLock escudo de seguridad ofensiva"
+      width={600}
+      class="hero-img"
+      loading="eager"
+      decoding="async"
+      fetchpriority="high"
+    />
 
-        <p class="text-lg md:text-xl text-dark-500 max-w-xl mb-10 leading-relaxed">
-          Encontramos las vulnerabilidades que los ciberdelincuentes explotarían y te asesoramos para corregirlas antes de que sea demasiado tarde.
-        </p>
+    <div class="hero-contact">
+      <p class="hero-lead">
+        ¿Te preocupa la seguridad de tu empresa y no sabes por dónde empezar? <strong>Hablemos, sin compromiso.</strong>
+      </p>
+      <button type="button" class="gl-btn-primary hero-cta" data-open="asesoria">
+        Hablar con un experto →
+      </button>
+      <p class="hero-note">Te contactaremos en menos de 24 horas.</p>
+    </div>
 
-        <div class="flex flex-col sm:flex-row gap-4">
-          <a
-            href="https://wa.me/34603358517?text=Hola%2C%20me%20interesa%20información%20sobre%20ciberseguridad%20para%20mi%20empresa" data-ref="WEB-HERO"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="hero-btn-whatsapp inline-flex items-center justify-center px-8 py-4 rounded-none font-semibold text-base transition-all"
-          >
-            Asesoramiento gratuito
-          </a>
-          <a
-            href="#servicios"
-            class="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-none border-2 border-dark-800 text-dark-800 font-semibold hover:bg-dark-800 hover:text-white transition-colors text-base"
-          >
-            Cómo trabajamos
-          </a>
-        </div>
-      </div>
-
-      <!-- Right: Hero image -->
-      <div class="flex items-center justify-center">
-        <Image
-          src={heroImg}
-          alt="Protección de ciberseguridad empresarial - GreenLock escudo de seguridad ofensiva"
-          width={600}
-          height={600}
-          class="w-full max-w-lg h-auto"
-          loading="eager"
-          decoding="async"
-          fetchpriority="high"
-        />
-      </div>
+    <div class="hero-links">
+      <a
+        href="https://wa.me/34603358517?text=Hola%2C%20me%20interesa%20información%20sobre%20ciberseguridad%20para%20mi%20empresa" data-ref="WEB-HERO"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="hero-link hero-link--wa"
+      >
+        Asesoramiento gratuito por WhatsApp
+      </a>
+      <a href="#servicios" class="hero-link">Cómo trabajamos ↓</a>
     </div>
   </div>
-
-  <!-- Corner decoration — bottom left -->
-  <svg class="pointer-events-none" style="position: absolute; bottom: 0; left: 0; width: 320px; height: 320px; z-index: 5;" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <polygon points="0,400 0,160 240,400" fill="#030712" opacity="0.045"/>
-    <polygon points="0,400 0,220 180,400" fill="#22c55e" opacity="0.07"/>
-    <polygon points="0,400 0,280 120,400" fill="#030712" opacity="0.03"/>
-    <line x1="260" y1="400" x2="0" y2="140" stroke="#22c55e" stroke-width="0.75" opacity="0.12"/>
-    <line x1="200" y1="400" x2="0" y2="200" stroke="#030712" stroke-width="0.5" opacity="0.06"/>
-  </svg>
-
-  <!-- Corner decoration — bottom right -->
-  <svg class="pointer-events-none" style="position: absolute; bottom: 0; right: 0; width: 320px; height: 320px; z-index: 5;" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <polygon points="400,400 400,160 160,400" fill="#030712" opacity="0.045"/>
-    <polygon points="400,400 400,220 220,400" fill="#22c55e" opacity="0.07"/>
-    <polygon points="400,400 400,280 280,400" fill="#030712" opacity="0.03"/>
-    <line x1="140" y1="400" x2="400" y2="140" stroke="#22c55e" stroke-width="0.75" opacity="0.12"/>
-    <line x1="200" y1="400" x2="400" y2="200" stroke="#030712" stroke-width="0.5" opacity="0.06"/>
-  </svg>
 </section>
 
 <style>
-  .hero-btn-whatsapp {
-    background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
-    border: none;
-    color: #fff;
+  .hero {
+    position: relative;
+    overflow: hidden;
+    background: #f3f4f6;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    /* El header es fijo: el padding superior deja sitio para él */
+    padding-top: clamp(7rem, 10vw, 10rem);
+    padding-bottom: clamp(3rem, 5vw, 4rem);
   }
-  .hero-btn-whatsapp:hover {
-    background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
-    transform: translateY(-1px);
+
+  .hero-circle {
+    position: absolute;
+    left: 50%;
+    top: 46%;
+    width: min(900px, 130vw);
+    aspect-ratio: 1;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: #fff;
   }
-  .hero-btn-whatsapp:active {
-    background: #15803d;
-    transform: translateY(0);
+
+  .hero-content {
+    position: relative;
+    max-width: 1100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
   }
+
+  .hero-title {
+    margin: 0;
+    font-size: clamp(3rem, 7.6vw, 7.5rem);
+    line-height: 0.92;
+    letter-spacing: -0.05em;
+    font-weight: 700;
+    color: #030712;
+  }
+  .hero-title-soft {
+    display: block;
+    margin-top: 0.2em;
+    font-size: 0.4em;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    font-weight: 300;
+    color: #64748b;
+  }
+
+  .hero-img {
+    display: block;
+    height: min(36vh, 400px);
+    width: auto;
+    max-width: 90%;
+    margin: 4px 0 -6px;
+    object-fit: contain;
+  }
+
+  .hero-contact {
+    width: 100%;
+    max-width: 620px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+  }
+  .hero-lead {
+    margin: 0;
+    font-size: clamp(1.125rem, 1.8vw, 1.375rem);
+    line-height: 1.5;
+    color: #334155;
+    text-wrap: balance;
+  }
+  .hero-lead strong {
+    color: #030712;
+    font-weight: 700;
+  }
+
+  .hero-cta {
+    padding: 20px 40px;
+    font-size: 19px;
+    cursor: pointer;
+  }
+  .hero-cta,
+  .hero-cta:hover {
+    box-shadow: 0 20px 40px -20px rgba(22, 163, 74, 0.7);
+  }
+
+  .hero-note {
+    margin: 0;
+    font-size: 14px;
+    color: #64748b;
+  }
+
+  .hero-links {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 28px;
+    font-size: 16.5px;
+    font-weight: 500;
+  }
+  .hero-link {
+    color: #334155;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .hero-link:hover { color: #030712; }
+  .hero-link--wa { color: #16a34a; }
+  .hero-link--wa:hover { color: #15803d; }
 </style>
