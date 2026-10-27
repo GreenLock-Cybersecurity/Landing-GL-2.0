@@ -3,8 +3,6 @@ import { Image } from 'astro:assets';
 import estafadorImg from '@assets/estafador.png';
 import detectiveImg from '@assets/detective.png';
 import marcaImg from '@assets/marca.png';
-import consultoriaImg from '@assets/partner-consultoria.png';
-import complianceImg from '@assets/partner-compliance.png';
 
 // Legal: GreenLock no tiene licencia de detective. Esa palabra no puede
 // aparecer en ningún texto visible ni en los alt (el nombre de archivo sí).
@@ -36,28 +34,6 @@ const situations = [
   'Alguien usa mi marca, mi web o mi nombre',
   'Me acosan o difaman desde una cuenta anónima',
   'Necesito pruebas para denunciar o ir a juicio',
-];
-
-const steps = [
-  {
-    num: '01',
-    title: 'Nos cuentas qué ha pasado',
-    desc: 'Por formulario o por WhatsApp. Todo es confidencial.',
-    img: consultoriaImg,
-  },
-  {
-    num: '02',
-    title: 'Investigamos',
-    desc: 'Seguimos el rastro digital con fuentes abiertas (OSINT).',
-    img: detectiveImg,
-    tint: true,
-  },
-  {
-    num: '03',
-    title: 'Recibes un informe pericial',
-    desc: 'Listo para denunciar o aportar en un juicio.',
-    img: complianceImg,
-  },
 ];
 
 const ctaHref =
@@ -103,7 +79,7 @@ const ctaHref =
     </div>
 
     <!-- ¿Te ha pasado algo de esto? -->
-    <div class="os-block os-block--situations">
+    <div class="os-block">
       <h3 class="os-block-title">¿Te ha pasado algo de esto?</h3>
       <div class="os-situations">
         {situations.map((text, i) => (
@@ -111,27 +87,6 @@ const ctaHref =
             <span>{text}</span>
             <span class="os-situation-arrow" aria-hidden="true">→</span>
           </button>
-        ))}
-      </div>
-    </div>
-
-    <!-- Así trabajamos tu caso -->
-    <div class="os-block os-block--steps">
-      <h3 class="os-block-title">Así trabajamos tu caso</h3>
-      <div class="os-steps">
-        <div class="os-steps-line" aria-hidden="true"></div>
-        {steps.map((step) => (
-          <div class="os-step">
-            <div class:list={['os-step-visual', step.tint && 'os-step-visual--tint']}>
-              <span class="os-step-num" aria-hidden="true">{step.num}</span>
-              <Image src={step.img} alt="" height={190} densities={[1, 2]} class="os-step-img" loading="lazy" decoding="async" />
-            </div>
-            <div class="os-step-body">
-              <span class="os-step-tag font-mono">PASO {step.num}</span>
-              <h4 class="os-step-title">{step.title}</h4>
-              <p class="os-step-desc">{step.desc}</p>
-            </div>
-          </div>
         ))}
       </div>
     </div>
@@ -219,14 +174,13 @@ const ctaHref =
     color: #6b7280;
   }
 
-  /* ---- Bloques «¿Te ha pasado…?» y «Así trabajamos tu caso» ---- */
+  /* ---- Bloque «¿Te ha pasado algo de esto?» ---- */
   .os-block {
     margin-top: 64px;
     display: flex;
     flex-direction: column;
+    gap: 18px;
   }
-  .os-block--situations { gap: 18px; }
-  .os-block--steps { gap: 22px; }
 
   .os-block-title {
     margin: 0;
@@ -265,101 +219,6 @@ const ctaHref =
     flex: none;
     color: #16a34a;
     font-size: 18px;
-  }
-
-  .os-steps {
-    position: relative;
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: 20px;
-  }
-  .os-steps-line { display: none; }
-
-  .os-step {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
-    background: #fff;
-    border: 1px solid #e5e7eb;
-    overflow: hidden;
-    transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-  }
-  .os-step:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 26px 50px -28px rgba(15, 23, 42, 0.35);
-    border-color: #bbf7d0;
-  }
-
-  .os-step-visual {
-    position: relative;
-    height: 210px;
-    background: #f0fdf4;
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    overflow: hidden;
-  }
-  .os-step-visual--tint { background: #dcfce7; }
-
-  .os-step-num {
-    position: absolute;
-    left: 18px;
-    top: 6px;
-    font-size: 96px;
-    font-weight: 700;
-    letter-spacing: -0.05em;
-    line-height: 1;
-    color: rgba(22, 163, 74, 0.16);
-  }
-  .os-step-img {
-    position: relative;
-    display: block;
-    height: 190px;
-    width: auto;
-    max-width: 80%;
-    object-fit: contain;
-  }
-
-  .os-step-body {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    padding: 22px 24px 26px;
-  }
-  .os-step-tag {
-    align-self: flex-start;
-    font-size: 12px;
-    letter-spacing: 0.14em;
-    padding: 4px 10px;
-    background: #f0fdf4;
-    color: #15803d;
-  }
-  .os-step-title {
-    margin: 0;
-    font-size: 21px;
-    line-height: 1.2;
-    font-weight: 700;
-    color: #0f172a;
-  }
-  .os-step-desc {
-    margin: 0;
-    font-size: 15.5px;
-    line-height: 1.6;
-    color: #64748b;
-  }
-
-  @media (min-width: 900px) {
-    .os-steps { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-    .os-steps-line {
-      display: block;
-      position: absolute;
-      left: 8%;
-      right: 8%;
-      top: 105px;
-      border-top: 2px dashed #86efac;
-      z-index: 0;
-    }
   }
 
   /* ---- Cierre ---- */
