@@ -76,7 +76,7 @@ export const services: Service[] = [
         "Equipos y aplicaciones protegidos",
         "Vigilancia constante y aviso si algo pasa",
         "Informe periódico del estado de tu seguridad",
-        "[Modalidad y precio: cuota mensual, permanencia]",
+        "Servicio a medida para cada cliente",
       ],
       img: { src: imgMascotaInformeAuditoria, alt: "Informe de auditoría" },
     },
@@ -302,7 +302,7 @@ export const services: Service[] = [
       eyebrow: "Qué revisamos",
       title: "Lo que comprobamos en tu empresa",
       items: [
-        { title: "Revisiones periódicas", text: "[Frecuencia de las revisiones] sobre tu superficie expuesta." },
+        { title: "Revisiones mensuales", text: "Cada mes revisamos de nuevo tu superficie expuesta." },
         { title: "Nuevas vulnerabilidades", text: "Aviso cuando aparece un fallo que te afecta." },
         { title: "Seguimiento de correcciones", text: "Comprobamos que lo corregido sigue corregido." },
         { title: "Informe periódico", text: "Estado de tu seguridad y evolución en el tiempo." },
@@ -344,7 +344,6 @@ export const services: Service[] = [
       items: [
         { title: "Phishing simulado", text: "Campañas realistas adaptadas a tu empresa." },
         { title: "Formación práctica", text: "Sesiones cortas sobre lo que de verdad se usa para atacar." },
-        { title: "Medición", text: "[Métricas que se entregan] por departamento." },
         { title: "Mejora continua", text: "Nuevas campañas para comprobar la evolución." },
       ],
     },
