@@ -46,7 +46,7 @@ const diego: BlogAuthor = {
   name: 'Diego Rodríguez',
   role: 'Co-founder & Security Engineering',
   initials: 'DR',
-  certifications: [{ label: 'HackNet 60.000+ Seguidores', icon: hacknetLogo }],
+  certifications: [{ label: 'HackNet · 100.000+ seguidores', icon: hacknetLogo }],
   linkedin: 'https://www.linkedin.com/in/hackn3t/',
   youtube: 'https://www.youtube.com/@hackn3t',
   instagram: 'https://www.instagram.com/hacknetx/',

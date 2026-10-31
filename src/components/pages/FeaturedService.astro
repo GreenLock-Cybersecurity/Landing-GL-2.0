@@ -1,0 +1,95 @@
+---
+// Bloque destacado de «Ciberseguridad gestionada» (home y hub de ciberseguridad).
+// En la home lleva botón al formulario; en el hub todo el bloque es un enlace.
+import { Image } from 'astro:assets';
+import { serviceBySlug, serviceHref } from '@data/services';
+
+interface Props {
+  /** Botón que abre el formulario de la home en vez de enlazar todo el bloque */
+  withButton?: boolean;
+}
+const { withButton = false } = Astro.props;
+const s = serviceBySlug('gestionada')!;
+const href = serviceHref(s.slug);
+const Tag = withButton ? 'div' : 'a';
+---
+
+<Tag class:list={['fs', !withButton && 'fs--link']} {...(withButton ? {} : { href })}>
+  <div class="fs-copy">
+    <h3 class="fs-title">{s.name}</h3>
+    <p class="fs-text">{s.card.text}</p>
+    {withButton ? (
+      <div class="fs-actions">
+        <button type="button" class="gl-btn-primary fs-cta" data-open="auditoria" data-opt="0">{s.hero.ctaLabel}</button>
+        <a href={href} class="fs-more">Ver cómo funciona →</a>
+      </div>
+    ) : (
+      <span class="fs-more">Ver cómo funciona →</span>
+    )}
+  </div>
+  <div class="fs-visual">
+    <Image src={s.card.img.src} alt={s.card.img.alt} width={420} densities={[1, 2]} class="fs-img" loading="lazy" decoding="async" />
+  </div>
+</Tag>
+
+<style>
+  .fs {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr));
+    align-items: center;
+    gap: clamp(24px, 4vw, 56px);
+    padding: clamp(28px, 4vw, 48px);
+    background: #f0fdf4;
+    color: #111827;
+    text-decoration: none;
+  }
+  .fs--link { transition: transform 0.3s; }
+  .fs--link:hover { transform: translateY(-3px); }
+  .fs-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    min-width: 0;
+  }
+  .fs-title {
+    font-size: clamp(1.875rem, 3.6vw, 2.75rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: #030712;
+  }
+  .fs-text {
+    font-size: 18px;
+    line-height: 1.6;
+    color: #334155;
+  }
+  .fs-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px 24px;
+  }
+  .fs-cta {
+    padding: 16px 32px;
+    font-size: 17px;
+    cursor: pointer;
+  }
+  .fs-more {
+    font-size: 17px;
+    font-weight: 500;
+    color: #16a34a;
+    text-decoration: none;
+  }
+  a.fs-more:hover { color: #15803d; }
+  .fs-visual {
+    display: flex;
+    justify-content: center;
+  }
+  .fs-img {
+    display: block;
+    width: 100%;
+    max-width: 420px;
+    height: auto;
+    object-fit: contain;
+  }
+</style>

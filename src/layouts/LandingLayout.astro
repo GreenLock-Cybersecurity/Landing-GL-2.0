@@ -1,0 +1,31 @@
+---
+// Layout aislado para landings de campaña (Google Ads): sin menú, sin footer de
+// enlaces, sin pop ups ni widget de WhatsApp. Siempre noindex.
+import '../../app.css';
+import HeadCommon from '@components/layout/HeadCommon.astro';
+import TrackingScripts from '@components/layout/TrackingScripts.astro';
+import CookieBanner from '@components/layout/CookieBanner.astro';
+
+interface Props {
+  title: string;
+  description: string;
+}
+const { title, description } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <HeadCommon />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content="noindex, nofollow" />
+  </head>
+  <body class="bg-white text-dark-900 font-sans antialiased">
+    <TrackingScripts />
+    <slot />
+    <CookieBanner />
+  </body>
+</html>

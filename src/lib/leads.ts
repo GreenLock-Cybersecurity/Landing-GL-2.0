@@ -5,10 +5,7 @@
 // ============================================================================
 
 /** Modo de la interfaz: qué formulario se ha rellenado. */
-export type LeadMode = 'asesoria' | 'osint' | 'auditoria' | 'partner' | 'informe';
-
-/** Endpoint del Worker: POST /lead/{type}. */
-type LeadType = 'informe' | 'partner' | 'osint' | 'auditoria';
+export type LeadMode = 'osint' | 'auditoria' | 'partner' | 'informe';
 
 const LEADS_URL = (
   import.meta.env.PUBLIC_LEADS_URL || 'https://greenlock-leads.greenlockspain.workers.dev'
@@ -24,75 +21,49 @@ export const LEAD_LIMITS = {
   message: 1000,
 } as const;
 
-/** Opciones de selección única de cada modal. `tipo`, `caso` y `servicio` solo admiten estos valores. */
+/**
+ * Opciones de selección única de cada modal: `label` es lo que se ve y `value`
+ * lo que valida el Worker (`tipo`, `caso` y `servicio` solo admiten esos valores).
+ */
 export const LEAD_OPTIONS = {
-  asesoria: [
-    'Ciberseguridad: proteger mi empresa de ataques',
-    'Ciberinteligencia: investigar una estafa, fraude o suplantación',
-    'No lo sé, quiero que me asesoréis',
+  osint: [
+    { label: 'Estafa o fraude online', value: 'Estafa o fraude online' },
+    { label: 'Suplantación de marca', value: 'Suplantación de marca' },
+    { label: 'Cuentas anónimas y acoso', value: 'Perfilado y reputación' },
+    { label: 'Otro', value: 'Otro' },
   ],
-  osint: ['Estafa o fraude online', 'Suplantación de marca', 'Perfilado y reputación', 'Otro'],
-  auditoria: ['Auditoría perimetral', 'Pentesting', 'Red Team', 'Ciberseguridad continua', 'No lo sé'],
-  partner: ['Despacho / Compliance', 'Consultora', 'MSSP / IT'],
+  auditoria: [
+    { label: 'Ciberseguridad gestionada', value: 'Ciberseguridad gestionada' },
+    { label: 'Auditoría perimetral', value: 'Auditoría perimetral' },
+    { label: 'Pentesting', value: 'Pentesting' },
+    { label: 'Red Team', value: 'Red Team' },
+    { label: 'Ciberseguridad ofensiva continua', value: 'Ciberseguridad ofensiva continua' },
+    { label: 'Concienciación y phishing simulado', value: 'Concienciación y phishing simulado' },
+    { label: 'No lo sé', value: 'No lo sé' },
+  ],
+  partner: [
+    { label: 'Despacho / Compliance', value: 'Despacho / Compliance' },
+    { label: 'Consultora', value: 'Consultora' },
+    { label: 'MSSP / IT', value: 'MSSP / IT' },
+  ],
 } as const;
-
-// El asesoramiento viaja como una auditoría «No lo sé»; la opción elegida va
-// como prefijo del mensaje para que el CRM sepa qué pidió.
-const ASESORIA_TAGS = ['Ciberseguridad', 'Ciberinteligencia', 'No lo sabe'];
 
 type Values = Record<string, string>;
 
-function buildLead(mode: LeadMode, v: Values, option: number): { type: LeadType; data: Values } {
-  switch (mode) {
-    case 'informe':
-      return { type: 'informe', data: { domain: v.domain, email: v.email, name: v.name } };
-    case 'partner':
-      return {
-        type: 'partner',
-        data: { tipo: LEAD_OPTIONS.partner[option], name: v.name, empresa: v.empresa, email: v.email },
-      };
-    case 'osint':
-      return {
-        type: 'osint',
-        data: { caso: LEAD_OPTIONS.osint[option], name: v.name, email: v.email, phone: v.phone, message: v.message },
-      };
-    case 'auditoria':
-      return {
-        type: 'auditoria',
-        data: {
-          servicio: LEAD_OPTIONS.auditoria[option],
-          name: v.name,
-          empresa: v.empresa,
-          email: v.email,
-          phone: v.phone,
-          message: v.message,
-        },
-      };
-    case 'asesoria':
-      return {
-        type: 'auditoria',
-        data: {
-          servicio: 'No lo sé',
-          name: v.name,
-          empresa: v.empresa,
-          email: v.email,
-          phone: v.phone,
-          message: `[Asesoramiento sin compromiso · ${ASESORIA_TAGS[option]}] ${v.message}`.trim(),
-        },
-      };
-  }
-}
+/** Campo propio de cada tipo, además de nombre, email, teléfono y mensaje. */
+const OPTION_FIELD = { osint: 'caso', auditoria: 'servicio', partner: 'tipo' } as const;
 
 function leadMeta(): Values {
   try {
     const q = new URLSearchParams(location.search);
-    const utm = (k: string) => (q.get(k) || '').slice(0, 100);
+    const param = (k: string, max = 100) => (q.get(k) || '').slice(0, max);
     return {
       page: location.href.slice(0, 300),
       referrer: (document.referrer || '').slice(0, 300),
-      utm_source: utm('utm_source'),
-      utm_medium: utm('utm_medium'),
-      utm_campaign: utm('utm_campaign'),
+      utm_source: param('utm_source'),
+      utm_medium: param('utm_medium'),
+      utm_campaign: param('utm_campaign'),
+      gclid: param('gclid', 200),
     };
   } catch {
     return {};
@@ -101,27 +72,33 @@ function leadMeta(): Values {
 
 /**
  * Envía un formulario. `values` son los campos tal cual (incluido el honeypot
- * `website`) y `option` el índice de la opción marcada. Devuelve true solo si
- * el Worker responde 200; en ese caso registra `lead_submit` en el dataLayer.
+ * `website`) y `option` el índice de la opción marcada, si el tipo la tiene.
+ * Devuelve true solo si el Worker responde 200; en ese caso registra
+ * `lead_<tipo>` en el dataLayer para GTM y Google Ads.
  */
 export async function submitLead(mode: LeadMode, values: Values, option = 0): Promise<boolean> {
-  const v: Values = {};
-  for (const [k, val] of Object.entries(values)) v[k] = (val || '').trim();
-  const { type, data } = buildLead(mode, v, option);
+  const data: Values = {};
+  for (const [k, val] of Object.entries(values)) data[k] = (val || '').trim();
+
+  if (mode !== 'informe') {
+    const opts = LEAD_OPTIONS[mode];
+    data[OPTION_FIELD[mode]] = (opts[option] ?? opts[0]).value;
+  }
 
   try {
-    const res = await fetch(`${LEADS_URL}/lead/${type}`, {
+    const res = await fetch(`${LEADS_URL}/lead/${mode}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ ...leadMeta(), ...data, website: v.website || '', token: '' }),
+      body: JSON.stringify({ ...leadMeta(), ...data, website: data.website || '', token: '' }),
     });
     if (res.status !== 200) return false;
   } catch {
     return false;
   }
 
+  const detail = mode === 'informe' ? '' : data[OPTION_FIELD[mode]];
   const w = window as unknown as { dataLayer?: unknown[] };
   w.dataLayer = w.dataLayer || [];
-  w.dataLayer.push({ event: 'lead_submit', lead_type: mode });
+  w.dataLayer.push({ event: `lead_${mode}`, lead_type: mode, lead_detail: detail, ...(data.variante ? { variante: data.variante } : {}) });
   return true;
 }

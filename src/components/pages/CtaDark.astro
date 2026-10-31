@@ -1,0 +1,66 @@
+---
+// CTA final oscuro de las páginas interiores (mismo patrón que el CTA de la home: .gl-final-cta).
+interface Props {
+  eyebrow: string;
+  title: string;
+  text: string;
+  primary: { label: string; href: string };
+  wa: { href: string; ref: string };
+}
+const { eyebrow, title, text, primary, wa } = Astro.props;
+---
+
+<section id="contacto" class="gl-final-cta">
+  <div class="gl-final-cta-inner container-custom cd-inner">
+    <p class="cd-eyebrow">{eyebrow}</p>
+    <h2>{title}</h2>
+    <p class="gl-lead">{text}</p>
+    <div class="cd-ctas">
+      <a href={primary.href} class="gl-btn-primary cd-cta">{primary.label}</a>
+      <a href={wa.href} data-ref={wa.ref} target="_blank" rel="noopener noreferrer" class="gl-btn-dark-ghost cd-cta-wa">WhatsApp</a>
+    </div>
+    <p class="cd-contact">
+      O contáctanos: <a href="tel:+34603358517">+34 603 35 85 17</a> · <a href="mailto:info@greenlock.tech">info@greenlock.tech</a>
+    </p>
+  </div>
+</section>
+
+<style>
+  .cd-inner {
+    padding-top: clamp(4.5rem, 8vw, 7rem);
+    padding-bottom: clamp(4.5rem, 8vw, 7rem);
+  }
+  .cd-eyebrow {
+    margin-bottom: 16px;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #22c55e;
+  }
+  .cd-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .cd-cta {
+    padding: 18px 34px;
+    font-size: 19px;
+  }
+  .cd-cta-wa {
+    padding: 16px 34px;
+    font-size: 17px;
+  }
+  .cd-contact {
+    font-size: 14px;
+    color: #94a3b8;
+  }
+  .cd-contact a {
+    color: #22c55e;
+    font-weight: 500;
+    text-decoration: none;
+  }
+  .cd-contact a:hover { color: #16a34a; }
+</style>

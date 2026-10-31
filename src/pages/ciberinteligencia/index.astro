@@ -1,0 +1,99 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import PageHero from '@components/pages/PageHero.astro';
+import SectionHeading from '@components/pages/SectionHeading.astro';
+import ListPanel from '@components/pages/ListPanel.astro';
+import CardGrid from '@components/pages/CardGrid.astro';
+import CtaDark from '@components/pages/CtaDark.astro';
+import { cases, caseHref } from '@data/cases';
+import { breadcrumbSchema } from '@lib/seo';
+import casoImg from '@assets/mascota-caso-personal.webp';
+import heroImg from '@assets/Hero-GL.webp';
+import detectiveImg from '@assets/detective.webp';
+import periciaImg from '@assets/mascota-informe-pericial.webp';
+
+const crumbs = [{ label: 'Inicio', href: '/' }, { label: 'Investigación digital' }];
+const wa = 'https://wa.me/34603358517?text=Hola%2C%20quiero%20contaros%20mi%20caso%20(investigaci%C3%B3n)';
+const cards = [
+  ...cases.map((c) => ({ href: caseHref(c.slug), title: c.card.title, text: c.card.text, img: c.card.img })),
+  {
+    href: '/#contar-caso-3',
+    title: '¿Necesitas otra investigación digital?',
+    text: 'Análisis de tu reputación digital o de las evidencias digitales de cualquier otro caso.',
+    img: { src: detectiveImg, alt: 'Otra investigación digital' },
+    linkLabel: 'Cuéntanos tu caso →',
+  },
+];
+---
+
+<BaseLayout
+  title="Investigación digital OSINT e informe pericial | GreenLock"
+  exactTitle
+  description="Investigación digital con fuentes abiertas (OSINT) para estafas online, suplantación de identidad, perfiles falsos, acoso y pruebas para juicio. Informe pericial listo para denunciar."
+  schemas={[breadcrumbSchema(crumbs, '/ciberinteligencia')]}
+>
+  <PageHero
+    crumbs={crumbs}
+    eyebrow="Ciberinteligencia · OSINT"
+    title="Investigación digital (OSINT)"
+    sub="Investigamos en fuentes abiertas (webs, redes sociales, registros públicos y datos técnicos) lo que necesitas saber, y lo documentamos en un informe pericial."
+    primary={{ label: 'Contar mi caso', href: '/#contar-caso' }}
+    wa={{ label: 'Cuéntanoslo por WhatsApp', href: wa, ref: 'WEB-INVESTIGACION' }}
+    img={{ src: casoImg, alt: 'Mascota de GreenLock siguiendo un rastro digital' }}
+  />
+
+  <ListPanel
+    eyebrow="Qué es OSINT"
+    title="Información pública, analizada con método"
+    lead="OSINT significa inteligencia de fuentes abiertas: webs, redes sociales, registros públicos y datos técnicos de dominios y servidores. La analizamos con método y la documentamos para que tenga valor como prueba."
+    img={{ src: heroImg, alt: 'Mascota de GreenLock' }}
+  >
+    <p class="osint-note">Trabajamos solo con información pública y técnica, dentro de la ley. El informe documenta lo encontrado para que tu abogado, la plataforma o la policía puedan actuar.</p>
+  </ListPanel>
+
+  <section id="casos" class="intel-cases">
+    <div class="container-custom intel-inner">
+      <SectionHeading eyebrow="Casos que resolvemos" title="¿Te ha pasado algo de esto?" class="intel-head" />
+      <CardGrid cards={cards} linkLabel="Ver cómo te ayudamos →" />
+    </div>
+  </section>
+
+  <ListPanel
+    eyebrow="Qué recibes"
+    title="Un informe pericial con valor de prueba"
+    items={[
+      'Hechos documentados en orden cronológico',
+      'Cada evidencia con su fecha, su origen y cómo se obtuvo',
+      'Metodología explicada para que se pueda revisar',
+      'Conclusiones técnicas claras para tu abogado o la policía',
+    ]}
+    img={{ src: periciaImg, alt: 'Informe pericial' }}
+    tone="gray"
+  />
+
+  <CtaDark
+    eyebrow="Confidencial"
+    title="Cuanto antes actúes, más rastro queda."
+    text="Cuéntanos qué ha pasado. Te contactaremos en menos de 24 horas."
+    primary={{ label: 'Contar mi caso', href: '/#contar-caso' }}
+    wa={{ href: wa, ref: 'WEB-INVESTIGACION-CTA' }}
+  />
+</BaseLayout>
+
+<style>
+  .osint-note {
+    margin-top: 20px;
+    font-size: 16px;
+    line-height: 1.6;
+    color: #334155;
+  }
+  .intel-cases {
+    background: #fff;
+    border-top: 1px solid #eef0f2;
+  }
+  .intel-inner {
+    padding-top: clamp(4rem, 7vw, 6rem);
+    padding-bottom: clamp(4rem, 7vw, 6rem);
+  }
+  .intel-inner :global(.intel-head) { margin-bottom: 48px; }
+</style>

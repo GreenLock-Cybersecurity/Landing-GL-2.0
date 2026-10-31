@@ -1,0 +1,8 @@
+---
+// Pinta un texto con los tramos **así** en el verde de marca, como el resto de titulares de la web.
+interface Props {
+  text: string;
+}
+const parts = Astro.props.text.split(/\*\*(.+?)\*\*/g);
+---
+{parts.map((part, i) => (i % 2 ? <span style="color: #22c55e;">{part}</span> : part))}

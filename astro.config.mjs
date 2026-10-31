@@ -22,7 +22,9 @@ export default defineConfig({
       filter: (page) =>
         !/\/legal\/(aviso-legal|privacidad|cookies)/.test(page) &&
         !page.includes('/404') &&
-        !page.includes('/gracias'),
+        !page.includes('/gracias') &&
+        // Landings de Google Ads: noindex y fuera del sitemap
+        !page.includes('/ciberinteligencia/caso/'),
       i18n: {
         defaultLocale: 'es',
         locales: {
@@ -34,13 +36,8 @@ export default defineConfig({
         if (item.url === 'https://greenlock.tech/') {
           item.priority = 1.0;
           item.changefreq = 'weekly';
-        } else if (
-          item.url.includes('/servicios/') &&
-          !item.url.endsWith('/servicios/')
-        ) {
-          item.priority = 0.9;
-          item.changefreq = 'monthly';
-        } else if (item.url.endsWith('/servicios/')) {
+        } else if (item.url.includes('/ciberseguridad/') || item.url.includes('/ciberinteligencia/')) {
+          // Hubs y páginas de servicio o de caso
           item.priority = 0.9;
           item.changefreq = 'monthly';
         } else if (

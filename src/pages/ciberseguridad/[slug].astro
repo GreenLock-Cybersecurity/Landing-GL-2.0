@@ -1,0 +1,101 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import PageHero from '@components/pages/PageHero.astro';
+import ItemsGrid from '@components/pages/ItemsGrid.astro';
+import ListPanel from '@components/pages/ListPanel.astro';
+import CardGrid from '@components/pages/CardGrid.astro';
+import CtaDark from '@components/pages/CtaDark.astro';
+import { services, serviceBySlug, serviceHref, auditOption, type Service } from '@data/services';
+import { breadcrumbSchema } from '@lib/seo';
+
+export function getStaticPaths() {
+  return services.map((s) => ({ params: { slug: s.slug } }));
+}
+
+const service = serviceBySlug(Astro.params.slug!)!;
+const path = serviceHref(service.slug);
+const crumbs = [
+  { label: 'Inicio', href: '/' },
+  { label: 'Ciberseguridad', href: '/ciberseguridad' },
+  { label: service.name },
+];
+// El formulario de auditoría de la home se abre con este servicio ya marcado
+const formHref = `/#solicitar-auditoria-${auditOption(service.slug)}`;
+const related = service.related
+  .map(serviceBySlug)
+  .filter((r): r is Service => !!r)
+  .map((r) => ({ href: serviceHref(r.slug), title: r.name, text: r.card.text, img: r.card.img }));
+const waRef = `WEB-SERVICIO-${service.slug.toUpperCase()}`;
+---
+
+<BaseLayout
+  title={service.seo.title}
+  exactTitle
+  description={service.seo.description}
+  schemas={[breadcrumbSchema(crumbs, path), ...service.schema]}
+>
+  <PageHero
+    crumbs={crumbs}
+    eyebrow={service.hero.eyebrow}
+    title={service.hero.h1}
+    sub={service.hero.sub}
+    primary={{ label: service.hero.ctaLabel, href: formHref }}
+    wa={{ label: 'Consultar por WhatsApp', href: service.hero.wa, ref: waRef }}
+    img={service.hero.img}
+  />
+
+  <ItemsGrid eyebrow={service.review.eyebrow} title={service.review.title} items={service.review.items} />
+
+  <ListPanel
+    eyebrow={service.receive.eyebrow}
+    title={service.receive.title}
+    items={service.receive.items}
+    img={service.receive.img}
+    tone="gray"
+  />
+
+  <section class="svc-related">
+    <div class="container-custom svc-related-inner">
+      <div class="svc-related-head">
+        <h2 class="gl-section-title">Otros servicios de ciberseguridad</h2>
+        <a href="/ciberseguridad" class="svc-related-all">Ver todos →</a>
+      </div>
+      <CardGrid cards={related} />
+    </div>
+  </section>
+
+  <CtaDark
+    eyebrow="Da el primer paso"
+    title={service.cta.title}
+    text={service.cta.text}
+    primary={{ label: service.hero.ctaLabel, href: formHref }}
+    wa={{ href: service.hero.wa, ref: `${waRef}-CTA` }}
+  />
+</BaseLayout>
+
+<style>
+  .svc-related {
+    background: #fff;
+    border-top: 1px solid #eef0f2;
+  }
+  .svc-related-inner {
+    padding-top: clamp(4rem, 7vw, 6rem);
+    padding-bottom: clamp(4rem, 7vw, 6rem);
+  }
+  .svc-related-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+  .svc-related-head .gl-section-title { margin-bottom: 0; }
+  .svc-related-all {
+    font-size: 16px;
+    font-weight: 500;
+    color: #16a34a;
+    text-decoration: none;
+  }
+  .svc-related-all:hover { color: #15803d; }
+</style>

@@ -2,40 +2,35 @@
 import { Image } from 'astro:assets';
 import logoMitre from '@assets/icons/Mitre.webp';
 import logoOwasp from '@assets/icons/owasp.webp';
-import logoIncibe from '@assets/icons/incibe.webp';
-import logoIne from '@assets/icons/INE_nl_carbon-gradient-RGB.webp';
 import logoNis2 from '@assets/icons/NIS2.webp';
 import logoEns from '@assets/icons/ENS.webp';
 import logoIso from '@assets/icons/iso2001-logo.webp';
+import logoIncibe from '@assets/icons/incibe.webp';
 
 const frameworks = [
   { name: 'MITRE ATT&CK', logo: logoMitre, h: 24 },
   { name: 'OWASP', logo: logoOwasp, h: 36 },
-  { name: 'INCIBE', logo: logoIncibe, h: 36 },
-  { name: 'INE', logo: logoIne, h: 28 },
-  { name: 'NIS2', logo: logoNis2, h: 36 },
-  { name: 'ENS', logo: logoEns, h: 48 },
-  { name: 'ISO 27001', logo: logoIso, h: 48 },
+  { name: 'NIS2', logo: logoNis2, h: 34 },
+  { name: 'ENS', logo: logoEns, h: 34 },
+  { name: 'ISO 27001', logo: logoIso, h: 34 },
+  { name: 'INCIBE', logo: logoIncibe, h: 28 },
 ];
-const allFrameworks = [...frameworks, ...frameworks];
 ---
 
-<section class="bg-white py-6 md:py-8">
+<section class="bg-white" style="padding-top: 40px; padding-bottom: 40px;">
   <div class="container-custom">
     <p class="text-xs font-semibold uppercase tracking-[0.25em] text-dark-400 mb-6 text-center">
       Metodologías y marcos con los que trabajamos
     </p>
-  </div>
-
-  <div class="container-custom relative overflow-hidden" style="-webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent); mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);">
-    <div class="framework-track" style="display: flex; align-items: center; gap: 4rem; width: max-content; animation: framework-scroll 40s linear infinite;">
-      {allFrameworks.map((fw) => (
+    <div class="fw-row">
+      {frameworks.map((fw) => (
         <Image
           src={fw.logo}
           alt={fw.name}
           height={fw.h}
-          class="shrink-0 select-none"
-          style="width: auto; opacity: 0.6;"
+          densities={[1, 2]}
+          class="fw-logo"
+          style={`height: ${fw.h}px;`}
           loading="lazy"
         />
       ))}
@@ -43,12 +38,17 @@ const allFrameworks = [...frameworks, ...frameworks];
   </div>
 </section>
 
-<style is:global>
-  @keyframes framework-scroll {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
+<style>
+  .fw-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 2.5rem 4rem;
   }
-  .framework-track {
-    pointer-events: none;
+  .fw-logo {
+    width: auto;
+    opacity: 0.6;
+    user-select: none;
   }
 </style>

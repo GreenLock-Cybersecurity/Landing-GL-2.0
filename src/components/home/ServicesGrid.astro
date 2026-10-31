@@ -1,34 +1,17 @@
 ---
 import { Image } from 'astro:assets';
-import imgPerimetral from '@assets/perimetral.webp';
-import imgRedTeam from '@assets/red-team.webp';
-import img360 from '@assets/360.webp';
-import imgContinua from '@assets/continua-robot.png';
+import FeaturedService from '@components/pages/FeaturedService.astro';
+import { servicesIn, serviceHref, type Service } from '@data/services';
 
-const services = [
-  {
-    title: 'Auditoría Perimetral',
-    description: 'Análisis exhaustivo de tu superficie de ataque externa. Identificamos cada punto de entrada antes que los atacantes.',
-    icon: imgPerimetral,
-  },
-  {
-    title: 'Red Team',
-    description: 'Simulación de ataque real end-to-end. OSINT, ingeniería social, acceso físico y movimiento lateral sin restricciones.',
-    icon: imgRedTeam,
-    // El arte de Red Team ocupa más lienzo: lo escalamos algo por debajo del resto.
-    iconScale: 0.83,
-  },
-  {
-    title: 'Pentesting',
-    description: 'Explotación controlada de aplicaciones web, APIs e infraestructura interna. Hallazgos priorizados y reproducibles.',
-    icon: img360,
-  },
-  {
-    title: 'Ciberseguridad Continua',
-    description: 'Revisamos y auditamos tus sistemas de forma continua para que estés protegido en todo momento, no solo el día de la auditoría.',
-    icon: imgContinua,
-  },
-];
+// Tamaño de la ilustración en las tarjetas de la home (algunas mascotas traen más margen)
+const CARD_SIZE: Record<string, { w: number; h: number; scale?: number }> = {
+  'red-team': { w: 150, h: 150 },
+  'pentest-aplicaciones': { w: 180, h: 180, scale: 1.45 },
+  'pentest-wordpress': { w: 180, h: 180, scale: 1.45 },
+  'concienciacion-phishing': { w: 354, h: 226 },
+};
+const cards = (group: 'auditoria' | 'formacion') =>
+  servicesIn(group).map((s: Service) => ({ ...s, size: CARD_SIZE[s.slug] ?? { w: 180, h: 180 } }));
 ---
 
 <section id="servicios" class="bg-white">
@@ -37,7 +20,7 @@ const services = [
     <!-- Title + description -->
     <div class="mb-16 max-w-3xl">
       <p class="uppercase mb-4" style="color: #22c55e; font-size: clamp(1.25rem, 2.4vw, 1.625rem); font-weight: 700; letter-spacing: 0.04em;">
-        Servicios de ciberseguridad
+        Ciberseguridad
       </p>
       <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-dark-900 mb-5 leading-tight">
         Tu negocio <span style="color: #22c55e;">genera dinero.</span><br/>
@@ -48,38 +31,79 @@ const services = [
       </p>
     </div>
 
-    <!-- Services grid -->
-    <div class="svc-grid">
-      {services.map((service) => (
-        <div class="svc-card">
-          <div class="svc-icon-area">
-            <Image src={service.icon} alt={service.title} width={180} height={180} class="svc-icon-img" loading="eager" decoding="async" style={service.iconScale ? `--svc-icon-scale: ${service.iconScale};` : ''} />
-          </div>
-          <div class="svc-content">
-            <h3 class="svc-title">{service.title}</h3>
-            <p class="svc-desc">{service.description}</p>
-          </div>
+    <FeaturedService withButton />
+
+    {[
+      { group: 'auditoria' as const, title: 'Auditoría y pruebas de seguridad', text: 'Buscamos tus puntos débiles antes que los atacantes.', min: 300 },
+      { group: 'formacion' as const, title: 'Formación', text: 'Tu equipo, la primera línea de defensa.', min: 260 },
+    ].map((block) => (
+      <>
+        <div class="svc-group">
+          <h3 class="svc-group-title">{block.title}</h3>
+          <p class="svc-group-text">{block.text}</p>
         </div>
-      ))}
+        <div class="svc-grid" style={`--svc-min: ${block.min}px;`}>
+          {cards(block.group).map((service) => (
+            <a href={serviceHref(service.slug)} class="svc-card">
+              <div class="svc-icon-area">
+                <Image
+                  src={service.card.img.src}
+                  alt={service.name}
+                  width={service.size.w}
+                  densities={[1, 2]}
+                  class="svc-icon-img"
+                  loading="lazy"
+                  decoding="async"
+                  style={`width: ${service.size.w}px; height: ${service.size.h}px;${service.size.scale ? ` transform: scale(${service.size.scale});` : ''}`}
+                />
+              </div>
+              <div class="svc-content">
+                <h3 class="svc-title">{service.name}</h3>
+                <p class="svc-desc">{service.homeText ?? service.card.text}</p>
+              </div>
+            </a>
+          ))}
+        </div>
+      </>
+    ))}
+
+    <div class="svc-foot">
+      <button type="button" class="gl-btn-primary svc-cta" data-open="auditoria" data-opt="6">Solicitar asesoramiento</button>
+      <p class="svc-foot-note">Te contactaremos en menos de 24 horas.</p>
+      <a href="/ciberseguridad" class="svc-foot-link">Ver todos los servicios de ciberseguridad →</a>
     </div>
 
   </div>
 </section>
 
 <style>
+  .svc-group {
+    max-width: 760px;
+    margin: 64px 0 8px;
+  }
+  .svc-group-title {
+    margin-bottom: 8px;
+    font-size: clamp(1.5rem, 2.6vw, 2rem);
+    font-weight: 700;
+    color: #0f172a;
+  }
+  .svc-group-text {
+    font-size: 17px;
+    line-height: 1.6;
+    color: #64748b;
+  }
+
   .svc-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--svc-min)), 1fr));
     gap: 24px;
-    /* Tamaño base del icono; cada breakpoint lo redefine y las tarjetas que
-       lo necesiten aplican su propia --svc-icon-scale encima. */
-    --svc-icon-base: 180px;
   }
 
   .svc-card {
     display: flex;
     flex-direction: column;
-    cursor: default;
+    color: #111827;
+    text-decoration: none;
     transition: transform 0.3s ease;
   }
   .svc-card:hover {
@@ -95,13 +119,8 @@ const services = [
   }
 
   .svc-icon-img {
-    width: calc(var(--svc-icon-base) * var(--svc-icon-scale, 1));
-    height: calc(var(--svc-icon-base) * var(--svc-icon-scale, 1));
+    max-width: 100%;
     object-fit: contain;
-    transition: transform 0.3s ease;
-  }
-  .svc-card:hover .svc-icon-img {
-    transform: scale(1.06);
   }
 
   .svc-content {
@@ -113,40 +132,45 @@ const services = [
   }
 
   .svc-title {
-    font-size: 20px;
+    font-size: 24px;
     font-weight: 700;
     color: #111827;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
     line-height: 1.3;
   }
 
   .svc-desc {
-    font-size: 14.5px;
+    font-size: 16.5px;
     line-height: 1.65;
     color: #6b7280;
   }
 
-  @media (max-width: 639px) {
-    .svc-grid {
-      grid-template-columns: 1fr;
-      gap: 16px;
-      --svc-icon-base: 140px;
-    }
+  .svc-foot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    margin-top: 40px;
+    text-align: center;
   }
+  .svc-cta {
+    padding: 18px 40px;
+    font-size: 17px;
+    cursor: pointer;
+  }
+  .svc-foot-note {
+    font-size: 14px;
+    color: #64748b;
+  }
+  .svc-foot-link {
+    font-size: 16px;
+    font-weight: 500;
+    color: #16a34a;
+    text-decoration: none;
+  }
+  .svc-foot-link:hover { color: #15803d; }
 
-  /* Cuatro tarjetas: en tablet van en dos filas de dos. */
-  @media (min-width: 640px) and (max-width: 1023px) {
-    .svc-grid {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 16px;
-      --svc-icon-base: 150px;
-    }
-    .svc-icon-area {
-      height: 190px;
-      padding: 16px 8px 12px;
-    }
-    .svc-content {
-      padding: 0 8px 20px;
-    }
+  @media (max-width: 639px) {
+    .svc-title { font-size: 21px; }
   }
 </style>

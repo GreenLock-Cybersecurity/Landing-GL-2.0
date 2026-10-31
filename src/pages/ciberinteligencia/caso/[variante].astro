@@ -1,0 +1,1116 @@
+---
+// Landing de Google Ads para investigación digital: una variante por grupo de
+// anuncios (/ciberinteligencia/caso/<variante>) para que el mensaje case con el
+// anuncio. noindex y fuera del sitemap. El formulario va directo al Worker
+// (/lead/osint) con la variante, el gclid y las UTM.
+import type { ImageMetadata } from 'astro';
+import { Image } from 'astro:assets';
+import LandingLayout from '@layouts/LandingLayout.astro';
+import { LEAD_LIMITS } from '@lib/leads';
+import logoImg from '@assets/icons/Logo.webp';
+import casoImg from '@assets/mascota-caso-personal.webp';
+import detectiveImg from '@assets/detective.webp';
+import suplantacionImg from '@assets/mascota-suplantacion.webp';
+import estafadorImg from '@assets/estafador.webp';
+import periciaImg from '@assets/mascota-informe-pericial.webp';
+import perfilImg from '@assets/mascota-perfil-falso.webp';
+import acosoImg from '@assets/mascota-acoso.webp';
+import complianceImg from '@assets/partner-compliance.webp';
+import paso1Img from '@assets/ads-paso-1.webp';
+import paso2Img from '@assets/ads-paso-2.webp';
+import damianImg from '@assets/damian.webp';
+import diegoImg from '@assets/diego.webp';
+import hacknetImg from '@assets/HackNet-Logo.webp';
+import crtoImg from '@assets/crto.webp';
+import uneonImg from '@assets/uneon.webp';
+
+// Casos que se pueden marcar. `option` = índice en LEAD_OPTIONS.osint (el valor que acepta el Worker).
+const CASES: { id: string; label: string; img: ImageMetadata; scale: number; option: number }[] = [
+  { id: 'perfil', label: 'Perfil falso o suplantación', img: perfilImg, scale: 1.5, option: 1 },
+  { id: 'acoso', label: 'Acoso o difamación', img: acosoImg, scale: 1.5, option: 3 },
+  { id: 'quien', label: '¿Quién está detrás?', img: detectiveImg, scale: 1, option: 2 },
+  { id: 'estafa', label: 'Estafa online', img: estafadorImg, scale: 1, option: 0 },
+  { id: 'juicio', label: 'Prueba para un juicio', img: complianceImg, scale: 1.4, option: 3 },
+];
+
+const VARIANTS = {
+  generica: { h1: 'Investigación digital', sub: 'Seguimos el rastro que deja en internet quien está detrás de tu caso y lo convertimos en prueba.', img: casoImg, scale: 1, caso: null },
+  quien: { h1: '¿Quién está detrás de esa cuenta?', sub: 'Seguimos su rastro y lo convertimos en prueba.', img: detectiveImg, scale: 1.1, caso: 'quien' },
+  suplantacion: { h1: '¿Alguien se hace pasar por ti?', sub: 'Preservamos la prueba y seguimos el rastro del perfil falso.', img: suplantacionImg, scale: 1.5, caso: 'perfil' },
+  estafa: { h1: '¿Te han estafado por internet?', sub: 'Convertimos el rastro en pruebas para tu denuncia.', img: estafadorImg, scale: 1.1, caso: 'estafa' },
+  juicio: { h1: '¿Necesitas pruebas para el juicio?', sub: 'Informe pericial ratificable ante el juez.', img: periciaImg, scale: 1.4, caso: 'juicio' },
+} as const;
+
+type VariantKey = keyof typeof VARIANTS;
+
+export function getStaticPaths() {
+  return (['generica', 'quien', 'suplantacion', 'estafa', 'juicio'] as const).map((variante) => ({ params: { variante } }));
+}
+
+const key = Astro.params.variante as VariantKey;
+const v = VARIANTS[key];
+const defaultCase = CASES.find((c) => c.id === v.caso) ?? null;
+const wa = 'https://wa.me/34603358517?text=Hola%2C%20quiero%20contaros%20mi%20caso';
+const waRef = `ADS-OSINT-${key}`;
+
+const FAQS = [
+  ['¿Vale un WhatsApp o una captura como prueba?', 'Una captura sola es fácil de impugnar. Preservamos el contenido con método (fecha, origen y huella digital) y lo documentamos en un informe pericial para que tenga más peso.'],
+  ['¿Es legal lo que hacéis?', 'Sí. Trabajamos solo con fuentes abiertas e información pública, conforme al RGPD.'],
+  ['¿Me diréis quién es?', 'No prometemos identificar a nadie. Seguimos el rastro y documentamos todo lo que encontramos; con ese informe, tu abogado o la policía pueden pedir al juez los datos que faltan.'],
+  ['¿Recuperaréis mi dinero?', 'No. Nuestro trabajo es convertir el rastro en prueba para tu denuncia. La recuperación depende del procedimiento y de tu banco.'],
+  ['¿Cuánto cuesta y cuánto tarda?', 'La primera valoración es gratuita. [Precio orientativo y plazo habitual según el tipo de caso].'],
+  ['¿Es confidencial?', 'Sí. Solo el equipo que lleva tu caso ve tu información. [Referencia a la política de privacidad].'],
+];
+---
+
+<LandingLayout title="Investigación digital confidencial | GreenLock" description={`${v.h1} ${v.sub}`}>
+  <div class="ads" data-ads data-variante={key} data-case={defaultCase?.id ?? ''} data-option={defaultCase?.option ?? 3} data-case-label={defaultCase?.label ?? ''}>
+
+    <header class="ads-header">
+      <div class="ads-wrap ads-header-inner">
+        <span class="ads-logo">
+          <Image src={logoImg} alt="GreenLock" width={30} height={30} class="ads-logo-img" loading="eager" />
+          <span>Green<span class="ads-logo-accent">Lock</span></span>
+        </span>
+        <a href={wa} data-ref={waRef} target="_blank" rel="noopener noreferrer" class="ads-header-wa"><span class="ads-wa-dot" aria-hidden="true"></span>WhatsApp</a>
+      </div>
+    </header>
+
+    <!-- Hero + formulario -->
+    <section class="ads-hero">
+      <div class="ads-hero-circle" aria-hidden="true"></div>
+      <div class="ads-wrap ads-hero-grid">
+        <div class="ads-hero-copy">
+          <p class="ads-kicker">Investigación digital · OSINT</p>
+          <h1 class="ads-h1">{v.h1}</h1>
+          <p class="ads-sub">{v.sub}</p>
+          <div class="ads-hero-extra">
+            <ul class="ads-bullets">
+              <li>Informe pericial con cadena de custodia</li>
+              <li>Solo fuentes abiertas (OSINT), conforme al RGPD</li>
+              <li>Equipo de ciberexpertos con nombre y cara</li>
+            </ul>
+            <div class="ads-hero-mascot">
+              <Image src={v.img} alt="Mascota de GreenLock" height={220} densities={[1, 2]} class="ads-hero-img" loading="eager" decoding="async" style={`--s: ${v.scale};`} />
+              <p class="ads-hero-urgency">Cuanto antes actúes, más rastro queda. <span>→</span></p>
+            </div>
+          </div>
+        </div>
+
+        <div id="form" class="ads-form-card" data-ads-form-box>
+          <form class="ads-form" data-ads-form data-astro-reload>
+            <input class="ads-hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" />
+            <div class="ads-form-head">
+              <p class="ads-form-title">Cuéntanos tu caso</p>
+              <span class="ads-form-case" data-ads-case-label>{defaultCase ? `Caso: ${defaultCase.label}` : ''}</span>
+            </div>
+            <input class="ads-input" name="name" required maxlength={LEAD_LIMITS.name} placeholder="Nombre" aria-label="Nombre" autocomplete="name" data-ads-first />
+            <input class="ads-input" name="email" type="email" required maxlength={LEAD_LIMITS.email} placeholder="Email" aria-label="Email" autocomplete="email" />
+            <input class="ads-input" name="phone" type="tel" required maxlength={LEAD_LIMITS.phone} placeholder="Teléfono" aria-label="Teléfono" autocomplete="tel" />
+            <textarea class="ads-input ads-textarea" name="message" rows="2" required maxlength="900" placeholder="Cuéntanos en 2 líneas qué ha pasado" aria-label="Cuéntanos en 2 líneas qué ha pasado"></textarea>
+            <button type="submit" class="gl-btn-primary ads-submit">Contar mi caso →</button>
+            <p class="ads-error" role="alert" hidden>No se ha podido enviar. Inténtalo de nuevo o escríbenos por WhatsApp.</p>
+            <p class="ads-reassure">Valoración gratuita · Sin compromiso · Confidencial · Respuesta en menos de 24 h</p>
+            <div class="ads-team">
+              <span class="ads-team-faces">
+                <Image src={damianImg} alt="" width={34} height={34} densities={[1, 2]} class="ads-face" loading="lazy" />
+                <Image src={diegoImg} alt="" width={34} height={34} densities={[1, 2]} class="ads-face" loading="lazy" />
+              </span>
+              <span>Te atienden <strong>Damián Pérez</strong> y <strong>Diego Rodríguez</strong>, nuestro equipo de ciberexpertos</span>
+            </div>
+            <a href={wa} data-ref={waRef} target="_blank" rel="noopener noreferrer" class="ads-form-wa">¿Prefieres escribirnos? WhatsApp →</a>
+            <p class="ads-privacy">Al enviar aceptas la <a href="/legal/privacidad" target="_blank" rel="noopener">política de privacidad</a>. Responsable: GreenLock Cybersecurity E.S.P.J. Finalidad: responder a tu solicitud.</p>
+          </form>
+          <div class="ads-done" data-ads-done tabindex="-1" hidden>
+            <span class="ads-done-check" aria-hidden="true">✓</span>
+            <p class="ads-done-title">Caso recibido</p>
+            <p class="ads-done-text">Te llamamos en menos de 24 horas. Mientras tanto, no borres nada.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ¿Te suena? -->
+    <section class="ads-section">
+      <div class="ads-wrap">
+        <h2 class="ads-h2">Situaciones que investigamos en internet</h2>
+        <div class="ads-quotes">
+          <p>“Hay un perfil con mis fotos y no sé quién es.”</p>
+          <p>“Me amenazan desde una cuenta anónima.”</p>
+          <p>“Denuncié y me dicen que se archiva porque no saben quién es.”</p>
+        </div>
+        <div class="ads-inline-cta">
+          <p>Detrás de cada caso hay <strong>un rastro</strong>. Lo seguimos y lo convertimos en prueba.</p>
+          <button type="button" class="gl-btn-primary ads-btn" data-ads-to-form>Contar mi caso</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Cómo funciona -->
+    <section class="ads-section ads-section--gray">
+      <div class="ads-wrap">
+        <h2 class="ads-h2">Cómo es una investigación digital</h2>
+        <div class="ads-steps">
+          {[
+            { img: paso1Img, title: 'Nos cuentas el caso', text: 'Por el formulario o por WhatsApp. Te llamamos en menos de 24 h.' },
+            { img: paso2Img, title: 'Preservamos la prueba y seguimos el rastro', text: 'Guardamos las evidencias antes de que desaparezcan y analizamos fuentes abiertas.' },
+            { img: periciaImg, title: 'Recibes un informe pericial', text: 'Para tu denuncia o para que tu abogado lo aporte en el juicio.' },
+          ].map((step) => (
+            <div class="ads-step">
+              <div class="ads-step-visual">
+                <Image src={step.img} alt="" height={190} densities={[1, 2]} class="ads-step-img" loading="lazy" decoding="async" />
+              </div>
+              <h3>{step.title}</h3>
+              <p>{step.text}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- HackNet y equipo -->
+    <section class="ads-section">
+      <div class="ads-wrap ads-community">
+        <div class="ads-people">
+          <div class="ads-person">
+            <Image src={diegoImg} alt="Diego Rodríguez Sanz" width={160} height={160} densities={[1, 2]} class="ads-person-img" loading="lazy" />
+            <div class="ads-person-body">
+              <Image src={hacknetImg} alt="HackNet" width={56} height={56} class="ads-person-badge ads-person-badge--round" loading="lazy" />
+              <span class="ads-person-big">100.000+</span>
+              <span class="ads-person-accent">seguidores en redes sociales</span>
+              <span class="ads-person-role">Diego Rodríguez · Cofundador · HackNet</span>
+            </div>
+          </div>
+          <div class="ads-person ads-person--rule">
+            <Image src={damianImg} alt="Damián Pérez Moreno" width={160} height={160} densities={[1, 2]} class="ads-person-img" loading="lazy" />
+            <div class="ads-person-body">
+              <Image src={crtoImg} alt="CRTO" width={56} height={56} class="ads-person-badge" loading="lazy" />
+              <span class="ads-person-big ads-person-big--sm">Certificación CRTO</span>
+              <span class="ads-person-accent">Certified Red Team Operator</span>
+              <span class="ads-person-role">Damián Pérez · Cofundador · Seguridad ofensiva</span>
+            </div>
+          </div>
+        </div>
+        <div class="ads-community-copy">
+          <h2 class="ads-h2 ads-h2--tight">Nos sigue una comunidad de <span>más de 100.000 personas</span></h2>
+          <p>Diego Rodríguez, cofundador de GreenLock, divulga ciberseguridad y OSINT en HackNet, su canal de YouTube. Lo que enseñamos en abierto es lo que aplicamos en tu caso.</p>
+          <div><button type="button" class="gl-btn-primary ads-btn" data-ads-to-form>Contar mi caso</button></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Casos -->
+    <section class="ads-section">
+      <div class="ads-wrap">
+        <h2 class="ads-h2 ads-h2--flush">¿Qué necesitas investigar?</h2>
+        <p class="ads-lead">Pulsa el tuyo y empieza.</p>
+        <div class="ads-cases">
+          {CASES.map((c) => (
+            <button type="button" class="ads-case" data-ads-pick={c.id} data-option={c.option} data-label={c.label}>
+              <span class="ads-case-visual">
+                <Image src={c.img} alt="" height={130} densities={[1, 2]} class="ads-case-img" loading="lazy" decoding="async" style={`transform: scale(${c.scale});`} />
+              </span>
+              <span class="ads-case-label">{c.label}</span>
+              <span class="ads-case-link">Es mi caso →</span>
+            </button>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Por qué nosotros -->
+    <section class="ads-section ads-section--dark">
+      <div class="ads-wrap">
+        <h2 class="ads-h2 ads-h2--light">Por qué investigar con <span>GreenLock</span></h2>
+        <div class="ads-why">
+          <div><h3>No nos quedamos en la captura</h3><p>Una captura la hace cualquiera. Nosotros seguimos el rastro que hay detrás.</p></div>
+          <div><h3>Pensamos como el atacante</h3><p>Venimos de la seguridad ofensiva: sabemos cómo se esconde quien está al otro lado.</p></div>
+          <div><h3>Lo explicamos en abierto</h3><p>Divulgamos ciberseguridad y OSINT en HackNet, con más de 100.000 seguidores en redes sociales.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Confianza -->
+    <section class="ads-section">
+      <div class="ads-wrap ads-trust">
+        <figure class="ads-quote">
+          <span class="ads-quote-mark" aria-hidden="true">“</span>
+          <blockquote>Lo que primero me sorprendió de GreenLock fue su capacidad de prevenir situaciones. Son la nueva generación de ciberexpertos que controlan el medio, los nuevos ataques y, por su capacidad, deberían tener sedes en todo el mundo. Juventud y talento son las dos grandes virtudes de estos grandes profesionales. Mi experiencia en el análisis con fuentes abiertas ha sido abrumadora y espectacular, tanto, que estoy recomendando a mis clientes y partners que los conozcan y, una vez dada la oportunidad, estoy seguro de que no se separarán de ellos.</blockquote>
+          <figcaption>
+            <Image src={uneonImg} alt="Uneon" height={34} densities={[1, 2]} class="ads-quote-logo" loading="lazy" />
+            <span class="ads-quote-who"><strong>Rafael Gimeno</strong><span>CEO, Uneon · Despacho de abogados (Derecho Informático)</span></span>
+          </figcaption>
+        </figure>
+        <div class="ads-trust-side">
+          <div class="ads-trust-team">
+            <div class="ads-trust-member">
+              <Image src={damianImg} alt="Damián Pérez Moreno" width={64} height={64} densities={[1, 2]} class="ads-trust-face" loading="lazy" />
+              <div><p class="ads-trust-name">Damián Pérez Moreno</p><p class="ads-trust-role">Seguridad ofensiva · CRTO</p></div>
+            </div>
+            <div class="ads-trust-member">
+              <Image src={diegoImg} alt="Diego Rodríguez Sanz" width={64} height={64} densities={[1, 2]} class="ads-trust-face" loading="lazy" />
+              <div><p class="ads-trust-name">Diego Rodríguez Sanz</p><p class="ads-trust-role">Ingeniería de seguridad · HackNet</p></div>
+            </div>
+          </div>
+          <p class="ads-trust-note">[Cifra real: casos o informes realizados] · [Precio orientativo tras la valoración gratuita]</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="ads-section ads-section--gray">
+      <div class="ads-wrap ads-wrap--narrow">
+        <h2 class="ads-h2">Preguntas frecuentes</h2>
+        <div class="ads-faqs">
+          {FAQS.map(([q, a]) => (
+            <details class="ads-faq">
+              <summary><span>{q}</span><span class="ads-faq-icon" aria-hidden="true"></span></summary>
+              <p>{a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA final -->
+    <section class="ads-final">
+      <div class="ads-wrap ads-final-grid">
+        <div class="ads-final-copy">
+          <h2>Cuanto antes actúes, <span>más rastro queda.</span></h2>
+          <p>Los perfiles se borran y los mensajes desaparecen. Cuéntanoslo hoy.</p>
+        </div>
+        <div class="ads-form-card ads-form-card--flat" data-ads-form-box>
+          <form class="ads-form" data-ads-form data-astro-reload>
+            <input class="ads-hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" />
+            <input class="ads-input" name="name" required maxlength={LEAD_LIMITS.name} placeholder="Nombre" aria-label="Nombre" autocomplete="name" />
+            <input class="ads-input" name="email" type="email" required maxlength={LEAD_LIMITS.email} placeholder="Email" aria-label="Email" autocomplete="email" />
+            <input class="ads-input" name="phone" type="tel" required maxlength={LEAD_LIMITS.phone} placeholder="Teléfono" aria-label="Teléfono" autocomplete="tel" />
+            <textarea class="ads-input ads-textarea" name="message" rows="2" required maxlength="900" placeholder="Cuéntanos en 2 líneas qué ha pasado" aria-label="Cuéntanos en 2 líneas qué ha pasado"></textarea>
+            <button type="submit" class="gl-btn-primary ads-submit">Contar mi caso →</button>
+            <p class="ads-error" role="alert" hidden>No se ha podido enviar. Inténtalo de nuevo o escríbenos por WhatsApp.</p>
+            <p class="ads-reassure">Valoración gratuita · Sin compromiso · Confidencial · Respuesta en menos de 24 h</p>
+            <p class="ads-privacy">Al enviar aceptas la <a href="/legal/privacidad" target="_blank" rel="noopener">política de privacidad</a>. Responsable: GreenLock Cybersecurity E.S.P.J. Finalidad: responder a tu solicitud.</p>
+          </form>
+          <p class="ads-done-inline" data-ads-done hidden>✓ Caso recibido. Te llamamos en menos de 24 h.</p>
+        </div>
+      </div>
+      <p class="ads-legal">
+        © {new Date().getFullYear()} GreenLock Cybersecurity E.S.P.J. · NIF E22754246 ·
+        <a href="/legal/aviso-legal" target="_blank" rel="noopener">Aviso legal</a> ·
+        <a href="/legal/cookies" target="_blank" rel="noopener">Cookies</a>
+      </p>
+    </section>
+
+    <!-- Barra fija en móvil -->
+    <div class="ads-bar" data-ads-bar>
+      <button type="button" class="gl-btn-primary ads-bar-cta" data-ads-to-form>Contar mi caso</button>
+      <a href={wa} data-ref={waRef} target="_blank" rel="noopener noreferrer" class="ads-bar-wa" aria-label="WhatsApp">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      </a>
+    </div>
+  </div>
+</LandingLayout>
+
+<script>
+  import { submitLead } from '@lib/leads';
+
+  const root = document.querySelector<HTMLElement>('[data-ads]');
+  if (root) {
+    const variante = root.dataset.variante || 'generica';
+    const formBox = document.getElementById('form');
+    const caseLabel = root.querySelector<HTMLElement>('[data-ads-case-label]');
+    let sent = false;
+
+    const toForm = () => {
+      if (!formBox) return;
+      window.scrollTo({ top: formBox.getBoundingClientRect().top + window.scrollY - 12, behavior: 'smooth' });
+      window.setTimeout(() => root.querySelector<HTMLElement>('[data-ads-first]')?.focus({ preventScroll: true }), 450);
+    };
+
+    root.addEventListener('click', (e) => {
+      const target = e.target as HTMLElement;
+      if (target.closest('[data-ads-to-form]')) { toForm(); return; }
+      const pick = target.closest<HTMLElement>('[data-ads-pick]');
+      if (pick) {
+        root.dataset.case = pick.dataset.adsPick;
+        root.dataset.option = pick.dataset.option;
+        root.dataset.caseLabel = pick.dataset.label;
+        if (caseLabel) caseLabel.textContent = `Caso: ${pick.dataset.label}`;
+        toForm();
+      }
+    });
+
+    root.querySelectorAll<HTMLFormElement>('[data-ads-form]').forEach((form) => {
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (form.dataset.sending || sent) return;
+        const button = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+        const error = form.querySelector<HTMLElement>('.ads-error');
+        const label = button?.textContent ?? '';
+        form.dataset.sending = '1';
+        if (button) { button.disabled = true; button.textContent = 'Enviando…'; }
+        if (error) error.hidden = true;
+
+        const data = new FormData(form);
+        const value = (k: string) => String(data.get(k) ?? '').trim();
+        const prefix = root.dataset.caseLabel ? `[${root.dataset.caseLabel}] ` : '';
+        const ok = await submitLead('osint', {
+          name: value('name'),
+          email: value('email'),
+          phone: value('phone'),
+          message: prefix + value('message'),
+          website: value('website'),
+          variante,
+        }, Number(root.dataset.option ?? 3));
+
+        delete form.dataset.sending;
+        if (button) { button.disabled = false; button.textContent = label; }
+        if (!ok) { if (error) error.hidden = false; return; }
+
+        // Enviado: ambos formularios muestran el mensaje de éxito y la barra móvil desaparece
+        sent = true;
+        root.classList.add('is-sent');
+        root.querySelectorAll<HTMLElement>('[data-ads-form]').forEach((f) => { f.hidden = true; });
+        root.querySelectorAll<HTMLElement>('[data-ads-done]').forEach((d) => { d.hidden = false; });
+        form.parentElement?.querySelector<HTMLElement>('[data-ads-done]')?.focus({ preventScroll: true });
+      });
+    });
+  }
+</script>
+
+<style>
+  .ads { background: #fff; }
+  .ads-wrap {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .ads-wrap--narrow { max-width: 860px; }
+
+  /* ---- Header ---- */
+  .ads-header { background: #f3f4f6; }
+  .ads-header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding-top: 14px;
+    padding-bottom: 14px;
+  }
+  .ads-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 20px;
+    font-weight: 700;
+    color: #111827;
+  }
+  .ads-logo-img { width: 30px; height: 30px; object-fit: contain; }
+  .ads-logo-accent { color: #16a34a; }
+  .ads-header-wa {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 15px;
+    font-weight: 500;
+    color: #15803d;
+    text-decoration: none;
+  }
+  .ads-wa-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #25d366;
+  }
+
+  /* ---- Hero ---- */
+  .ads-hero {
+    position: relative;
+    overflow: hidden;
+    background: #f3f4f6;
+  }
+  .ads-hero-circle {
+    position: absolute;
+    left: -20%;
+    top: 40%;
+    width: min(900px, 150vw);
+    aspect-ratio: 1;
+    transform: translateY(-50%);
+    border-radius: 50%;
+    background: #fff;
+  }
+  .ads-hero-grid {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(320px, 1fr);
+    align-items: center;
+    gap: clamp(18px, 4vw, 56px);
+    padding-top: clamp(1rem, 3vw, 3rem);
+    padding-bottom: clamp(2rem, 4vw, 4rem);
+  }
+  .ads-hero-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    min-width: 0;
+  }
+  .ads-kicker {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #16a34a;
+  }
+  .ads-h1 {
+    font-size: clamp(2.1rem, 5.4vw, 4.25rem);
+    line-height: 1;
+    letter-spacing: -0.04em;
+    font-weight: 700;
+    color: #030712;
+    text-wrap: balance;
+  }
+  .ads-sub {
+    font-size: clamp(1.2rem, 2.2vw, 1.75rem);
+    line-height: 1.25;
+    font-weight: 500;
+    color: #16a34a;
+    text-wrap: balance;
+  }
+  .ads-hero-extra {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    margin-top: 10px;
+  }
+  .ads-bullets {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 17px;
+    color: #334155;
+  }
+  .ads-bullets li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .ads-bullets li::before {
+    content: '';
+    flex: none;
+    width: 8px;
+    height: 8px;
+    background: #22c55e;
+  }
+  .ads-hero-mascot {
+    display: flex;
+    align-items: flex-end;
+    gap: 18px;
+  }
+  .ads-hero-img {
+    display: block;
+    height: 220px;
+    width: auto;
+    object-fit: contain;
+    transform: scale(var(--s, 1));
+    transform-origin: left bottom;
+    /* reserva el espacio que gana la mascota al escalar para no pisar la lista ni el texto */
+    margin-top: calc((var(--s, 1) - 1) * 150px);
+    margin-right: calc((var(--s, 1) - 1) * 120px);
+  }
+  .ads-hero-urgency {
+    max-width: 230px;
+    margin-bottom: 30px;
+    font-size: 19px;
+    font-weight: 700;
+    color: #0f172a;
+  }
+  .ads-hero-urgency span { color: #16a34a; }
+
+  /* ---- Formulario ---- */
+  .ads-form-card {
+    background: #fff;
+    border-top: 5px solid #22c55e;
+    box-shadow: 0 30px 70px -30px rgba(15, 23, 42, 0.4);
+    padding: clamp(20px, 3vw, 34px);
+  }
+  .ads-form-card--flat {
+    box-shadow: none;
+    padding: clamp(20px, 3vw, 30px);
+  }
+  .ads-form {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .ads-hp {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+  }
+  .ads-form-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .ads-form-title {
+    font-size: 21px;
+    font-weight: 700;
+    color: #030712;
+  }
+  .ads-form-case {
+    font-size: 13.5px;
+    font-weight: 500;
+    color: #15803d;
+  }
+  .ads-input {
+    width: 100%;
+    border: 1px solid #d1d5db;
+    border-radius: 0;
+    background: #fff;
+    padding: 15px 14px;
+    font-size: 16px;
+    color: #111827;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .ads-input::placeholder { color: #94a3b8; }
+  .ads-input:focus,
+  .ads-input:focus-visible {
+    outline: none;
+    border-color: #22c55e;
+    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2);
+  }
+  .ads-textarea { resize: none; }
+  .ads-submit {
+    width: 100%;
+    padding: 20px;
+    font-size: 19px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 14px 30px -14px rgba(22, 163, 74, 0.8);
+  }
+  .ads-submit:disabled {
+    opacity: 0.75;
+    cursor: progress;
+    transform: none;
+  }
+  .ads-error {
+    font-size: 13.5px;
+    color: #dc2626;
+    text-align: center;
+  }
+  .ads-reassure {
+    margin-top: 2px;
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: #475569;
+    text-align: center;
+  }
+  .ads-team {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding-top: 12px;
+    border-top: 1px solid #f3f4f6;
+    font-size: 13.5px;
+    line-height: 1.4;
+    color: #334155;
+  }
+  .ads-team strong { color: #0f172a; }
+  .ads-team-faces { display: flex; flex: none; }
+  .ads-face {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: top;
+    border: 2px solid #fff;
+    background: #f3f4f6;
+  }
+  .ads-face + .ads-face { margin-left: -10px; }
+  .ads-form-wa {
+    font-size: 15px;
+    font-weight: 500;
+    text-align: center;
+    color: #16a34a;
+    text-decoration: none;
+  }
+  .ads-form-wa:hover { color: #15803d; }
+  .ads-privacy {
+    font-size: 12px;
+    line-height: 1.5;
+    color: #94a3b8;
+  }
+  .ads-privacy a {
+    color: #64748b;
+    text-decoration: underline;
+  }
+  .ads-done {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 24px 0;
+    text-align: center;
+    animation: glFade 0.3s ease;
+  }
+  .ads-done:focus { outline: none; }
+  .ads-done-check {
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #dcfce7;
+    color: #16a34a;
+    font-size: 26px;
+    font-weight: 700;
+  }
+  .ads-done-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #030712;
+  }
+  .ads-done-text {
+    font-size: 16px;
+    color: #475569;
+  }
+  .ads-done-inline {
+    padding: 20px 0;
+    text-align: center;
+    font-size: 19px;
+    font-weight: 700;
+    color: #030712;
+  }
+  .ads-done-inline:focus { outline: none; }
+
+  /* ---- Secciones ---- */
+  .ads-section { background: #fff; }
+  .ads-section--gray { background: #f3f4f6; }
+  .ads-section--dark { background: #030712; color: #fff; }
+  .ads-section > .ads-wrap {
+    padding-top: clamp(3rem, 6vw, 5rem);
+    padding-bottom: clamp(3rem, 6vw, 5rem);
+  }
+  .ads-h2 {
+    margin-bottom: 28px;
+    font-size: clamp(1.75rem, 3.6vw, 2.75rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: #0f172a;
+  }
+  .ads-h2 span { color: #22c55e; }
+  .ads-h2--flush { margin-bottom: 6px; }
+  .ads-h2--tight {
+    margin-bottom: 0;
+    font-size: clamp(1.75rem, 3.6vw, 2.5rem);
+    line-height: 1.15;
+  }
+  .ads-h2--light { color: #fff; margin-bottom: 36px; }
+  .ads-lead {
+    margin-bottom: 32px;
+    font-size: 17px;
+    color: #64748b;
+  }
+  .ads-btn {
+    padding: 15px 28px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .ads-quotes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+    gap: 16px;
+  }
+  .ads-quotes p {
+    padding: 20px 22px;
+    background: #f3f4f6;
+    border-radius: 4px 22px 22px 22px;
+    font-size: clamp(1.125rem, 1.8vw, 1.375rem);
+    line-height: 1.45;
+    font-weight: 500;
+    color: #0f172a;
+  }
+  .ads-inline-cta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px 28px;
+    margin-top: 28px;
+  }
+  .ads-inline-cta p {
+    font-size: 19px;
+    line-height: 1.5;
+    color: #334155;
+  }
+  .ads-inline-cta strong { color: #16a34a; }
+
+  .ads-steps,
+  .ads-why {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+    gap: 32px;
+  }
+  .ads-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    text-align: center;
+  }
+  .ads-step-visual {
+    width: 100%;
+    height: 190px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .ads-step-img {
+    display: block;
+    height: 100%;
+    width: auto;
+    object-fit: contain;
+    transform: scale(1.35);
+  }
+  .ads-step h3,
+  .ads-why h3 {
+    font-size: 21px;
+    font-weight: 700;
+    color: #0f172a;
+  }
+  .ads-step p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #64748b;
+  }
+  .ads-why > div {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .ads-why h3 { color: #fff; }
+  .ads-why p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #cbd5e1;
+  }
+
+  .ads-community,
+  .ads-trust {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+    align-items: center;
+    gap: clamp(24px, 4vw, 56px);
+  }
+  .ads-people {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+  .ads-person {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .ads-person--rule {
+    padding-top: 28px;
+    border-top: 1px solid #e5e7eb;
+  }
+  .ads-person-img {
+    flex: none;
+    width: clamp(110px, 14vw, 160px);
+    height: clamp(110px, 14vw, 160px);
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: top;
+    background: #f0fdf4;
+  }
+  .ads-person-body {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .ads-person-badge {
+    width: 56px;
+    height: 56px;
+    object-fit: contain;
+  }
+  .ads-person-badge--round { border-radius: 10px; }
+  .ads-person-big {
+    font-size: clamp(2.5rem, 5vw, 3.75rem);
+    line-height: 1;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: #030712;
+  }
+  .ads-person-big--sm {
+    font-size: clamp(1.5rem, 2.6vw, 2rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+  .ads-person-accent {
+    font-size: 15px;
+    font-weight: 500;
+    color: #16a34a;
+  }
+  .ads-person-role {
+    font-size: 14px;
+    color: #475569;
+  }
+  .ads-community-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .ads-community-copy p {
+    font-size: 17px;
+    line-height: 1.65;
+    color: #475569;
+  }
+
+  .ads-cases {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 170px), 1fr));
+    gap: 16px;
+  }
+  .ads-case {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 8px 18px;
+    border: 0;
+    background: none;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.3s;
+  }
+  .ads-case:hover { transform: translateY(-3px); }
+  .ads-case-visual {
+    width: 100%;
+    height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .ads-case-img {
+    height: 130px;
+    width: auto;
+    object-fit: contain;
+  }
+  .ads-case-label {
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.3;
+    color: #0f172a;
+  }
+  .ads-case-link {
+    font-size: 15px;
+    font-weight: 500;
+    color: #16a34a;
+  }
+
+  .ads-quote {
+    margin: 0;
+    padding: clamp(24px, 3vw, 36px);
+    background: #f0fdf4;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .ads-quote-mark {
+    font-size: 56px;
+    line-height: 0.6;
+    font-weight: 700;
+    color: #22c55e;
+  }
+  .ads-quote blockquote {
+    margin: 0;
+    font-size: clamp(1.0625rem, 1.6vw, 1.25rem);
+    line-height: 1.6;
+    color: #14532d;
+  }
+  .ads-quote figcaption {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding-top: 16px;
+    border-top: 1px solid #bbf7d0;
+  }
+  .ads-quote-logo {
+    height: 34px;
+    width: auto;
+    object-fit: contain;
+  }
+  .ads-quote-who {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-size: 14px;
+    color: #15803d;
+  }
+  .ads-quote-who strong {
+    font-size: 16px;
+    color: #0f172a;
+  }
+  .ads-trust-side {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .ads-trust-team {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .ads-trust-member {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .ads-trust-face {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: top;
+    background: #f3f4f6;
+  }
+  .ads-trust-name {
+    font-size: 16.5px;
+    font-weight: 700;
+    color: #0f172a;
+  }
+  .ads-trust-role {
+    font-size: 14px;
+    color: #16a34a;
+  }
+  .ads-trust-note {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #475569;
+  }
+
+  /* ---- FAQ ---- */
+  .ads-faqs { border-top: 1px solid #d1d5db; }
+  .ads-faq { border-bottom: 1px solid #d1d5db; }
+  .ads-faq summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 19px 0;
+    font-size: 17.5px;
+    font-weight: 700;
+    color: #0f172a;
+    cursor: pointer;
+    list-style: none;
+  }
+  .ads-faq summary::-webkit-details-marker { display: none; }
+  .ads-faq-icon::before {
+    content: '+';
+    flex: none;
+    font-size: 22px;
+    color: #16a34a;
+  }
+  .ads-faq[open] .ads-faq-icon::before { content: '−'; }
+  .ads-faq p {
+    margin-bottom: 20px;
+    font-size: 16px;
+    line-height: 1.65;
+    color: #475569;
+  }
+
+  /* ---- CTA final ---- */
+  .ads-final { background: #030712; }
+  .ads-final-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr));
+    align-items: center;
+    gap: 32px;
+    padding-top: clamp(3rem, 6vw, 5rem);
+    padding-bottom: clamp(3rem, 6vw, 5rem);
+  }
+  .ads-final-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .ads-final-copy h2 {
+    font-size: clamp(2rem, 4.4vw, 3.25rem);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    font-weight: 700;
+    color: #fff;
+  }
+  .ads-final-copy h2 span { color: #22c55e; }
+  .ads-final-copy p {
+    font-size: 17px;
+    line-height: 1.6;
+    color: #cbd5e1;
+  }
+  .ads-legal {
+    padding: 20px;
+    text-align: center;
+    font-size: 12.5px;
+    color: #64748b;
+    border-top: 1px solid #1f2937;
+  }
+  .ads-legal a {
+    color: #94a3b8;
+    text-decoration: none;
+  }
+  .ads-legal a:hover { color: #22c55e; }
+
+  /* ---- Barra fija en móvil ---- */
+  .ads-bar { display: none; }
+
+  @media (max-width: 759px) {
+    .ads-hero-grid { grid-template-columns: minmax(0, 1fr); }
+    .ads-hero-extra { display: none; }
+    .ads:not(.is-sent) { padding-bottom: 76px; }
+    .ads:not(.is-sent) .ads-bar {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 60;
+      display: flex;
+      gap: 8px;
+      padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
+      background: #fff;
+      box-shadow: 0 -10px 30px -12px rgba(15, 23, 42, 0.35);
+    }
+    .ads-bar-cta {
+      flex: 1;
+      min-height: 52px;
+      font-size: 17px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .ads-bar-wa {
+      flex: none;
+      width: 52px;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #25d366;
+      color: #fff;
+    }
+    .ads-bar-wa svg { width: 26px; height: 26px; }
+  }
+</style>
