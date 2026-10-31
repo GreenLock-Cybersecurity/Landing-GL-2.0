@@ -24,8 +24,10 @@ const { title, description } = Astro.props;
     <meta name="robots" content="noindex, nofollow" />
   </head>
   <body class="bg-white text-dark-900 font-sans antialiased">
+    <!--email_off-->
     <TrackingScripts />
     <slot />
     <CookieBanner />
+    <!--/email_off-->
   </body>
 </html>

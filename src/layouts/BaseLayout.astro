@@ -201,6 +201,9 @@ const webSiteSchema = isHome ? {
     ))}
   </head>
   <body class="bg-white text-dark-900 font-sans antialiased">
+    {/* Cloudflare Email Obfuscation sustituye los emails por un texto protegido que, con
+        ViewTransitions, no se decodifica al navegar: lo desactivamos en todo el body. */}
+    <!--email_off-->
     <TrackingScripts />
 
     <!-- Skip to content (accessibility) -->
@@ -220,5 +223,6 @@ const webSiteSchema = isHome ? {
     <Footer />
     <WhatsAppWidget />
     <CookieBanner />
+    <!--/email_off-->
   </body>
 </html>
