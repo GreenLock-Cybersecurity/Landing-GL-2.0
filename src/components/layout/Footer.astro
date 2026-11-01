@@ -29,6 +29,7 @@ const footerLinks = [
       { label: 'Aviso legal', href: '/legal/aviso-legal' },
       { label: 'Política de privacidad', href: '/legal/privacidad' },
       { label: 'Política de cookies', href: '/legal/cookies' },
+      { label: 'Configurar cookies', href: '#configurar-cookies', cookieSettings: true },
     ],
   },
 ];
@@ -81,7 +82,7 @@ const footerLinks = [
           <ul class="ft-col-list">
             {column.links.map((link) => (
               <li>
-                <a href={link.href} class="ft-link">{link.label}</a>
+                <a href={link.href} class="ft-link" data-cookie-settings={link.cookieSettings ? "" : undefined}>{link.label}</a>
               </li>
             ))}
           </ul>

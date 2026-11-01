@@ -7,7 +7,8 @@
  * has different requirements (BaseLayout supports article metadata, etc.)
  */
 
-const gtmId = import.meta.env.PUBLIC_GTM_ID || '';
+// Contenedor de GreenLock. Si PUBLIC_GTM_ID existe pero está vacía, GTM queda desactivado.
+const gtmId = import.meta.env.PUBLIC_GTM_ID ?? 'GTM-5V6GSD';
 ---
 
 <!-- Google Consent Mode v2 — defaults denied (GDPR) -->
