@@ -1,0 +1,152 @@
+---
+// Hero de las páginas de servicio, de caso y de los hubs: migas de pan, titular,
+// acción principal + WhatsApp, e ilustración sobre el círculo blanco de la home.
+import { Image } from 'astro:assets';
+import type { Pic } from '@data/services';
+import type { Crumb } from '@lib/seo';
+
+interface Props {
+  crumbs: Crumb[];
+  eyebrow: string;
+  title: string;
+  sub: string;
+  primary: { label: string; href: string };
+  wa: { label: string; href: string; ref: string };
+  img: Pic;
+}
+
+const { crumbs, eyebrow, title, sub, primary, wa, img } = Astro.props;
+---
+
+<section class="ph">
+  <div class="ph-circle" aria-hidden="true"></div>
+  <div class="ph-inner container-custom">
+    <div class="ph-copy">
+      <nav class="ph-crumbs" aria-label="Migas de pan">
+        {crumbs.map((c, i) => (
+          <>
+            {i > 0 && <span aria-hidden="true">/</span>}
+            {c.href ? <a href={c.href}>{c.label}</a> : <span class="ph-crumb-current" aria-current="page">{c.label}</span>}
+          </>
+        ))}
+      </nav>
+      <p class="ph-eyebrow">{eyebrow}</p>
+      <h1 class="ph-title">{title}</h1>
+      <p class="ph-sub">{sub}</p>
+      <div class="ph-ctas">
+        <a href={primary.href} class="gl-btn-primary ph-cta">{primary.label}</a>
+        <a href={wa.href} data-ref={wa.ref} target="_blank" rel="noopener noreferrer" class="gl-btn-ghost-green ph-cta-wa">{wa.label}</a>
+      </div>
+      <p class="ph-note">Te contactaremos en menos de 24 horas.</p>
+    </div>
+    <div class="ph-visual">
+      <Image src={img.src} alt={img.alt} height={440} densities={[1, 2]} class="ph-img" loading="eager" decoding="async" fetchpriority="high" />
+    </div>
+  </div>
+</section>
+
+<style>
+  .ph {
+    position: relative;
+    overflow: hidden;
+    background: #f3f4f6;
+  }
+  .ph-circle {
+    position: absolute;
+    right: -12%;
+    top: 50%;
+    width: min(820px, 110vw);
+    aspect-ratio: 1;
+    transform: translateY(-50%);
+    border-radius: 50%;
+    background: #fff;
+  }
+  .ph-inner {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr));
+    align-items: center;
+    gap: clamp(24px, 4vw, 56px);
+    padding-top: clamp(2.5rem, 5vw, 4.5rem);
+    padding-bottom: clamp(2.5rem, 5vw, 4.5rem);
+  }
+  .ph-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    min-width: 0;
+  }
+  .ph-crumbs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-size: 14px;
+    color: #64748b;
+  }
+  .ph-crumbs a {
+    color: #64748b;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .ph-crumbs a:hover { color: #16a34a; }
+  .ph-crumb-current {
+    color: #0f172a;
+    font-weight: 500;
+  }
+  .ph-eyebrow {
+    color: #22c55e;
+    font-size: clamp(1rem, 1.8vw, 1.25rem);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .ph-title {
+    font-size: clamp(2.25rem, 5vw, 4.25rem);
+    line-height: 1.02;
+    letter-spacing: -0.04em;
+    font-weight: 700;
+    color: #030712;
+    text-wrap: balance;
+  }
+  .ph-sub {
+    font-size: clamp(1.0625rem, 1.6vw, 1.25rem);
+    line-height: 1.65;
+    color: #64748b;
+    text-wrap: pretty;
+  }
+  .ph-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .ph-cta {
+    padding: 18px 40px;
+    font-size: 17px;
+  }
+  .ph-cta-wa {
+    padding: 16px 36px;
+    font-size: 17px;
+  }
+  .ph-note {
+    font-size: 14px;
+    color: #64748b;
+  }
+  .ph-visual {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: clamp(260px, 34vw, 440px);
+  }
+  .ph-img {
+    display: block;
+    height: clamp(260px, 34vw, 440px);
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
+    animation: glFloat 6s ease-in-out infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ph-img { animation: none; }
+  }
+</style>

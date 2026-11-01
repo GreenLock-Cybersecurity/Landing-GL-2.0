@@ -2,14 +2,30 @@
 import { Image } from 'astro:assets';
 import logoImg from '@assets/icons/Logo.webp';
 
-// Anclas a secciones de la propia landing (scroll interno)
-const navLinks = [
-  { label: 'Auditoría', href: '/#servicios' },
-  { label: 'Investigaciones', href: '/#osint' },
-  { label: 'Casos', href: '/#casos' },
+import gestionadaImg from '@assets/mascota-proteccion-gestionada.webp';
+import detectiveImg from '@assets/detective.webp';
+import { servicesIn, serviceHref } from '@data/services';
+
+// Navegación por público. Las anclas apuntan a secciones de la home.
+const auditServices = servicesIn('auditoria').map((s) => ({ label: s.name, href: serviceHref(s.slug) }));
+const mobileLinks = [
+  { label: 'Ciberseguridad', href: '/ciberseguridad', sub: [
+    { label: 'Ciberseguridad gestionada', href: '/ciberseguridad/gestionada', strong: true },
+    { label: 'Auditoría y pruebas', href: '/ciberseguridad#auditoria' },
+    { label: 'Formación', href: '/ciberseguridad/concienciacion-phishing' },
+  ] },
+  { label: 'Ciberinteligencia', href: '/ciberinteligencia', sub: [
+    { label: 'Investigación OSINT', href: '/ciberinteligencia', strong: true },
+  ] },
+  { label: 'Partners', href: '/#partners' },
   { label: 'Equipo', href: '/#equipo' },
   { label: 'Blog', href: '/#blog' },
-  { label: 'Contacto', href: '/#contacto' },
+];
+// En la home abren el formulario (data-open lo gestiona LeadModals); en el resto llevan a la home con el hash
+const contactOptions = [
+  { title: 'Quiero proteger mi empresa', text: 'Ciberseguridad gestionada, auditoría y pentesting', href: '/#solicitar-auditoria', open: 'auditoria' },
+  { title: 'Tengo un caso para investigar', text: 'Investigación digital OSINT', href: '/#contar-caso', open: 'osint' },
+  { title: 'Quiero ser partner', text: 'MSSP, consultora o despacho', href: '/#ser-partner', open: 'partner' },
 ];
 ---
 
@@ -59,9 +75,54 @@ const navLinks = [
         </span>
       </a>
 
-      <!-- Desktop Navigation (anclas a secciones) -->
+      <!-- Desktop Navigation: desplegables con :hover y :focus-within -->
       <div class="hidden lg:flex items-center gap-1">
-        {navLinks.map((link) => (
+        <div class="nav-dd">
+          <a href="/ciberseguridad" class="header-nav-link nav-dd-trigger px-3 py-1.5 text-xs font-medium rounded-md transition-colors uppercase tracking-wider text-dark-700 hover:text-dark-900" aria-haspopup="true" data-door="empresa">
+            Ciberseguridad<span class="nav-caret" aria-hidden="true">▾</span>
+          </a>
+          <div class="nav-dd-panel nav-dd-panel--wide">
+            <div class="nav-dd-box nav-dd-grid">
+              <div class="nav-dd-col">
+                <span class="nav-dd-label">Ciberseguridad gestionada</span>
+                <a href="/ciberseguridad/gestionada" class="nav-dd-feature">
+                  <Image src={gestionadaImg} alt="" height={110} densities={[1, 2]} class="nav-dd-feature-img" loading="lazy" decoding="async" />
+                  <span class="nav-dd-feature-title">Ciberseguridad gestionada</span>
+                  <span class="nav-dd-feature-text">Nos ocupamos de tu ciberseguridad a medida. Recomendado para pymes.</span>
+                </a>
+              </div>
+              <div class="nav-dd-col">
+                <span class="nav-dd-label">Auditoría y pruebas</span>
+                {auditServices.map((s) => <a href={s.href} class="nav-dd-link">{s.label}</a>)}
+              </div>
+              <div class="nav-dd-col">
+                <span class="nav-dd-label">Formación</span>
+                <a href="/ciberseguridad/concienciacion-phishing" class="nav-dd-link">
+                  Concienciación y phishing simulado
+                  <span class="nav-dd-link-text">Formamos a tu equipo y lo ponemos a prueba.</span>
+                </a>
+                <a href="/ciberseguridad" class="nav-dd-all">Ver todos los servicios →</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="nav-dd">
+          <a href="/ciberinteligencia" class="header-nav-link nav-dd-trigger px-3 py-1.5 text-xs font-medium rounded-md transition-colors uppercase tracking-wider text-dark-700 hover:text-dark-900" aria-haspopup="true" data-door="caso">
+            Ciberinteligencia<span class="nav-caret" aria-hidden="true">▾</span>
+          </a>
+          <div class="nav-dd-panel">
+            <div class="nav-dd-box nav-dd-box--narrow">
+              <a href="/ciberinteligencia" class="nav-dd-feature nav-dd-feature--row">
+                <Image src={detectiveImg} alt="" height={56} densities={[1, 2]} class="nav-dd-feature-icon" loading="lazy" decoding="async" />
+                <span class="nav-dd-feature-body">
+                  <span class="nav-dd-feature-title">Investigación OSINT</span>
+                  <span class="nav-dd-feature-text">Seguimos el rastro digital y lo convertimos en prueba.</span>
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+        {mobileLinks.slice(2).map((link) => (
           <a
             href={link.href}
             class="header-nav-link px-3 py-1.5 text-xs font-medium rounded-md transition-colors uppercase tracking-wider text-dark-700 hover:text-dark-900"
@@ -73,15 +134,29 @@ const navLinks = [
 
       <!-- CTA + Mobile Toggle -->
       <div class="flex items-center gap-3">
-        <a
-          href="/#partners"
-          class="relative hidden sm:inline-flex items-center px-6 py-2.5 rounded-none font-semibold text-sm uppercase tracking-wider transition-all header-cta-btn"
-          style="background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%); border: none; color: #fff;"
-        >
-          <!-- Anillo pulsante: lo activa LeadModals (clase is-pulsing) al aparecer la mascota de partners -->
-          <span class="header-cta-ring" aria-hidden="true"></span>
-          Hazte Partner
-        </a>
+        <div class="contact-dd hidden sm:block">
+          <button
+            type="button"
+            id="contact-toggle"
+            class="relative inline-flex items-center gap-2 px-6 py-2.5 rounded-none font-semibold text-sm uppercase tracking-wider transition-all header-cta-btn"
+            style="background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%); border: none; color: #fff;"
+            aria-haspopup="true"
+            aria-expanded="false"
+            aria-controls="contact-menu"
+          >
+            <!-- Anillo pulsante: lo activa LeadModals (clase is-pulsing) al aparecer la mascota de partners -->
+            <span class="header-cta-ring" aria-hidden="true"></span>
+            Contactar<span class="nav-caret" aria-hidden="true">▾</span>
+          </button>
+          <div id="contact-menu" class="contact-menu" role="menu" hidden>
+            {contactOptions.map((o) => (
+              <a href={o.href} data-open={o.open} role="menuitem" class="contact-item">
+                <span class="contact-item-title">{o.title}</span>
+                <span class="contact-item-text">{o.text}</span>
+              </a>
+            ))}
+          </div>
+        </div>
 
         <!-- Hamburger button -->
         <button
@@ -127,20 +202,24 @@ const navLinks = [
 
   <!-- Mobile navigation links -->
   <div class="px-4 py-4 pb-32">
-    {navLinks.map((link) => (
-      <a
-        href={link.href}
-        class="block py-4 px-2 text-base font-medium border-b border-dark-100 text-dark-900 hover:text-brand-600 transition-colors"
-      >
-        {link.label}
-      </a>
+    {mobileLinks.map((link) => (
+      <>
+        <a
+          href={link.href}
+          class="block py-4 px-2 text-base font-medium uppercase tracking-wider border-b border-dark-100 text-dark-900 hover:text-brand-600 transition-colors"
+        >
+          {link.label}
+        </a>
+        {link.sub?.map((sub) => (
+          <a
+            href={sub.href}
+            class:list={['block py-3 pl-6 pr-2 text-base border-b border-dark-100 transition-colors', sub.strong ? 'font-medium mobile-sub-strong' : 'text-dark-600 hover:text-brand-600']}
+          >
+            {sub.label}
+          </a>
+        ))}
+      </>
     ))}
-    <a
-      href="/#partners"
-      class="block py-4 px-2 text-base font-semibold border-b border-dark-100 text-brand-600 hover:text-brand-700 transition-colors"
-    >
-      Hazte Partner
-    </a>
   </div>
 
   <!-- Mobile CTA fixed bottom -->
@@ -276,6 +355,24 @@ const navLinks = [
 
     // Ensure mobile menu is closed after navigation
     closeMenu();
+
+    // Menú «Contactar»: las opciones abren el formulario en la home o llevan a ella con el hash
+    const contactToggle = document.getElementById('contact-toggle');
+    const contactMenu = document.getElementById('contact-menu');
+    const setContact = (openMenu: boolean) => {
+      if (!contactMenu || !contactToggle) return;
+      contactMenu.hidden = !openMenu;
+      contactToggle.setAttribute('aria-expanded', String(openMenu));
+    };
+    contactToggle?.addEventListener('click', () => setContact(!!contactMenu?.hidden));
+    contactMenu?.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setContact(false)));
+    (window as any).__contactAbort?.abort();
+    const contactAbort = new AbortController();
+    (window as any).__contactAbort = contactAbort;
+    document.addEventListener('click', (e) => {
+      if (!(e.target as HTMLElement).closest('.contact-dd')) setContact(false);
+    }, { signal: contactAbort.signal });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setContact(false); }, { signal: contactAbort.signal });
   }
 
   // Run on initial load
@@ -287,7 +384,7 @@ const navLinks = [
 <!-- Smooth scroll + offset para que las anclas no queden bajo el header fijo -->
 <style is:global>
   html { scroll-behavior: smooth; }
-  #servicios, #osint, #casos, #equipo, #blog, #partners, #contacto { scroll-margin-top: 100px; }
+  #servicios, #osint, #casos, #equipo, #blog, #partners, #contacto, #auditoria { scroll-margin-top: 100px; }
 </style>
 
 <style>
@@ -323,6 +420,168 @@ const navLinks = [
   }
   .announcement-close-btn:hover { color: #fff; }
   .announcement-short { display: none; }
+
+  /* ---- Desplegables del menú (escritorio) ---- */
+  .nav-dd { position: relative; }
+  .nav-dd-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .nav-caret { font-size: 9px; }
+  .nav-dd-panel {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    z-index: 80;
+    padding-top: 18px;
+    transform: translateX(-50%);
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.18s ease, visibility 0.18s;
+  }
+  .nav-dd-panel--wide { transform: translateX(-38%); }
+  .nav-dd:hover .nav-dd-panel,
+  .nav-dd:focus-within .nav-dd-panel {
+    visibility: visible;
+    opacity: 1;
+  }
+  .nav-dd-box {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 30px 60px -24px rgba(15, 23, 42, 0.3);
+  }
+  .nav-dd-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 1.3fr 1fr;
+    gap: 28px;
+    width: min(760px, calc(100vw - 48px));
+    padding: 26px 28px;
+  }
+  .nav-dd-box--narrow {
+    width: 280px;
+    padding: 14px;
+  }
+  .nav-dd-col {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+  .nav-dd-label {
+    margin-bottom: 8px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #16a34a;
+  }
+  .nav-dd-link {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin: 0 -12px;
+    padding: 10px 12px;
+    font-size: 15px;
+    font-weight: 500;
+    color: #111827;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .nav-dd-link:hover { background: #f0fdf4; }
+  .nav-dd-link-text {
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.4;
+    color: #64748b;
+  }
+  .nav-dd-all {
+    margin-top: auto;
+    padding-top: 18px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #16a34a;
+    text-decoration: none;
+  }
+  .nav-dd-all:hover { color: #15803d; }
+  .nav-dd-feature {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 14px;
+    background: #f0fdf4;
+    color: #111827;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .nav-dd-feature:hover { background: #dcfce7; }
+  .nav-dd-feature--row {
+    flex-direction: row;
+    align-items: center;
+    gap: 14px;
+    padding: 12px;
+  }
+  .nav-dd-feature-img {
+    width: 100%;
+    height: 110px;
+    object-fit: contain;
+  }
+  .nav-dd-feature-icon {
+    flex: none;
+    width: 56px;
+    height: 56px;
+    object-fit: contain;
+  }
+  .nav-dd-feature-body {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .nav-dd-feature-title {
+    font-size: 16px;
+    font-weight: 700;
+  }
+  .nav-dd-feature-text {
+    font-size: 13px;
+    line-height: 1.45;
+    color: #475569;
+  }
+
+  /* ---- Menú «Contactar» ---- */
+  .contact-dd { position: relative; }
+  .contact-menu {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 8px);
+    z-index: 80;
+    width: min(300px, calc(100vw - 32px));
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 24px 50px -20px rgba(0, 0, 0, 0.35);
+    animation: glPop 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .contact-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 14px 16px;
+    border-bottom: 1px solid #f3f4f6;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .contact-item:last-child { border-bottom: 0; }
+  .contact-item:hover { background: #f0fdf4; }
+  .contact-item-title {
+    font-size: 15.5px;
+    font-weight: 700;
+    color: #111827;
+  }
+  .contact-item-text {
+    font-size: 13.5px;
+    color: #64748b;
+  }
+
+  .mobile-sub-strong { color: #16a34a; }
 
   .header-cta-ring {
     display: none;

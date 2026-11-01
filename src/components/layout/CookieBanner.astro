@@ -12,7 +12,7 @@ import logoImg from '@assets/icons/Logo.webp';
       <div class="cb-text">
         <p class="cb-title">Utilizamos cookies</p>
         <p class="cb-desc">
-          Usamos cookies técnicas esenciales para el funcionamiento del sitio. No usamos cookies publicitarias ni de seguimiento.
+          Usamos cookies técnicas necesarias y, solo si las aceptas, cookies de Google para analítica y para medir nuestras campañas de publicidad.
           <a href="/legal/cookies" class="cb-link">Política de cookies</a>
         </p>
       </div>
@@ -25,44 +25,57 @@ import logoImg from '@assets/icons/Logo.webp';
 </div>
 
 <script>
-  const banner = document.getElementById('cookie-banner');
-  const acceptBtn = document.getElementById('cb-accept');
-  const rejectBtn = document.getElementById('cb-reject');
+  const CONSENT_KEY = 'gl_cookie_consent';
 
-  if (banner && acceptBtn && rejectBtn) {
-    // Check if user already made a choice
-    const consent = localStorage.getItem('gl_cookie_consent');
-    if (consent) {
-      banner.remove();
-    } else {
-      // Show banner with animation
-      requestAnimationFrame(() => {
-        banner.classList.add('cb--visible');
+  function updateConsent(granted: boolean) {
+    if (typeof window.gtag === 'function') {
+      const value = granted ? 'granted' : 'denied';
+      window.gtag('consent', 'update', {
+        analytics_storage: value,
+        ad_storage: value,
+        ad_user_data: value,
+        ad_personalization: value,
       });
-
-      function updateConsent(granted: boolean) {
-        if (typeof window.gtag === 'function') {
-          window.gtag('consent', 'update', {
-            'analytics_storage': granted ? 'granted' : 'denied',
-            'ad_storage': granted ? 'granted' : 'denied',
-            'ad_user_data': granted ? 'granted' : 'denied',
-            'ad_personalization': granted ? 'granted' : 'denied',
-          });
-        }
-      }
-
-      function closeBanner(choice: string) {
-        localStorage.setItem('gl_cookie_consent', choice);
-        updateConsent(choice === 'accepted');
-        banner.classList.remove('cb--visible');
-        banner.classList.add('cb--hiding');
-        setTimeout(() => banner.remove(), 400);
-      }
-
-      acceptBtn.addEventListener('click', () => closeBanner('accepted'));
-      rejectBtn.addEventListener('click', () => closeBanner('rejected'));
     }
   }
+
+  // Se ejecuta en la carga inicial y tras cada navegación con ViewTransitions
+  // (el banner llega de nuevo en el body de cada página).
+  function initCookieBanner() {
+    const banner = document.getElementById('cookie-banner');
+    const acceptBtn = document.getElementById('cb-accept');
+    const rejectBtn = document.getElementById('cb-reject');
+    if (!banner || !acceptBtn || !rejectBtn) return;
+
+    let consent: string | null = null;
+    try { consent = localStorage.getItem(CONSENT_KEY); } catch { /* almacenamiento bloqueado */ }
+    if (consent) { banner.remove(); return; }
+
+    requestAnimationFrame(() => banner.classList.add('cb--visible'));
+
+    const closeBanner = (choice: 'accepted' | 'rejected') => {
+      try { localStorage.setItem(CONSENT_KEY, choice); } catch { /* almacenamiento bloqueado */ }
+      updateConsent(choice === 'accepted');
+      banner.classList.remove('cb--visible');
+      banner.classList.add('cb--hiding');
+      setTimeout(() => banner.remove(), 400);
+    };
+    acceptBtn.addEventListener('click', () => closeBanner('accepted'));
+    rejectBtn.addEventListener('click', () => closeBanner('rejected'));
+  }
+
+  initCookieBanner();
+  document.addEventListener('astro:after-swap', initCookieBanner);
+
+  // "Configurar cookies" (footer): retira el consentimiento y vuelve a mostrar el banner.
+  document.addEventListener('click', (e) => {
+    const link = (e.target as HTMLElement).closest('[data-cookie-settings]');
+    if (!link) return;
+    e.preventDefault();
+    try { localStorage.removeItem(CONSENT_KEY); } catch { /* almacenamiento bloqueado */ }
+    updateConsent(false);
+    window.location.reload();
+  });
 </script>
 
 <style>

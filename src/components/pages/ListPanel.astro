@@ -1,0 +1,88 @@
+---
+// Titular con una lista de filas separadas por líneas («Qué recibes», «¿Te suena?»)
+// y, opcionalmente, una ilustración en un panel al lado. Sin `items`, pinta el slot.
+import { Image } from 'astro:assets';
+import type { Pic } from '@data/services';
+import SectionHeading from './SectionHeading.astro';
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  lead?: string;
+  items?: string[];
+  img?: Pic;
+  tone?: 'white' | 'gray';
+}
+const { eyebrow, title, lead, items, img, tone = 'white' } = Astro.props;
+---
+
+<section class:list={['lp', `lp--${tone}`]}>
+  <div class="container-custom lp-inner">
+    <div class:list={['lp-grid', !img && 'lp-grid--single']}>
+      <div class="lp-copy">
+        <SectionHeading eyebrow={eyebrow} title={title} lead={lead} width={820} />
+        {items && (
+          <ul class="lp-list">
+            {items.map((item) => <li>{item}</li>)}
+          </ul>
+        )}
+        <slot />
+      </div>
+      {img && (
+        <div class="lp-panel">
+          <Image src={img.src} alt={img.alt} height={300} densities={[1, 2]} class="lp-img" loading="lazy" decoding="async" style={img.scale ? `transform: scale(${img.scale});` : undefined} />
+        </div>
+      )}
+    </div>
+  </div>
+</section>
+
+<style>
+  .lp--white { background: #fff; }
+  .lp--gray { background: #f3f4f6; }
+  .lp-inner {
+    padding-top: clamp(4rem, 7vw, 6rem);
+    padding-bottom: clamp(4rem, 7vw, 6rem);
+  }
+  .lp-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr));
+    align-items: center;
+    gap: clamp(28px, 5vw, 72px);
+  }
+  .lp-grid--single {
+    grid-template-columns: minmax(0, 1fr);
+    max-width: 820px;
+  }
+  .lp-copy { min-width: 0; }
+  .lp-list {
+    list-style: none;
+    margin: 8px 0 0;
+    padding: 0;
+    border-top: 1px solid #e5e7eb;
+  }
+  .lp-list li {
+    padding: 16px 0;
+    border-bottom: 1px solid #e5e7eb;
+    font-size: 18px;
+    line-height: 1.5;
+    color: #334155;
+  }
+  .lp-panel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 320px;
+    padding: clamp(20px, 3vw, 36px);
+    overflow: hidden;
+  }
+  .lp--gray .lp-panel { background: #fff; }
+  .lp--white .lp-panel { background: #f0fdf4; }
+  .lp-img {
+    display: block;
+    height: 300px;
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
+  }
+</style>

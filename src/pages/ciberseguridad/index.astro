@@ -1,0 +1,89 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import PageHero from '@components/pages/PageHero.astro';
+import SectionHeading from '@components/pages/SectionHeading.astro';
+import FeaturedService from '@components/pages/FeaturedService.astro';
+import CardGrid from '@components/pages/CardGrid.astro';
+import CtaDark from '@components/pages/CtaDark.astro';
+import { servicesIn, serviceHref, type Service } from '@data/services';
+import { breadcrumbSchema } from '@lib/seo';
+import empresaImg from '@assets/mascota-empresa.webp';
+
+const crumbs = [{ label: 'Inicio', href: '/' }, { label: 'Ciberseguridad' }];
+const toCard = (s: Service) => ({ href: serviceHref(s.slug), title: s.name, text: s.card.text, img: s.card.img });
+const wa = 'https://wa.me/34603358517?text=Hola%2C%20me%20interesa%3A%20servicios%20de%20ciberseguridad';
+---
+
+<BaseLayout
+  title="Servicios de ciberseguridad para empresas: auditoría, pentest y Red Team | GreenLock"
+  exactTitle
+  description="Servicios de ciberseguridad para empresas en España: auditoría perimetral, pentest web, de APIs, móvil y WordPress, Red Team, ciberseguridad ofensiva continua, phishing simulado y ciberseguridad gestionada."
+  schemas={[breadcrumbSchema(crumbs, '/ciberseguridad')]}
+>
+  <PageHero
+    crumbs={crumbs}
+    eyebrow="Para empresas"
+    title="Servicios de ciberseguridad para empresas"
+    sub="Encontramos las vulnerabilidades que los ciberdelincuentes explotarían y te asesoramos para corregirlas antes de que sea demasiado tarde."
+    primary={{ label: 'Solicitar auditoría', href: '/#solicitar-auditoria' }}
+    wa={{ label: 'Consultar por WhatsApp', href: wa, ref: 'WEB-SERVICIOS' }}
+    img={{ src: empresaImg, alt: 'Mascota de GreenLock protegiendo una oficina' }}
+  />
+
+  <section class="hub">
+    <div class="container-custom hub-inner">
+      <SectionHeading
+        eyebrow="Nuestros servicios"
+        title="Elige por dónde empezar"
+        lead="Si no sabes cuál necesitas, cuéntanos tu caso y te recomendamos el más adecuado."
+        class="hub-head"
+      />
+      <FeaturedService />
+
+      <div id="auditoria" class="hub-group">
+        <h3 class="hub-group-title">Auditoría y pruebas de seguridad</h3>
+        <p class="hub-group-text">Buscamos tus puntos débiles antes que los atacantes.</p>
+      </div>
+      <CardGrid cards={servicesIn('auditoria').map(toCard)} />
+
+      <div class="hub-group">
+        <h3 class="hub-group-title">Formación</h3>
+        <p class="hub-group-text">Tu equipo, la primera línea de defensa.</p>
+      </div>
+      <CardGrid cards={servicesIn('formacion').map(toCard)} />
+    </div>
+  </section>
+
+  <CtaDark
+    eyebrow="Da el primer paso"
+    title="¿Te preocupa la seguridad pero no sabes por dónde empezar?"
+    text="Cuéntanos tu caso y te recomendamos qué revisar primero. Te contactaremos en menos de 24 horas."
+    primary={{ label: 'Solicitar asesoramiento', href: '/#solicitar-auditoria-6' }}
+    wa={{ href: wa, ref: 'WEB-SERVICIOS-CTA' }}
+  />
+</BaseLayout>
+
+<style>
+  .hub { background: #fff; }
+  .hub-inner {
+    padding-top: clamp(4rem, 7vw, 6rem);
+    padding-bottom: clamp(4rem, 7vw, 6rem);
+  }
+  .hub-inner :global(.hub-head) { margin-bottom: 48px; }
+  .hub-group {
+    max-width: 760px;
+    margin: 56px 0 28px;
+    scroll-margin-top: 110px;
+  }
+  .hub-group-title {
+    margin-bottom: 8px;
+    font-size: clamp(1.5rem, 2.6vw, 2rem);
+    font-weight: 700;
+    color: #0f172a;
+  }
+  .hub-group-text {
+    font-size: 17px;
+    line-height: 1.6;
+    color: #64748b;
+  }
+</style>

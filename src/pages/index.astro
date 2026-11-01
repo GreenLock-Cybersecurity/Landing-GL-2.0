@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
 import Hero from '@components/home/Hero.astro';
+import HomeDoors from '@components/home/HomeDoors.astro';
 import ServicesGrid from '@components/home/ServicesGrid.astro';
 import CaseStudyHighlight from '@components/home/CaseStudyHighlight.astro';
 import OsintService from '@components/home/OsintService.astro';
@@ -24,55 +25,18 @@ const serviceSchema = {
     '@type': 'OfferCatalog',
     name: 'Servicios de Ciberseguridad',
     itemListElement: [
-      {
-        '@type': 'Offer',
-        itemOffered: {
-          '@type': 'Service',
-          name: 'Auditoría Perimetral',
-          description: 'Análisis exhaustivo de tu superficie de ataque externa. Identificamos vulnerabilidades antes que los atacantes.',
-        },
-      },
-      {
-        '@type': 'Offer',
-        itemOffered: {
-          '@type': 'Service',
-          name: 'Red Team',
-          description: 'Simulaciones de ataque realistas que ponen a prueba tus defensas, procesos y equipo de respuesta.',
-        },
-      },
-      {
-        '@type': 'Offer',
-        itemOffered: {
-          '@type': 'Service',
-          name: 'Pentesting',
-          description: 'Explotación controlada de aplicaciones web, APIs e infraestructura interna, con hallazgos priorizados y reproducibles.',
-        },
-      },
-      {
-        '@type': 'Offer',
-        itemOffered: {
-          '@type': 'Service',
-          name: 'Ciberseguridad Continua',
-          description: 'Revisión y auditoría continua de los sistemas del cliente para mantenerlos protegidos de forma permanente.',
-        },
-      },
-      {
-        '@type': 'Offer',
-        itemOffered: {
-          '@type': 'Service',
-          name: 'Investigación OSINT e informe pericial',
-          description: 'Identificamos quién está detrás de estafas, marcas falsas y cuentas anónimas, con un informe pericial listo para denunciar.',
-        },
-      },
-      {
-        '@type': 'Offer',
-        itemOffered: {
-          '@type': 'Service',
-          name: 'Informe gratuito de exposición digital',
-          description: 'Análisis gratuito de las principales exposiciones de tu negocio en internet.',
-        },
-      },
-    ],
+      ['Ciberseguridad gestionada', 'Medidas de protección a medida, protección de equipos y webs y vigilancia constante para pymes.'],
+      ['Auditoría de ciberseguridad perimetral', 'Análisis exhaustivo de tu superficie de ataque externa. Identificamos cada punto de entrada antes que los atacantes.'],
+      ['Pentesting de aplicaciones web e infraestructura', 'Explotación controlada de aplicaciones web, APIs, apps móviles e infraestructura, con hallazgos priorizados y reproducibles.'],
+      ['Red Team', 'Simulación de ataque real de principio a fin que pone a prueba tus defensas, procesos y equipo de respuesta.'],
+      ['Ciberseguridad ofensiva continua', 'Atacamos tus sistemas de forma periódica, como lo haría un atacante real, para encontrar nuevas brechas antes que nadie.'],
+      ['Concienciación y phishing simulado', 'Formación y campañas de phishing simulado para reducir el riesgo humano.'],
+      ['Investigación OSINT e informe pericial', 'Seguimos el rastro digital de estafas, suplantaciones y cuentas anónimas y lo convertimos en un informe pericial.'],
+      ['Informe gratuito de exposición digital', 'Análisis gratuito de las principales exposiciones de tu negocio en internet.'],
+    ].map(([name, description]) => ({
+      '@type': 'Offer',
+      itemOffered: { '@type': 'Service', name, description },
+    })),
   },
 };
 ---
@@ -83,6 +47,7 @@ const serviceSchema = {
   schemas={[serviceSchema]}
 >
   <Hero />
+  <HomeDoors />
   <CaseStudyHighlight />
   <ServicesGrid />
   <OsintService />

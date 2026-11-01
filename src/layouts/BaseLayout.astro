@@ -21,6 +21,8 @@ interface Props {
   articleSection?: string;
   /** Additional JSON-LD schemas to inject (array of objects) */
   schemas?: Record<string, unknown>[];
+  /** Use `title` as-is, without the " | GreenLock Cybersecurity" suffix */
+  exactTitle?: boolean;
 }
 
 const {
@@ -35,10 +37,11 @@ const {
   author,
   articleSection,
   schemas = [],
+  exactTitle = false,
 } = Astro.props;
 
 const isHome = Astro.url.pathname === '/';
-const fullTitle = isHome ? title : `${title} | GreenLock Cybersecurity`;
+const fullTitle = isHome || exactTitle ? title : `${title} | GreenLock Cybersecurity`;
 const resolvedCanonical = canonicalURL || new URL(Astro.url.pathname, Astro.site).href;
 const resolvedOgImage = new URL(ogImage, Astro.site).href;
 
@@ -198,6 +201,9 @@ const webSiteSchema = isHome ? {
     ))}
   </head>
   <body class="bg-white text-dark-900 font-sans antialiased">
+    {/* Cloudflare Email Obfuscation sustituye los emails por un texto protegido que, con
+        ViewTransitions, no se decodifica al navegar: lo desactivamos en todo el body. */}
+    <!--email_off-->
     <TrackingScripts />
 
     <!-- Skip to content (accessibility) -->
@@ -217,5 +223,6 @@ const webSiteSchema = isHome ? {
     <Footer />
     <WhatsAppWidget />
     <CookieBanner />
+    <!--/email_off-->
   </body>
 </html>

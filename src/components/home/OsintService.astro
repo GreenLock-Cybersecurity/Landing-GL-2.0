@@ -1,125 +1,81 @@
 ---
 import { Image } from 'astro:assets';
-import estafadorImg from '@assets/estafador.png';
-import detectiveImg from '@assets/detective.png';
-import marcaImg from '@assets/marca.png';
+import estafadorImg from '@assets/estafador.webp';
+import marcaImg from '@assets/marca.webp';
+import detectiveImg from '@assets/detective.webp';
+import complianceImg from '@assets/partner-compliance.webp';
 
 // Legal: GreenLock no tiene licencia de detective. Esa palabra no puede
 // aparecer en ningún texto visible ni en los alt (el nombre de archivo sí).
+// Cada tarjeta abre el formulario de investigación con su caso ya marcado
+// (data-opt = índice en LEAD_OPTIONS.osint).
 const items = [
-  {
-    title: 'Estafas y fraude online',
-    desc: 'Tiendas falsas, phishing y suplantación de identidad.',
-    icon: 'M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z',
-    img: estafadorImg,
-  },
-  {
-    title: 'Denuncias de marca',
-    desc: 'Suplantación de marca, falsificación y competencia desleal.',
-    icon: 'M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z',
-    img: marcaImg,
-  },
-  {
-    title: 'Perfilado y reputación',
-    desc: 'Atribución de cuentas anónimas y reputación online de una persona.',
-    icon: 'M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z',
-    img: detectiveImg,
-  },
-];
-
-// Cada situación abre el modal «osint» con su caso ya marcado (data-opt =
-// índice en LEAD_OPTIONS.osint: Estafa, Suplantación, Perfilado, Otro).
-const situations = [
-  'Me han estafado comprando o invirtiendo online',
-  'Alguien usa mi marca, mi web o mi nombre',
-  'Me acosan o difaman desde una cuenta anónima',
-  'Necesito pruebas para denunciar o ir a juicio',
+  { title: 'Estafas y fraude online', desc: 'Tiendas falsas, inversiones fraudulentas o falsos bancos.', img: estafadorImg },
+  { title: 'Suplantación de marca o identidad', desc: 'Alguien usa tu marca, tu web o tu nombre.', img: marcaImg },
+  { title: 'Acoso desde cuentas anónimas', desc: 'Te insultan, amenazan o difaman sin dar la cara.', img: detectiveImg },
+  { title: 'Pruebas para un juicio', desc: 'Evidencia digital documentada para denunciar o ir a juicio.', img: complianceImg, scale: 1.5 },
 ];
 
 const ctaHref =
   'https://wa.me/34603358517?text=Hola%2C%20quiero%20contaros%20mi%20caso%20(investigaci%C3%B3n)';
 ---
 
-<section id="osint" class="bg-[#f3f4f6]">
-  <div class="container-custom" style="padding-top: 6rem; padding-bottom: 6rem;">
+<section id="osint" class="os">
+  <div class="container-custom section-padding">
 
-    <!-- Title + one-line intro -->
-    <div class="mb-16 max-w-3xl mx-auto text-center">
-      <p class="uppercase" style="color: #22c55e; font-size: clamp(1.25rem, 2.4vw, 1.625rem); font-weight: 700; letter-spacing: 0.04em; margin-bottom: 6px;">
-        Investigación digital
+    <div class="mb-16 max-w-3xl">
+      <p class="uppercase mb-4" style="color: #22c55e; font-size: clamp(1.25rem, 2.4vw, 1.625rem); font-weight: 700; letter-spacing: 0.04em;">
+        Ciberinteligencia · Investigación OSINT
       </p>
-      <p class="os-kicker font-mono">Ciberinteligencia · Investigación OSINT</p>
       <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-dark-900 mb-5 leading-tight">
-        Detrás de cada estafa hay <span style="color: #22c55e;">una persona.</span> La encontramos.
+        Detrás de cada caso hay <span style="color: #22c55e;">un rastro.</span><br/>
+        Lo seguimos y lo convertimos en <span style="color: #22c55e;">prueba.</span>
       </h2>
       <p class="text-lg text-dark-500 leading-relaxed">
-        Identificamos quién está detrás de estafas, marcas falsas y cuentas anónimas, y te entregamos un informe pericial listo para denunciar.
+        Investigamos con OSINT (inteligencia de fuentes abiertas) estafas, suplantaciones, cuentas anónimas o cualquier caso que necesite pruebas digitales, y te entregamos un informe pericial listo para tu abogado o tu denuncia.
       </p>
     </div>
 
-    <!-- 3 simple items -->
     <div class="os-grid">
-      {items.map((item) => (
-        <div class="os-card">
-          {item.img ? (
-            <div class="os-logo">
-              <Image src={item.img} alt={item.title} loading="lazy" decoding="async" />
-            </div>
-          ) : (
-            <div class="os-icon">
-              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" d={item.icon} />
-              </svg>
-            </div>
-          )}
-          <h3 class="os-title">{item.title}</h3>
-          <p class="os-desc">{item.desc}</p>
-        </div>
+      {items.map((item, i) => (
+        <button type="button" class="os-card" data-open="osint" data-opt={i}>
+          <span class="os-visual">
+            <Image src={item.img} alt={item.title} width={180} densities={[1, 2]} class="os-img" loading="lazy" decoding="async" style={item.scale ? `transform: scale(${item.scale});` : undefined} />
+          </span>
+          <span class="os-body">
+            <span class="os-title">{item.title}</span>
+            <span class="os-desc">{item.desc}</span>
+            <span class="os-link">Es mi caso →</span>
+          </span>
+        </button>
       ))}
     </div>
 
-    <!-- ¿Te ha pasado algo de esto? -->
-    <div class="os-block">
-      <h3 class="os-block-title">¿Te ha pasado algo de esto?</h3>
-      <div class="os-situations">
-        {situations.map((text, i) => (
-          <button type="button" class="os-situation" data-open="osint" data-opt={i}>
-            <span>{text}</span>
-            <span class="os-situation-arrow" aria-hidden="true">→</span>
-          </button>
-        ))}
-      </div>
-    </div>
-
-    <!-- Cierre -->
     <div class="os-foot">
-      <p class="os-foot-title">Cuanto antes actúes, más rastro queda.</p>
       <div class="os-foot-ctas">
         <button type="button" class="gl-btn-primary os-cta" data-open="osint" data-opt="0">
-          Cuéntanos tu caso
+          Contar mi caso
         </button>
-        <a href={ctaHref} data-ref="WEB-OSINT" target="_blank" rel="noopener noreferrer" class="os-cta-wa">
+        <a href={ctaHref} data-ref="WEB-OSINT" target="_blank" rel="noopener noreferrer" class="gl-btn-ghost-green os-cta">
           Cuéntanoslo por WhatsApp
         </a>
       </div>
       <p class="os-foot-note">Confidencial · Te contactaremos en menos de 24 horas.</p>
+      <a href="/ciberinteligencia" class="os-foot-link">Cómo funciona la investigación digital →</a>
     </div>
 
   </div>
 </section>
 
 <style>
-  .os-kicker {
-    margin-bottom: 18px;
-    font-size: 13px;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: #64748b;
+  .os {
+    background: #fff;
+    border-top: 1px solid #eef0f2;
   }
 
   .os-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
     gap: 24px;
   }
 
@@ -127,114 +83,61 @@ const ctaHref =
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 0;
+    border: 0;
+    background: none;
     text-align: center;
-    padding: 32px 24px;
-    background: #fff;
-    border: 1px solid #e5e7eb;
-    border-radius: 0;
-    transition: border-color 0.25s ease;
+    color: #111827;
+    cursor: pointer;
+    transition: transform 0.3s;
   }
-  .os-card:hover { border-color: #22c55e; }
+  .os-card:hover { transform: translateY(-3px); }
 
-  .os-icon {
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    background: #f0fdf4;
-    color: #16a34a;
+  .os-visual {
+    width: 100%;
+    height: 220px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 18px;
+    padding: 24px 24px 16px;
   }
-  .os-icon svg { width: 28px; height: 28px; }
-
-  .os-logo {
-    height: 135px;
-    margin-bottom: 18px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .os-logo img {
-    max-height: 135px;
-    width: auto;
+  .os-img {
+    width: 180px;
+    height: 180px;
     object-fit: contain;
   }
 
-  .os-title {
-    font-size: 18px;
-    font-weight: 700;
-    color: #111827;
-    margin-bottom: 8px;
-  }
-  .os-desc {
-    font-size: 14.5px;
-    line-height: 1.6;
-    color: #6b7280;
-  }
-
-  /* ---- Bloque «¿Te ha pasado algo de esto?» ---- */
-  .os-block {
-    margin-top: 64px;
+  .os-body {
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    padding: 0 16px 24px;
   }
-
-  .os-block-title {
-    margin: 0;
-    text-align: center;
-    font-size: clamp(1.375rem, 2.4vw, 1.875rem);
+  .os-title {
+    margin-bottom: 10px;
+    font-size: 24px;
     font-weight: 700;
-    color: #0f172a;
-  }
-
-  .os-situations {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
-    gap: 12px;
-  }
-  .os-situation {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 14px;
-    padding: 18px 20px;
-    background: #fff;
-    border: 1px solid #e5e7eb;
-    font-size: 16.5px;
-    font-weight: 500;
-    line-height: 1.4;
+    line-height: 1.3;
     color: #111827;
-    text-align: left;
-    cursor: pointer;
-    transition: border-color 0.2s, background 0.2s;
   }
-  .os-situation:hover {
-    border-color: #22c55e;
-    background: #f0fdf4;
+  .os-desc {
+    margin-bottom: 12px;
+    font-size: 16.5px;
+    line-height: 1.65;
+    color: #6b7280;
   }
-  .os-situation-arrow {
-    flex: none;
+  .os-link {
+    font-size: 16px;
+    font-weight: 500;
     color: #16a34a;
-    font-size: 18px;
   }
 
-  /* ---- Cierre ---- */
   .os-foot {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 14px;
-    margin-top: 48px;
+    margin-top: 40px;
     text-align: center;
-  }
-  .os-foot-title {
-    margin: 0;
-    font-size: 18px;
-    font-weight: 700;
-    color: #0f172a;
   }
   .os-foot-ctas {
     display: flex;
@@ -247,35 +150,20 @@ const ctaHref =
     font-size: 17px;
     cursor: pointer;
   }
-  .os-cta-wa {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    padding: 16px 36px;
-    border: 2px solid #16a34a;
-    color: #15803d;
-    font-size: 17px;
-    font-weight: 600;
-    text-decoration: none;
-    transition: background 0.2s, color 0.2s;
-  }
-  .os-cta-wa:hover {
-    background: #16a34a;
-    color: #fff;
-  }
+  .os-cta.gl-btn-ghost-green { padding: 16px 36px; }
   .os-foot-note {
-    margin: 0;
     font-size: 14px;
     color: #64748b;
   }
-
-  @media (max-width: 1023px) {
-    .os-grid { grid-template-columns: 1fr; gap: 16px; }
+  .os-foot-link {
+    font-size: 16px;
+    font-weight: 500;
+    color: #16a34a;
+    text-decoration: none;
   }
+  .os-foot-link:hover { color: #15803d; }
 
   @media (max-width: 639px) {
-    .os-logo { height: 105px; }
-    .os-logo img { max-height: 105px; }
+    .os-title { font-size: 21px; }
   }
 </style>

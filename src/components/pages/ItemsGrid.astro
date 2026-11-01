@@ -1,0 +1,57 @@
+---
+// Bloque de cuatro puntos con título y texto («Qué revisamos», «Qué hacer ahora»…).
+import SectionHeading from './SectionHeading.astro';
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  items: { title: string; text: string }[];
+  tone?: 'white' | 'gray';
+}
+const { eyebrow, title, items, tone = 'white' } = Astro.props;
+---
+
+<section class:list={['ig', `ig--${tone}`]}>
+  <div class="container-custom ig-inner">
+    <SectionHeading eyebrow={eyebrow} title={title} class="ig-head" />
+    <div class="ig-grid">
+      {items.map((item) => (
+        <div class="ig-item">
+          <h3 class="ig-title">{item.title}</h3>
+          <p class="ig-text">{item.text}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .ig--white { background: #fff; }
+  .ig--gray { background: #f3f4f6; }
+  .ig-inner {
+    padding-top: clamp(4rem, 7vw, 6rem);
+    padding-bottom: clamp(4rem, 7vw, 6rem);
+  }
+  .ig-inner :global(.ig-head) { margin-bottom: 48px; }
+  .ig-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+    gap: 40px;
+  }
+  .ig-item {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .ig-title {
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.3;
+    color: #111827;
+  }
+  .ig-text {
+    font-size: 16.5px;
+    line-height: 1.65;
+    color: #6b7280;
+  }
+</style>
