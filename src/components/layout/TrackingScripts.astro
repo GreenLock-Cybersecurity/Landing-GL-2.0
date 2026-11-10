@@ -17,6 +17,9 @@ const gtmId = import.meta.env.PUBLIC_GTM_ID ?? 'GTM-KQQ5L8S3';
 
 <!-- WhatsApp click tracking → dataLayer -->
 <script is:inline>
+  // Una sola vez aunque ViewTransitions vuelva a ejecutar el script al navegar
+  if (!window.__glTrack) {
+  window.__glTrack = true;
   document.addEventListener('click', function(e) {
     var link = e.target.closest('a[href*="wa.me"]');
     if (!link) return;
@@ -31,4 +34,20 @@ const gtmId = import.meta.env.PUBLIC_GTM_ID ?? 'GTM-KQQ5L8S3';
       page_location: window.location.pathname
     });
   });
+
+  // Ciberinteligencia: clics en botones de llamada a la acción (data-cta="hero|secundario|sticky")
+  // y en el teléfono. `servicio` = slug de la página (data-servicio en su contenedor).
+  document.addEventListener('click', function(e) {
+    var el = e.target.closest('[data-cta], a[href^="tel:"]');
+    if (!el) return;
+    var holder = el.closest('[data-servicio]') || document.querySelector('[data-servicio]');
+    var servicio = holder ? holder.getAttribute('data-servicio') : '';
+    window.dataLayer = window.dataLayer || [];
+    if (el.hasAttribute('data-cta')) {
+      window.dataLayer.push({ event: 'cta_click', servicio: servicio, posicion: el.getAttribute('data-cta') });
+    } else {
+      window.dataLayer.push({ event: 'tel_click', servicio: servicio, page_location: window.location.pathname });
+    }
+  });
+  }
 </script>

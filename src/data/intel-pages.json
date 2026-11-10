@@ -1,0 +1,2584 @@
+{
+ "ciberinteligencia": {
+  "name": "ciberinteligencia",
+  "path": "/ciberinteligencia",
+  "kind": "hub",
+  "seo": {
+   "title": "Ciberinteligencia: due diligence, rastreo digital y evidencias | GreenLock",
+   "description": "Inteligencia digital y evidencias para decidir y para juicio: due diligence de empresas, rastreo de huella digital y evidencia digital para procedimientos judiciales. Alcance y plazo cerrados.",
+   "jsonld": [
+    {
+     "@context": "https://schema.org",
+     "@type": "BreadcrumbList",
+     "itemListElement": [
+      {
+       "@type": "ListItem",
+       "position": 1,
+       "name": "Inicio",
+       "item": "https://greenlock.tech/"
+      },
+      {
+       "@type": "ListItem",
+       "position": 2,
+       "name": "Ciberinteligencia",
+       "item": "https://greenlock.tech/ciberinteligencia/"
+      }
+     ]
+    },
+    {
+     "@context": "https://schema.org",
+     "@type": "FAQPage",
+     "mainEntity": [
+      {
+       "@type": "Question",
+       "name": "¿Qué pasa si no encontráis lo que busco?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Se cobra por el alcance, no por el resultado. Siempre le entregamos lo encontrado y lo que no se ha podido determinar."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "¿Es legal?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sí. Trabajamos con fuentes públicas y legítimas, sobre empresas, infraestructuras e identificadores digitales. No investigamos la vida privada de personas."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "¿Cuánto tarda?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Depende del servicio: 7 días hábiles en due diligence y rastreo, y 3 días hábiles para el estudio de viabilidad de una evidencia. El plazo y el presupuesto se cierran antes de empezar."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "¿Sirve como prueba en un juicio?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "El rastreo orienta la denuncia y las diligencias. Para aportar la prueba al procedimiento existe el servicio de evidencia digital para juicio."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "¿Es confidencial?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sí. Acuerdo de confidencialidad por defecto, envío cifrado del informe y borrado de los datos de trabajo al cerrar el caso."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  "hero": {
+   "crumbs": [
+    {
+     "label": "Inicio",
+     "href": "/"
+    },
+    {
+     "label": "Ciberinteligencia"
+    }
+   ],
+   "eyebrow": "Ciberinteligencia",
+   "h1": "Inteligencia digital y evidencias para decidir y para juicio",
+   "sub": "Antes de firmar, invertir o reclamar, sepa con quién trata. Y si ya hay conflicto, le entregamos la prueba.",
+   "cta": {
+    "label": "Solicitar presupuesto",
+    "href": "#encargo"
+   },
+   "img": "detective"
+  },
+  "form": {
+   "eyebrow": "Encargo",
+   "title": "Cuéntenos qué necesita",
+   "intro": "Cuéntenos el caso. Le llamamos en menos de 24 h hábiles y le enviamos un presupuesto cerrado.",
+   "cta": "Solicitar presupuesto",
+   "linea": "Due diligence de empresa",
+   "colab": false,
+   "slug": "ciberinteligencia",
+   "identLabel": "Sociedad o identificador",
+   "identPlaceholder": "Nombre o CIF, perfil, URL, correo, teléfono…"
+  },
+  "sections": [
+   {
+    "h2": "Tres servicios con alcance y plazo cerrados",
+    "eyebrow": "Servicios",
+    "kind": "grid",
+    "intro": [],
+    "cards": [
+     {
+      "title": "Due diligence de empresa",
+      "text": "Para despachos, asesorías y empresas que van a firmar, invertir, conceder crédito o reclamar.",
+      "href": "/ciberinteligencia/due-diligence-empresas",
+      "linkLabel": "Ver servicio →",
+      "img": "detective"
+     },
+     {
+      "title": "Rastreo de huella digital",
+      "text": "Para quien sufre un perfil falso, una web fraudulenta, una suplantación o una estafa online.",
+      "href": "/ciberinteligencia/rastreo-huella-digital",
+      "linkLabel": "Ver servicio →",
+      "img": "estafador"
+     },
+     {
+      "title": "Evidencia digital para juicio",
+      "text": "Para abogados con un procedimiento abierto o a punto de abrirse.",
+      "href": "/ciberinteligencia/evidencia-digital-juicio",
+      "linkLabel": "Ver servicio →",
+      "img": "ci-abogado"
+     }
+    ],
+    "notes": [],
+    "variant": "links",
+    "tone": "white"
+   },
+   {
+    "h2": "Equipo técnico, fuentes documentadas y alcance cerrado",
+    "eyebrow": "Por qué GreenLock",
+    "kind": "grid",
+    "intro": [],
+    "cards": [
+     {
+      "title": "Equipo técnico",
+      "items": [
+       "Detrás de cada investigación hay un equipo de ciberseguridad ofensiva.",
+       "Sabemos cómo se monta una web falsa o una red de perfiles porque auditamos ese tipo de infraestructuras."
+      ]
+     },
+     {
+      "title": "Fuente y fecha en cada dato",
+      "items": [
+       "Cada dato del informe lleva su fuente, su fecha y su nivel de fiabilidad.",
+       "Lo que no se ha podido confirmar se indica como tal."
+      ]
+     },
+     {
+      "title": "Alcance cerrado",
+      "items": [
+       "Plazo y presupuesto cerrados antes de empezar.",
+       "Las ampliaciones se presupuestan siempre por escrito."
+      ]
+     }
+    ],
+    "notes": [],
+    "variant": "checks",
+    "tone": "gray"
+   },
+   {
+    "h2": "Información pública, analizada con método",
+    "eyebrow": "Metodología",
+    "kind": "report",
+    "mock": {
+     "kind": "INFORME DE EJEMPLO",
+     "title": "Informe de due diligence",
+     "subtitle": "Sociedad Ejemplo, S.L. (ficticia)",
+     "risk": true
+    },
+    "items": [],
+    "intro": [
+     "Trabajamos con inteligencia de fuentes abiertas (OSINT): registros oficiales, boletines, prensa, webs, redes sociales y datos técnicos de dominios y servidores. Seguimos el ciclo de inteligencia: planificamos con usted la finalidad, recogemos y preservamos la información, la analizamos y le entregamos conclusiones con su grado de fiabilidad."
+    ],
+    "tone": "white"
+   },
+   {
+    "h2": "Encargo, pago, investigación y entrega",
+    "eyebrow": "Cómo funciona",
+    "kind": "steps",
+    "steps": [
+     {
+      "title": "Encargo",
+      "text": "Nos cuenta la finalidad y firmamos la hoja de encargo.",
+      "img": "paso-encargo"
+     },
+     {
+      "title": "Pago",
+      "text": "Pago por adelantado del presupuesto cerrado.",
+      "img": "paso-pago"
+     },
+     {
+      "title": "Investigación",
+      "text": "Recogemos, preservamos y analizamos la información.",
+      "img": "paso-investigacion"
+     },
+     {
+      "title": "Entrega",
+      "text": "Le enviamos el informe cifrado y lo comentamos con usted.",
+      "img": "paso-entrega"
+     }
+    ],
+    "tone": "gray"
+   },
+   {
+    "h2": "",
+    "eyebrow": "",
+    "kind": "notdo",
+    "text": "No investigamos la vida privada, el paradero ni el patrimonio de personas. Esos encargos están reservados por ley a detectives privados habilitados; si su caso lo necesita, se lo diremos y le derivaremos a un profesional colaborador.",
+    "tone": "gray"
+   },
+   {
+    "h2": "¿Es usted abogado?",
+    "eyebrow": "Para despachos",
+    "kind": "band",
+    "intro": [
+     "Trabajamos bajo su dirección, con confidencialidad por defecto, y puede repercutir el coste a su cliente."
+    ],
+    "cards": [],
+    "notes": [],
+    "link": {
+     "label": "Ver servicio para despachos",
+     "href": "/ciberinteligencia/abogados"
+    },
+    "tone": "dark"
+   },
+   {
+    "h2": "Preguntas frecuentes",
+    "eyebrow": "",
+    "kind": "faq",
+    "faq": [
+     {
+      "q": "¿Qué pasa si no encontráis lo que busco?",
+      "a": "Se cobra por el alcance, no por el resultado. Siempre le entregamos lo encontrado y lo que no se ha podido determinar."
+     },
+     {
+      "q": "¿Es legal?",
+      "a": "Sí. Trabajamos con fuentes públicas y legítimas, sobre empresas, infraestructuras e identificadores digitales. No investigamos la vida privada de personas."
+     },
+     {
+      "q": "¿Cuánto tarda?",
+      "a": "Depende del servicio: 7 días hábiles en due diligence y rastreo, y 3 días hábiles para el estudio de viabilidad de una evidencia. El plazo y el presupuesto se cierran antes de empezar."
+     },
+     {
+      "q": "¿Sirve como prueba en un juicio?",
+      "a": "El rastreo orienta la denuncia y las diligencias. Para aportar la prueba al procedimiento existe el servicio de evidencia digital para juicio."
+     },
+     {
+      "q": "¿Es confidencial?",
+      "a": "Sí. Acuerdo de confidencialidad por defecto, envío cifrado del informe y borrado de los datos de trabajo al cerrar el caso."
+     }
+    ],
+    "tone": "white"
+   },
+   {
+    "kind": "form"
+   }
+  ],
+  "closing": null
+ },
+ "ciberinteligencia-due-diligence-empresas": {
+  "name": "ciberinteligencia-due-diligence-empresas",
+  "path": "/ciberinteligencia/due-diligence-empresas",
+  "kind": "service",
+  "seo": {
+   "title": "Due diligence de empresas: investigue antes de firmar | GreenLock",
+   "description": "Due diligence de empresa: Registro Mercantil, administradores, empresas vinculadas, cuentas, concursos, sanciones, litigios, prensa y huella digital. Informe con semáforo de riesgo en 7 días hábiles.",
+   "jsonld": [
+    {
+     "@context": "https://schema.org",
+     "@type": "BreadcrumbList",
+     "itemListElement": [
+      {
+       "@type": "ListItem",
+       "position": 1,
+       "name": "Inicio",
+       "item": "https://greenlock.tech/"
+      },
+      {
+       "@type": "ListItem",
+       "position": 2,
+       "name": "Ciberinteligencia",
+       "item": "https://greenlock.tech/ciberinteligencia/"
+      },
+      {
+       "@type": "ListItem",
+       "position": 3,
+       "name": "Due diligence de empresa",
+       "item": "https://greenlock.tech/ciberinteligencia/due-diligence-empresas/"
+      }
+     ]
+    },
+    {
+     "@context": "https://schema.org",
+     "@type": "Service",
+     "name": "Due diligence de empresa",
+     "serviceType": "Due diligence de empresa",
+     "areaServed": "ES",
+     "url": "https://greenlock.tech/ciberinteligencia/due-diligence-empresas/",
+     "provider": {
+      "@type": "Organization",
+      "name": "GreenLock Cybersecurity",
+      "url": "https://greenlock.tech/",
+      "telephone": "+34603358517"
+     }
+    },
+    {
+     "@context": "https://schema.org",
+     "@type": "FAQPage",
+     "mainEntity": [
+      {
+       "@type": "Question",
+       "name": "¿Qué pasa si no encontráis lo que busco?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Se cobra por el alcance, no por el resultado. Siempre le entregamos lo encontrado y lo que no se ha podido determinar."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "¿Es legal?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sí. Trabajamos con fuentes públicas y legítimas, sobre empresas, infraestructuras e identificadores digitales. No investigamos la vida privada de personas."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "¿Cuánto tarda?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "7 días hábiles, o 72 horas en servicio urgente. El presupuesto es cerrado y se lo enviamos antes de empezar."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "¿Es confidencial?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sí. Acuerdo de confidencialidad por defecto, envío cifrado del informe y borrado de los datos de trabajo al cerrar el caso."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "¿Y si necesito analizar más sociedades?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Cada sociedad vinculada adicional que quiera analizar a fondo se presupuesta por escrito antes de hacerla."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "¿Puedo repercutirlo a mi cliente?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sí. Facturamos a nombre del despacho o del cliente final, como prefiera."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  "hero": {
+   "crumbs": [
+    {
+     "label": "Inicio",
+     "href": "/"
+    },
+    {
+     "label": "Ciberinteligencia",
+     "href": "/ciberinteligencia"
+    },
+    {
+     "label": "Due diligence de empresa"
+    }
+   ],
+   "eyebrow": "Ciberinteligencia: Due diligence",
+   "h1": "Sepa con quién va a firmar.",
+   "sub": "Revisamos una sociedad en registros oficiales, prensa y su huella digital, y le entregamos un informe con semáforo de riesgo y la fuente de cada dato.",
+   "cta": {
+    "label": "Encargar due diligence",
+    "href": "#encargo"
+   },
+   "img": "detective"
+  },
+  "form": {
+   "eyebrow": "Encargo",
+   "title": "Encargue la due diligence",
+   "intro": "Cuéntenos el caso. Le llamamos en menos de 24 h hábiles y le enviamos un presupuesto cerrado.",
+   "cta": "Encargar due diligence",
+   "linea": "Due diligence de empresa",
+   "colab": false,
+   "slug": "due-diligence-empresas",
+   "identLabel": "Sociedad (nombre o CIF)",
+   "identPlaceholder": "Ejemplo, S.L. o B12345678"
+  },
+  "sections": [
+   {
+    "h2": "Situaciones en las que conviene revisar a la otra parte",
+    "eyebrow": "Cuándo lo necesita",
+    "kind": "grid",
+    "intro": [],
+    "cards": [
+     {
+      "text": "Su cliente va a firmar un contrato de distribución de 3 años con una empresa que nadie ha revisado."
+     },
+     {
+      "text": "Va a entrar en el capital de una sociedad y solo conoce lo que le han contado sus socios."
+     },
+     {
+      "text": "Un nuevo cliente pide pagar a 90 días y no sabe si podrá cobrarle."
+     },
+     {
+      "text": "Va a reclamar a una sociedad y necesita saber quién la administra y con qué empresas se relaciona."
+     }
+    ],
+    "notes": [],
+    "variant": "situations",
+    "tone": "white"
+   },
+   {
+    "h2": "Lo que comprobamos de la sociedad",
+    "eyebrow": "Qué revisamos",
+    "kind": "grid",
+    "intro": [],
+    "cards": [
+     {
+      "title": "Registro y estructura",
+      "items": [
+       "Registro Mercantil y BORME",
+       "Administradores, socios y apoderados, actuales e históricos",
+       "Empresas vinculadas"
+      ]
+     },
+     {
+      "title": "Solvencia y riesgo",
+      "items": [
+       "Cuentas de los 3 últimos ejercicios",
+       "Concursos, embargos y deudas públicas",
+       "Sanciones y listas internacionales",
+       "Litigios publicados"
+      ]
+     },
+     {
+      "title": "Reputación y huella digital",
+      "items": [
+       "Prensa y reputación",
+       "Huella digital del dominio corporativo",
+       "Filtraciones que afectan al dominio"
+      ]
+     }
+    ],
+    "notes": [
+     {
+      "kind": "box",
+      "title": "Para despachos",
+      "text": "En determinadas operaciones, la normativa de prevención del blanqueo de capitales también obliga a los abogados a aplicar medidas de diligencia debida sobre sus clientes. Este informe puede ayudarle a documentarla.",
+      "small": "Este contenido es informativo y no constituye asesoramiento jurídico."
+     }
+    ],
+    "variant": "checks",
+    "tone": "gray"
+   },
+   {
+    "h2": "Contenido del informe",
+    "eyebrow": "Qué recibe",
+    "kind": "report",
+    "mock": {
+     "kind": "INFORME DE DUE DILIGENCE",
+     "title": "Sociedad Ejemplo, S.L.",
+     "subtitle": "Sociedad ficticia: ejemplo ilustrativo",
+     "risk": true
+    },
+    "items": [
+     "Resumen ejecutivo",
+     "Semáforo de riesgo: verde, ámbar o rojo",
+     "Banderas rojas detectadas",
+     "Mapa societario",
+     "Cada dato con su fuente, su fecha y su nivel de fiabilidad"
+    ],
+    "intro": [],
+    "tone": "white"
+   },
+   {
+    "h2": "Encargo, pago, investigación y entrega",
+    "eyebrow": "Cómo funciona",
+    "kind": "steps",
+    "steps": [
+     {
+      "title": "Encargo",
+      "text": "Nos indica la sociedad (nombre o CIF) y la finalidad, y firmamos la hoja de encargo.",
+      "img": "paso-encargo"
+     },
+     {
+      "title": "Pago",
+      "text": "Pago por adelantado del presupuesto cerrado.",
+      "img": "paso-pago"
+     },
+     {
+      "title": "Investigación",
+      "text": "Revisamos registros, prensa y huella digital.",
+      "img": "paso-investigacion"
+     },
+     {
+      "title": "Entrega",
+      "text": "Le enviamos el informe cifrado y lo comentamos con usted.",
+      "img": "paso-entrega"
+     }
+    ],
+    "tone": "gray"
+   },
+   {
+    "h2": "",
+    "eyebrow": "",
+    "kind": "notdo",
+    "text": "No investigamos la vida privada, el paradero ni el patrimonio de personas. Esos encargos están reservados por ley a detectives privados habilitados; si su caso lo necesita, se lo diremos y le derivaremos a un profesional colaborador.",
+    "tone": "gray"
+   },
+   {
+    "h2": "Preguntas frecuentes",
+    "eyebrow": "",
+    "kind": "faq",
+    "faq": [
+     {
+      "q": "¿Qué pasa si no encontráis lo que busco?",
+      "a": "Se cobra por el alcance, no por el resultado. Siempre le entregamos lo encontrado y lo que no se ha podido determinar."
+     },
+     {
+      "q": "¿Es legal?",
+      "a": "Sí. Trabajamos con fuentes públicas y legítimas, sobre empresas, infraestructuras e identificadores digitales. No investigamos la vida privada de personas."
+     },
+     {
+      "q": "¿Cuánto tarda?",
+      "a": "7 días hábiles, o 72 horas en servicio urgente. El presupuesto es cerrado y se lo enviamos antes de empezar."
+     },
+     {
+      "q": "¿Es confidencial?",
+      "a": "Sí. Acuerdo de confidencialidad por defecto, envío cifrado del informe y borrado de los datos de trabajo al cerrar el caso."
+     },
+     {
+      "q": "¿Y si necesito analizar más sociedades?",
+      "a": "Cada sociedad vinculada adicional que quiera analizar a fondo se presupuesta por escrito antes de hacerla."
+     },
+     {
+      "q": "¿Puedo repercutirlo a mi cliente?",
+      "a": "Sí. Facturamos a nombre del despacho o del cliente final, como prefiera."
+     }
+    ],
+    "tone": "white"
+   },
+   {
+    "kind": "form"
+   },
+   {
+    "h2": "Le puede interesar",
+    "eyebrow": "",
+    "kind": "grid",
+    "intro": [],
+    "cards": [
+     {
+      "title": "Investigar una empresa antes de firmar",
+      "text": "Qué revisar de la otra parte antes de cerrar un acuerdo.",
+      "linkLabel": "Ver más →",
+      "href": "/investigar-empresa-antes-de-firmar"
+     },
+     {
+      "title": "Para despachos de abogados",
+      "text": "Cómo trabajamos bajo la dirección del despacho.",
+      "linkLabel": "Ver más →",
+      "href": "/ciberinteligencia/abogados"
+     }
+    ],
+    "notes": [],
+    "variant": "links",
+    "tone": "white"
+   }
+  ],
+  "closing": null
+ },
+ "ciberinteligencia-rastreo-huella-digital": {
+  "name": "ciberinteligencia-rastreo-huella-digital",
+  "path": "/ciberinteligencia/rastreo-huella-digital",
+  "kind": "service",
+  "seo": {
+   "title": "Rastreo de huella digital: quién está detrás de un perfil o una web | GreenLock",
+   "description": "Rastreo de huella digital a partir de un perfil, una web, un correo, un teléfono, un alias o una wallet. Preservamos el contenido, correlacionamos y le entregamos el grado de atribución y las diligencias a pedir.",
+   "jsonld": [
+    {
+     "@context": "https://schema.org",
+     "@type": "BreadcrumbList",
+     "itemListElement": [
+      {
+       "@type": "ListItem",
+       "position": 1,
+       "name": "Inicio",
+       "item": "https://greenlock.tech/"
+      },
+      {
+       "@type": "ListItem",
+       "position": 2,
+       "name": "Ciberinteligencia",
+       "item": "https://greenlock.tech/ciberinteligencia/"
+      },
+      {
+       "@type": "ListItem",
+       "position": 3,
+       "name": "Rastreo de huella digital",
+       "item": "https://greenlock.tech/ciberinteligencia/rastreo-huella-digital/"
+      }
+     ]
+    },
+    {
+     "@context": "https://schema.org",
+     "@type": "Service",
+     "name": "Rastreo de huella digital",
+     "serviceType": "Rastreo de huella digital",
+     "areaServed": "ES",
+     "url": "https://greenlock.tech/ciberinteligencia/rastreo-huella-digital/",
+     "provider": {
+      "@type": "Organization",
+      "name": "GreenLock Cybersecurity",
+      "url": "https://greenlock.tech/",
+      "telephone": "+34603358517"
+     }
+    },
+    {
+     "@context": "https://schema.org",
+     "@type": "FAQPage",
+     "mainEntity": [
+      {
+       "@type": "Question",
+       "name": "¿Qué pasa si no encontráis lo que busco?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Se cobra por el alcance, no por el resultado. Siempre le entregamos lo encontrado y lo que no se ha podido determinar."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "¿Es legal?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sí. Trabajamos con fuentes públicas y legítimas, sobre empresas, infraestructuras e identificadores digitales. No investigamos la vida privada de personas."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "¿Sirve como prueba en un juicio?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "El rastreo orienta la denuncia y las diligencias. Para aportar la prueba al procedimiento existe el servicio de evidencia digital para juicio."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "¿Cuánto tarda?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "7 días hábiles desde el pago. El presupuesto es cerrado y se lo enviamos antes de empezar."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "¿Es confidencial?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sí. Acuerdo de confidencialidad por defecto, envío cifrado del informe y borrado de los datos de trabajo al cerrar el caso."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "¿Y si tengo más identificadores?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Partimos de un único identificador. Si quiere analizar otros, la ampliación se presupuesta por escrito antes de hacerla."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  "hero": {
+   "crumbs": [
+    {
+     "label": "Inicio",
+     "href": "/"
+    },
+    {
+     "label": "Ciberinteligencia",
+     "href": "/ciberinteligencia"
+    },
+    {
+     "label": "Rastreo de huella digital"
+    }
+   ],
+   "eyebrow": "Ciberinteligencia: Rastreo de huella digital",
+   "h1": "¿Quién está detrás de ese perfil, esa web o ese correo?",
+   "sub": "Partimos de un único identificador, seguimos su rastro en fuentes públicas y le decimos con qué grado de fiabilidad se puede atribuir y qué diligencias pedir.",
+   "cta": {
+    "label": "Solicitar presupuesto",
+    "href": "#encargo"
+   },
+   "img": "estafador"
+  },
+  "form": {
+   "eyebrow": "Encargo",
+   "title": "Cuéntenos su caso",
+   "intro": "Cuéntenos el caso. Le llamamos en menos de 24 h hábiles y le enviamos un presupuesto cerrado.",
+   "cta": "Solicitar presupuesto",
+   "linea": "Rastreo de huella digital",
+   "colab": false,
+   "slug": "rastreo-huella-digital",
+   "identLabel": "Identificador de partida",
+   "identPlaceholder": "Perfil, URL, correo, teléfono, alias o wallet"
+  },
+  "sections": [
+   {
+    "h2": "Casos habituales",
+    "eyebrow": "Cuándo lo necesita",
+    "kind": "grid",
+    "intro": [],
+    "cards": [
+     {
+      "text": "Un perfil falso usa su nombre o el de su empresa para engañar a sus clientes."
+     },
+     {
+      "text": "Una web copia su marca y vende en su nombre."
+     },
+     {
+      "text": "Llegan correos o mensajes que suplantan a su empresa para pedir pagos."
+     },
+     {
+      "text": "Ha sufrido una estafa online y quiere aportar a la denuncia algo más que capturas."
+     }
+    ],
+    "notes": [],
+    "variant": "situations",
+    "tone": "white"
+   },
+   {
+    "h2": "Preservación, análisis y correlación",
+    "eyebrow": "Qué hacemos",
+    "kind": "grid",
+    "intro": [],
+    "cards": [
+     {
+      "title": "Preservar",
+      "items": [
+       "Guardamos el contenido antes de que desaparezca, con fecha y origen"
+      ]
+     },
+     {
+      "title": "Analizar",
+      "items": [
+       "Infraestructura y registro del identificador",
+       "Filtraciones y bases públicas"
+      ]
+     },
+     {
+      "title": "Correlacionar",
+      "items": [
+       "Otros perfiles, alias y cuentas relacionados",
+       "Reconstrucción de la cronología de los hechos"
+      ]
+     }
+    ],
+    "notes": [
+     {
+      "kind": "chips",
+      "title": "Punto de partida: un único identificador",
+      "chips": [
+       "Perfil",
+       "URL o dominio",
+       "Correo",
+       "Teléfono",
+       "Alias",
+       "Wallet"
+      ]
+     },
+     {
+      "kind": "dark",
+      "title": "Se cobra por el trabajo realizado, no por el resultado.",
+      "text": "Siempre se entrega lo encontrado, con el grado de atribución alcanzado."
+     }
+    ],
+    "variant": "checks",
+    "tone": "gray"
+   },
+   {
+    "h2": "Contenido del informe",
+    "eyebrow": "Qué recibe",
+    "kind": "report",
+    "mock": {
+     "kind": "INFORME DE RASTREO",
+     "title": "Huella digital de un perfil",
+     "subtitle": "Caso ilustrativo",
+     "risk": false
+    },
+    "items": [
+     "Grado de atribución: alto, medio, bajo o no determinado",
+     "Cronología de los hechos",
+     "Evidencias preservadas con su fecha y su origen",
+     "Qué diligencias concretas pedir al juzgado o a las plataformas"
+    ],
+    "intro": [],
+    "tone": "white"
+   },
+   {
+    "h2": "Encargo, pago, investigación y entrega",
+    "eyebrow": "Cómo funciona",
+    "kind": "steps",
+    "steps": [
+     {
+      "title": "Encargo",
+      "text": "Nos envía el identificador, el relato y sus capturas, y firmamos la hoja de encargo.",
+      "img": "paso-encargo"
+     },
+     {
+      "title": "Pago",
+      "text": "Pago por adelantado del presupuesto cerrado.",
+      "img": "paso-pago"
+     },
+     {
+      "title": "Investigación",
+      "text": "Preservamos, analizamos y correlacionamos.",
+      "img": "paso-investigacion"
+     },
+     {
+      "title": "Entrega",
+      "text": "Le enviamos el informe cifrado y lo comentamos con usted.",
+      "img": "paso-entrega"
+     }
+    ],
+    "tone": "gray"
+   },
+   {
+    "h2": "",
+    "eyebrow": "",
+    "kind": "notdo",
+    "text": "No investigamos la vida privada, el paradero ni el patrimonio de personas. Esos encargos están reservados por ley a detectives privados habilitados; si su caso lo necesita, se lo diremos y le derivaremos a un profesional colaborador.",
+    "tone": "gray"
+   },
+   {
+    "h2": "Preguntas frecuentes",
+    "eyebrow": "",
+    "kind": "faq",
+    "faq": [
+     {
+      "q": "¿Qué pasa si no encontráis lo que busco?",
+      "a": "Se cobra por el alcance, no por el resultado. Siempre le entregamos lo encontrado y lo que no se ha podido determinar."
+     },
+     {
+      "q": "¿Es legal?",
+      "a": "Sí. Trabajamos con fuentes públicas y legítimas, sobre empresas, infraestructuras e identificadores digitales. No investigamos la vida privada de personas."
+     },
+     {
+      "q": "¿Sirve como prueba en un juicio?",
+      "a": "El rastreo orienta la denuncia y las diligencias. Para aportar la prueba al procedimiento existe el servicio de evidencia digital para juicio."
+     },
+     {
+      "q": "¿Cuánto tarda?",
+      "a": "7 días hábiles desde el pago. El presupuesto es cerrado y se lo enviamos antes de empezar."
+     },
+     {
+      "q": "¿Es confidencial?",
+      "a": "Sí. Acuerdo de confidencialidad por defecto, envío cifrado del informe y borrado de los datos de trabajo al cerrar el caso."
+     },
+     {
+      "q": "¿Y si tengo más identificadores?",
+      "a": "Partimos de un único identificador. Si quiere analizar otros, la ampliación se presupuesta por escrito antes de hacerla."
+     }
+    ],
+    "tone": "white"
+   },
+   {
+    "kind": "form"
+   },
+   {
+    "h2": "Casos que resolvemos",
+    "eyebrow": "",
+    "kind": "grid",
+    "intro": [],
+    "cards": [
+     {
+      "title": "Perfil falso",
+      "text": "Un perfil falso le está haciendo daño.",
+      "linkLabel": "Ver más →",
+      "href": "/perfil-falso-quien-esta-detras"
+     },
+     {
+      "title": "Suplantación de marca",
+      "text": "Alguien usa su marca o una web falsa.",
+      "linkLabel": "Ver más →",
+      "href": "/suplantacion-de-marca-web-falsa"
+     },
+     {
+      "title": "Estafa online",
+      "text": "Le han estafado por internet.",
+      "linkLabel": "Ver más →",
+      "href": "/estafa-online-identificar-autor"
+     }
+    ],
+    "notes": [],
+    "variant": "links",
+    "tone": "white"
+   }
+  ],
+  "closing": null
+ },
+ "ciberinteligencia-evidencia-digital-juicio": {
+  "name": "ciberinteligencia-evidencia-digital-juicio",
+  "path": "/ciberinteligencia/evidencia-digital-juicio",
+  "kind": "service",
+  "seo": {
+   "title": "Evidencia digital para juicio: prueba preservada con método | GreenLock",
+   "description": "Evidencia digital para procedimientos civiles, penales, laborales y mercantiles: estudio de viabilidad, preservación con hash y cadena de custodia e informe técnico de evidencias digitales.",
+   "jsonld": [
+    {
+     "@context": "https://schema.org",
+     "@type": "BreadcrumbList",
+     "itemListElement": [
+      {
+       "@type": "ListItem",
+       "position": 1,
+       "name": "Inicio",
+       "item": "https://greenlock.tech/"
+      },
+      {
+       "@type": "ListItem",
+       "position": 2,
+       "name": "Ciberinteligencia",
+       "item": "https://greenlock.tech/ciberinteligencia/"
+      },
+      {
+       "@type": "ListItem",
+       "position": 3,
+       "name": "Evidencia digital para juicio",
+       "item": "https://greenlock.tech/ciberinteligencia/evidencia-digital-juicio/"
+      }
+     ]
+    },
+    {
+     "@context": "https://schema.org",
+     "@type": "Service",
+     "name": "Evidencia digital para juicio",
+     "serviceType": "Evidencia digital para juicio",
+     "areaServed": "ES",
+     "url": "https://greenlock.tech/ciberinteligencia/evidencia-digital-juicio/",
+     "provider": {
+      "@type": "Organization",
+      "name": "GreenLock Cybersecurity",
+      "url": "https://greenlock.tech/",
+      "telephone": "+34603358517"
+     }
+    },
+    {
+     "@context": "https://schema.org",
+     "@type": "FAQPage",
+     "mainEntity": [
+      {
+       "@type": "Question",
+       "name": "¿No bastan las capturas de pantalla?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Una captura sola se impugna con facilidad. Preservamos el contenido con hash, fecha y origen para que se pueda comprobar."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "¿Qué pasa si la evidencia ya no está accesible?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Lo sabrá en el estudio de viabilidad, antes de encargar la segunda fase."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "¿Cuánto tarda?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "El estudio de viabilidad, 3 días hábiles. La obtención y el informe técnico, unas 2 semanas."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "¿Y la ratificación en juicio?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Se presupuesta aparte cuando hay señalamiento."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "¿Es confidencial?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sí. Acuerdo de confidencialidad por defecto, envío cifrado del informe y borrado de los datos de trabajo al cerrar el caso."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "¿Puedo repercutirlo a mi cliente?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sí. Facturamos a nombre del despacho o del cliente final, como prefiera."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  "hero": {
+   "crumbs": [
+    {
+     "label": "Inicio",
+     "href": "/"
+    },
+    {
+     "label": "Ciberinteligencia",
+     "href": "/ciberinteligencia"
+    },
+    {
+     "label": "Evidencia digital para juicio"
+    }
+   ],
+   "eyebrow": "Ciberinteligencia: Evidencia digital",
+   "h1": "La prueba digital, preservada y lista para el procedimiento.",
+   "sub": "Para abogados con un procedimiento abierto o a punto de abrirse: estudiamos qué evidencias existen, las preservamos con método y las documentamos en un informe técnico.",
+   "cta": {
+    "label": "Solicitar estudio de viabilidad",
+    "href": "#encargo"
+   },
+   "img": "ci-abogado"
+  },
+  "form": {
+   "eyebrow": "Encargo",
+   "title": "Solicite el estudio de viabilidad",
+   "intro": "Cuéntenos el caso. Le llamamos en menos de 24 h hábiles y le enviamos un presupuesto cerrado.",
+   "cta": "Solicitar estudio de viabilidad",
+   "linea": "Evidencia digital para juicio",
+   "colab": false,
+   "slug": "evidencia-digital-juicio",
+   "identLabel": "Evidencia o identificador",
+   "identPlaceholder": "Perfil, URL, conversación, correo…"
+  },
+  "sections": [
+   {
+    "h2": "Casos habituales",
+    "eyebrow": "Cuándo lo necesita",
+    "kind": "grid",
+    "intro": [],
+    "cards": [
+     {
+      "text": "La parte contraria ha borrado publicaciones que eran clave para el caso."
+     },
+     {
+      "text": "Las capturas de pantalla de su cliente han sido impugnadas."
+     },
+     {
+      "text": "Necesita acreditar conversaciones, correos o publicaciones con fecha y origen."
+     },
+     {
+      "text": "Un procedimiento laboral depende de mensajes en redes sociales o aplicaciones de mensajería."
+     }
+    ],
+    "notes": [],
+    "variant": "situations",
+    "tone": "white"
+   },
+   {
+    "h2": "El servicio en dos fases",
+    "eyebrow": "Cómo se trabaja",
+    "kind": "grid",
+    "intro": [],
+    "cards": [
+     {
+      "title": "Estudio de viabilidad",
+      "text": "Qué evidencias existen, si siguen accesibles, cómo obtenerlas y qué valor probatorio tendrían. Termina con una recomendación y un presupuesto cerrado."
+     },
+     {
+      "title": "Obtención e informe técnico",
+      "text": "Preservación con hash y cadena de custodia, análisis e informe técnico de evidencias digitales para aportar al procedimiento."
+     }
+    ],
+    "notes": [
+     {
+      "kind": "plain",
+      "text": "La ratificación en juicio se presupuesta aparte cuando hay señalamiento."
+     }
+    ],
+    "variant": "plain",
+    "tone": "gray"
+   },
+   {
+    "h2": "Contenido del informe",
+    "eyebrow": "Qué recibe",
+    "kind": "report",
+    "mock": {
+     "kind": "INFORME TÉCNICO",
+     "title": "Evidencias digitales",
+     "subtitle": "Procedimiento ilustrativo",
+     "risk": false
+    },
+    "items": [
+     "Evidencias preservadas con hash",
+     "Cadena de custodia documentada",
+     "Metodología explicada para que se pueda revisar",
+     "Conclusiones técnicas claras"
+    ],
+    "intro": [],
+    "tone": "white"
+   },
+   {
+    "h2": "Encargo, pago, investigación y entrega",
+    "eyebrow": "Cómo funciona",
+    "kind": "steps",
+    "steps": [
+     {
+      "title": "Encargo",
+      "text": "Nos explica el procedimiento y firmamos la hoja de encargo.",
+      "img": "paso-encargo"
+     },
+     {
+      "title": "Viabilidad",
+      "text": "Pago por adelantado y estudio de las evidencias.",
+      "img": "paso-viabilidad"
+     },
+     {
+      "title": "Obtención",
+      "text": "Pago del 50 %, preservación y análisis.",
+      "img": "paso-investigacion"
+     },
+     {
+      "title": "Entrega",
+      "text": "Informe técnico y pago del 50 % restante.",
+      "img": "paso-entrega"
+     }
+    ],
+    "tone": "gray"
+   },
+   {
+    "h2": "",
+    "eyebrow": "",
+    "kind": "notdo",
+    "text": "No investigamos la vida privada, el paradero ni el patrimonio de personas. Esos encargos están reservados por ley a detectives privados habilitados; si su caso lo necesita, se lo diremos y le derivaremos a un profesional colaborador.",
+    "tone": "gray"
+   },
+   {
+    "h2": "Preguntas frecuentes",
+    "eyebrow": "",
+    "kind": "faq",
+    "faq": [
+     {
+      "q": "¿No bastan las capturas de pantalla?",
+      "a": "Una captura sola se impugna con facilidad. Preservamos el contenido con hash, fecha y origen para que se pueda comprobar."
+     },
+     {
+      "q": "¿Qué pasa si la evidencia ya no está accesible?",
+      "a": "Lo sabrá en el estudio de viabilidad, antes de encargar la segunda fase."
+     },
+     {
+      "q": "¿Cuánto tarda?",
+      "a": "El estudio de viabilidad, 3 días hábiles. La obtención y el informe técnico, unas 2 semanas."
+     },
+     {
+      "q": "¿Y la ratificación en juicio?",
+      "a": "Se presupuesta aparte cuando hay señalamiento."
+     },
+     {
+      "q": "¿Es confidencial?",
+      "a": "Sí. Acuerdo de confidencialidad por defecto, envío cifrado del informe y borrado de los datos de trabajo al cerrar el caso."
+     },
+     {
+      "q": "¿Puedo repercutirlo a mi cliente?",
+      "a": "Sí. Facturamos a nombre del despacho o del cliente final, como prefiera."
+     }
+    ],
+    "tone": "white"
+   },
+   {
+    "kind": "form"
+   },
+   {
+    "h2": "Le puede interesar",
+    "eyebrow": "",
+    "kind": "grid",
+    "intro": [],
+    "cards": [
+     {
+      "title": "Prueba digital para juicio",
+      "text": "Por qué las capturas de pantalla no bastan.",
+      "linkLabel": "Ver más →",
+      "href": "/prueba-digital-para-juicio"
+     },
+     {
+      "title": "Para despachos de abogados",
+      "text": "Trabajamos bajo la dirección del despacho.",
+      "linkLabel": "Ver más →",
+      "href": "/ciberinteligencia/abogados"
+     }
+    ],
+    "notes": [],
+    "variant": "links",
+    "tone": "white"
+   }
+  ],
+  "closing": null
+ },
+ "ciberinteligencia-abogados": {
+  "name": "ciberinteligencia-abogados",
+  "path": "/ciberinteligencia/abogados",
+  "kind": "service",
+  "seo": {
+   "title": "Ciberinteligencia para despachos de abogados | GreenLock",
+   "description": "Due diligence de la contraparte, rastreo de huella digital y evidencias digitales para el procedimiento. Trabajamos bajo la dirección del despacho, con confidencialidad y factura al despacho o al cliente final.",
+   "jsonld": [
+    {
+     "@context": "https://schema.org",
+     "@type": "BreadcrumbList",
+     "itemListElement": [
+      {
+       "@type": "ListItem",
+       "position": 1,
+       "name": "Inicio",
+       "item": "https://greenlock.tech/"
+      },
+      {
+       "@type": "ListItem",
+       "position": 2,
+       "name": "Ciberinteligencia",
+       "item": "https://greenlock.tech/ciberinteligencia/"
+      },
+      {
+       "@type": "ListItem",
+       "position": 3,
+       "name": "Para despachos de abogados",
+       "item": "https://greenlock.tech/ciberinteligencia/abogados/"
+      }
+     ]
+    },
+    {
+     "@context": "https://schema.org",
+     "@type": "FAQPage",
+     "mainEntity": [
+      {
+       "@type": "Question",
+       "name": "¿Puedo repercutirlo a mi cliente?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sí. Facturamos a nombre del despacho o del cliente final, como prefiera."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "¿Es confidencial?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sí. Acuerdo de confidencialidad por defecto, envío cifrado del informe y borrado de los datos de trabajo al cerrar el caso."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "¿Es legal?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sí. Trabajamos con fuentes públicas y legítimas, sobre empresas, infraestructuras e identificadores digitales. No investigamos la vida privada de personas."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "¿Quién dirige el trabajo?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Usted. Trabajamos bajo la dirección del despacho y le reportamos solo a usted."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  "hero": {
+   "crumbs": [
+    {
+     "label": "Inicio",
+     "href": "/"
+    },
+    {
+     "label": "Ciberinteligencia",
+     "href": "/ciberinteligencia"
+    },
+    {
+     "label": "Para despachos de abogados"
+    }
+   ],
+   "eyebrow": "Ciberinteligencia: Para despachos",
+   "h1": "Inteligencia digital y evidencias para su despacho",
+   "sub": "Due diligence de la contraparte, rastreo de quien está detrás de un perfil o una web, y evidencias digitales para el procedimiento. Trabajamos bajo su dirección y con plena confidencialidad.",
+   "cta": {
+    "label": "Darme de alta como despacho",
+    "href": "#encargo"
+   },
+   "img": "ci-abogado"
+  },
+  "form": {
+   "eyebrow": "Despacho colaborador",
+   "title": "Alta como despacho colaborador",
+   "intro": "Déjenos sus datos y le llamamos en menos de 24 h hábiles para explicarle cómo trabajamos.",
+   "cta": "Darme de alta como despacho",
+   "linea": "Due diligence de empresa",
+   "colab": true,
+   "slug": "abogados",
+   "identLabel": null,
+   "identPlaceholder": null
+  },
+  "sections": [
+   {
+    "h2": "Servicios para despachos",
+    "eyebrow": "Servicios",
+    "kind": "grid",
+    "intro": [],
+    "cards": [
+     {
+      "title": "Due diligence de empresa",
+      "text": "Antes de que su cliente firme, invierta, conceda crédito o reclame a otra sociedad.",
+      "href": "/ciberinteligencia/due-diligence-empresas",
+      "linkLabel": "Ver servicio →"
+     },
+     {
+      "title": "Rastreo de huella digital",
+      "text": "Cuando su cliente sufre un perfil falso, una web fraudulenta, una suplantación o una estafa online.",
+      "href": "/ciberinteligencia/rastreo-huella-digital",
+      "linkLabel": "Ver servicio →"
+     },
+     {
+      "title": "Evidencia digital para juicio",
+      "text": "Casos habituales que hay que preservar.",
+      "href": "/ciberinteligencia/evidencia-digital-juicio",
+      "linkLabel": "Ver servicio →"
+     }
+    ],
+    "notes": [],
+    "variant": "links",
+    "tone": "white"
+   },
+   {
+    "h2": "Condiciones para despachos",
+    "eyebrow": "Cómo trabajamos con despachos",
+    "kind": "grid",
+    "intro": [],
+    "cards": [
+     {
+      "title": "Dirección",
+      "items": [
+       "Trabajamos bajo su dirección y sus instrucciones",
+       "Le reportamos solo a usted"
+      ]
+     },
+     {
+      "title": "Honorarios",
+      "items": [
+       "Puede repercutir el coste a su cliente",
+       "Facturamos al despacho o al cliente final",
+       "Presupuesto cerrado por escrito antes de cada encargo"
+      ]
+     },
+     {
+      "title": "Confidencialidad",
+      "items": [
+       "Acuerdo de confidencialidad por defecto",
+       "Envío cifrado y borrado de los datos al cerrar"
+      ]
+     }
+    ],
+    "notes": [
+     {
+      "kind": "box",
+      "title": "Diligencia debida",
+      "text": "En determinadas operaciones, la normativa de prevención del blanqueo de capitales también obliga a los abogados a aplicar medidas de diligencia debida sobre sus clientes. La due diligence de empresa puede ayudarle a documentarla.",
+      "small": "Este contenido es informativo y no constituye asesoramiento jurídico."
+     }
+    ],
+    "variant": "checks",
+    "tone": "gray"
+   },
+   {
+    "h2": "",
+    "eyebrow": "",
+    "kind": "notdo",
+    "text": "No investigamos la vida privada, el paradero ni el patrimonio de personas. Esos encargos están reservados por ley a detectives privados habilitados; si su caso lo necesita, se lo diremos y le derivaremos a un profesional colaborador.",
+    "tone": "gray"
+   },
+   {
+    "h2": "Preguntas frecuentes",
+    "eyebrow": "",
+    "kind": "faq",
+    "faq": [
+     {
+      "q": "¿Puedo repercutirlo a mi cliente?",
+      "a": "Sí. Facturamos a nombre del despacho o del cliente final, como prefiera."
+     },
+     {
+      "q": "¿Es confidencial?",
+      "a": "Sí. Acuerdo de confidencialidad por defecto, envío cifrado del informe y borrado de los datos de trabajo al cerrar el caso."
+     },
+     {
+      "q": "¿Es legal?",
+      "a": "Sí. Trabajamos con fuentes públicas y legítimas, sobre empresas, infraestructuras e identificadores digitales. No investigamos la vida privada de personas."
+     },
+     {
+      "q": "¿Quién dirige el trabajo?",
+      "a": "Usted. Trabajamos bajo la dirección del despacho y le reportamos solo a usted."
+     }
+    ],
+    "tone": "white"
+   },
+   {
+    "kind": "form"
+   }
+  ],
+  "closing": null
+ },
+ "investigar-empresa-antes-de-firmar": {
+  "name": "investigar-empresa-antes-de-firmar",
+  "path": "/investigar-empresa-antes-de-firmar",
+  "kind": "landing",
+  "seo": {
+   "title": "Investigar una empresa antes de firmar con ella | GreenLock",
+   "description": "Antes de firmar, invertir o conceder crédito, revise a la otra empresa: registros, administradores, cuentas, concursos, sanciones, litigios y huella digital. Informe con semáforo de riesgo en 7 días hábiles.",
+   "jsonld": [
+    {
+     "@context": "https://schema.org",
+     "@type": "Service",
+     "name": "Due diligence de empresa",
+     "serviceType": "Due diligence de empresa",
+     "areaServed": "ES",
+     "url": "https://greenlock.tech/investigar-empresa-antes-de-firmar/",
+     "provider": {
+      "@type": "Organization",
+      "name": "GreenLock Cybersecurity",
+      "url": "https://greenlock.tech/",
+      "telephone": "+34603358517"
+     }
+    },
+    {
+     "@context": "https://schema.org",
+     "@type": "FAQPage",
+     "mainEntity": [
+      {
+       "@type": "Question",
+       "name": "¿Qué pasa si no encontráis lo que busco?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Se cobra por el alcance, no por el resultado. Siempre le entregamos lo encontrado y lo que no se ha podido determinar."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "¿Es legal?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sí. Trabajamos con fuentes públicas y legítimas, sobre empresas, infraestructuras e identificadores digitales. No investigamos la vida privada de personas."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "¿Cuánto tarda?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "7 días hábiles, o 72 horas en servicio urgente."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "¿Es confidencial?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sí. Acuerdo de confidencialidad por defecto, envío cifrado del informe y borrado de los datos de trabajo al cerrar el caso."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  "hero": {
+   "crumbs": null,
+   "eyebrow": "Due diligence de empresa",
+   "h1": "Investigue a una empresa antes de firmar con ella.",
+   "sub": "Revisamos la sociedad en registros oficiales, prensa y su huella digital. En 7 días hábiles tiene un informe con semáforo de riesgo y la fuente de cada dato.",
+   "cta": {
+    "label": "Encargar due diligence",
+    "href": "#encargo"
+   },
+   "img": "detective"
+  },
+  "form": {
+   "eyebrow": "Encargo",
+   "title": "Cuéntenos su caso",
+   "intro": "Cuéntenos el caso. Le llamamos en menos de 24 h hábiles y le enviamos un presupuesto cerrado.",
+   "cta": "Encargar due diligence",
+   "linea": "Due diligence de empresa",
+   "colab": false,
+   "slug": "investigar-empresa-antes-de-firmar",
+   "identLabel": "Sociedad (nombre o CIF)",
+   "identPlaceholder": "Ejemplo, S.L. o B12345678"
+  },
+  "sections": [
+   {
+    "h2": "Casos habituales",
+    "eyebrow": "Situaciones habituales",
+    "kind": "grid",
+    "intro": [],
+    "cards": [
+     {
+      "text": "Va a firmar un contrato de varios años con un proveedor o un distribuidor que no conoce."
+     },
+     {
+      "text": "Un cliente nuevo pide pagar a 90 días."
+     },
+     {
+      "text": "Va a invertir o a entrar en el capital de una sociedad."
+     }
+    ],
+    "notes": [],
+    "variant": "situations",
+    "tone": "white"
+   },
+   {
+    "h2": "Lo que revisamos",
+    "eyebrow": "Qué hacemos",
+    "kind": "grid",
+    "intro": [],
+    "cards": [
+     {
+      "title": "Registro y estructura",
+      "items": [
+       "Registro Mercantil y BORME",
+       "Administradores, socios y apoderados",
+       "Empresas vinculadas"
+      ]
+     },
+     {
+      "title": "Solvencia y riesgo",
+      "items": [
+       "Cuentas de los 3 últimos ejercicios",
+       "Concursos, embargos y deudas públicas",
+       "Sanciones y litigios publicados"
+      ]
+     },
+     {
+      "title": "Reputación",
+      "items": [
+       "Prensa y reputación",
+       "Huella digital y filtraciones del dominio"
+      ]
+     }
+    ],
+    "notes": [],
+    "variant": "checks",
+    "tone": "gray"
+   },
+   {
+    "h2": "Contenido del informe",
+    "eyebrow": "Qué recibe",
+    "kind": "report",
+    "mock": {
+     "kind": "INFORME DE DUE DILIGENCE",
+     "title": "Sociedad Ejemplo, S.L.",
+     "subtitle": "Sociedad ficticia: ejemplo ilustrativo",
+     "risk": true
+    },
+    "items": [
+     "Resumen ejecutivo",
+     "Semáforo de riesgo: verde, ámbar o rojo",
+     "Banderas rojas y mapa societario",
+     "Cada dato con su fuente, su fecha y su fiabilidad"
+    ],
+    "intro": [],
+    "tone": "white"
+   },
+   {
+    "h2": "Encargo, pago, investigación y entrega",
+    "eyebrow": "Cómo funciona",
+    "kind": "steps",
+    "steps": [
+     {
+      "title": "Encargo",
+      "text": "Nos indica la sociedad y la finalidad, y firmamos la hoja de encargo.",
+      "img": "paso-encargo"
+     },
+     {
+      "title": "Pago",
+      "text": "Pago por adelantado del presupuesto cerrado.",
+      "img": "paso-pago"
+     },
+     {
+      "title": "Investigación",
+      "text": "Registros, prensa y huella digital.",
+      "img": "paso-investigacion"
+     },
+     {
+      "title": "Entrega",
+      "text": "Informe cifrado y reunión para comentarlo.",
+      "img": "paso-entrega"
+     }
+    ],
+    "tone": "gray"
+   },
+   {
+    "h2": "",
+    "eyebrow": "",
+    "kind": "notdo",
+    "text": "No investigamos la vida privada, el paradero ni el patrimonio de personas. Esos encargos están reservados por ley a detectives privados habilitados; si su caso lo necesita, se lo diremos y le derivaremos a un profesional colaborador.",
+    "tone": "gray"
+   },
+   {
+    "h2": "Preguntas frecuentes",
+    "eyebrow": "",
+    "kind": "faq",
+    "faq": [
+     {
+      "q": "¿Qué pasa si no encontráis lo que busco?",
+      "a": "Se cobra por el alcance, no por el resultado. Siempre le entregamos lo encontrado y lo que no se ha podido determinar."
+     },
+     {
+      "q": "¿Es legal?",
+      "a": "Sí. Trabajamos con fuentes públicas y legítimas, sobre empresas, infraestructuras e identificadores digitales. No investigamos la vida privada de personas."
+     },
+     {
+      "q": "¿Cuánto tarda?",
+      "a": "7 días hábiles, o 72 horas en servicio urgente."
+     },
+     {
+      "q": "¿Es confidencial?",
+      "a": "Sí. Acuerdo de confidencialidad por defecto, envío cifrado del informe y borrado de los datos de trabajo al cerrar el caso."
+     }
+    ],
+    "tone": "white"
+   },
+   {
+    "kind": "form"
+   }
+  ],
+  "closing": {
+   "text": "Este caso se resuelve con nuestro servicio de **Due diligence de empresa**.",
+   "link": {
+    "label": "Conozca el servicio completo →",
+    "href": "/ciberinteligencia/due-diligence-empresas"
+   }
+  }
+ },
+ "perfil-falso-quien-esta-detras": {
+  "name": "perfil-falso-quien-esta-detras",
+  "path": "/perfil-falso-quien-esta-detras",
+  "kind": "landing",
+  "seo": {
+   "title": "Perfil falso: saber quién está detrás | GreenLock",
+   "description": "¿Un perfil falso usa su nombre, sus fotos o su empresa? Preservamos el contenido, rastreamos su huella digital y le entregamos el grado de atribución y las diligencias a pedir.",
+   "jsonld": [
+    {
+     "@context": "https://schema.org",
+     "@type": "Service",
+     "name": "Rastreo de huella digital",
+     "serviceType": "Rastreo de huella digital",
+     "areaServed": "ES",
+     "url": "https://greenlock.tech/perfil-falso-quien-esta-detras/",
+     "provider": {
+      "@type": "Organization",
+      "name": "GreenLock Cybersecurity",
+      "url": "https://greenlock.tech/",
+      "telephone": "+34603358517"
+     }
+    },
+    {
+     "@context": "https://schema.org",
+     "@type": "FAQPage",
+     "mainEntity": [
+      {
+       "@type": "Question",
+       "name": "¿Qué pasa si no encontráis lo que busco?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Se cobra por el alcance, no por el resultado. Siempre le entregamos lo encontrado y lo que no se ha podido determinar."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "¿Es legal?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sí. Trabajamos con fuentes públicas y legítimas, sobre empresas, infraestructuras e identificadores digitales. No investigamos la vida privada de personas."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "¿Sirve como prueba en un juicio?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "El rastreo orienta la denuncia y las diligencias. Para aportar la prueba al procedimiento existe el servicio de evidencia digital para juicio."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "¿Es confidencial?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sí. Acuerdo de confidencialidad por defecto, envío cifrado del informe y borrado de los datos de trabajo al cerrar el caso."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  "hero": {
+   "crumbs": null,
+   "eyebrow": "Rastreo de huella digital",
+   "h1": "Un perfil falso le está haciendo daño. Le ayudamos a saber quién hay detrás.",
+   "sub": "Preservamos el perfil antes de que desaparezca, seguimos su rastro en fuentes públicas y le decimos con qué fiabilidad se puede atribuir y qué pedir a la plataforma o al juzgado.",
+   "cta": {
+    "label": "Solicitar presupuesto",
+    "href": "#encargo"
+   },
+   "img": "lp-perfil-falso"
+  },
+  "form": {
+   "eyebrow": "Encargo",
+   "title": "Cuéntenos su caso",
+   "intro": "Cuéntenos el caso. Le llamamos en menos de 24 h hábiles y le enviamos un presupuesto cerrado.",
+   "cta": "Solicitar presupuesto",
+   "linea": "Rastreo de huella digital",
+   "colab": false,
+   "slug": "perfil-falso-quien-esta-detras",
+   "identLabel": "Enlace o nombre del perfil",
+   "identPlaceholder": "https://… o @usuario"
+  },
+  "sections": [
+   {
+    "h2": "Casos habituales",
+    "eyebrow": "Situaciones habituales",
+    "kind": "grid",
+    "intro": [],
+    "cards": [
+     {
+      "text": "Un perfil usa su nombre o sus fotos para contactar con sus conocidos o sus clientes."
+     },
+     {
+      "text": "Una cuenta anónima publica contenido que daña su reputación o la de su empresa."
+     },
+     {
+      "text": "La plataforma no retira el perfil y necesita algo más sólido que una captura."
+     }
+    ],
+    "notes": [],
+    "variant": "situations",
+    "tone": "white"
+   },
+   {
+    "h2": "Lo que revisamos",
+    "eyebrow": "Qué hacemos",
+    "kind": "grid",
+    "intro": [],
+    "cards": [
+     {
+      "title": "Preservar",
+      "items": [
+       "Guardamos el contenido antes de que desaparezca"
+      ]
+     },
+     {
+      "title": "Analizar",
+      "items": [
+       "Infraestructura y registro del identificador",
+       "Filtraciones y bases públicas"
+      ]
+     },
+     {
+      "title": "Correlacionar",
+      "items": [
+       "Otros perfiles, alias y cuentas",
+       "Cronología de los hechos"
+      ]
+     }
+    ],
+    "notes": [
+     {
+      "kind": "dark",
+      "title": "Se cobra por el trabajo realizado, no por el resultado.",
+      "text": "Siempre se entrega lo encontrado, con el grado de atribución alcanzado."
+     }
+    ],
+    "variant": "checks",
+    "tone": "gray"
+   },
+   {
+    "h2": "Contenido del informe",
+    "eyebrow": "Qué recibe",
+    "kind": "report",
+    "mock": {
+     "kind": "INFORME DE RASTREO",
+     "title": "Huella digital",
+     "subtitle": "Caso ilustrativo",
+     "risk": false
+    },
+    "items": [
+     "Grado de atribución: alto, medio, bajo o no determinado",
+     "Cronología de los hechos",
+     "Evidencias preservadas con su fecha y su origen",
+     "Qué diligencias pedir al juzgado o a las plataformas"
+    ],
+    "intro": [],
+    "tone": "white"
+   },
+   {
+    "h2": "Encargo, pago, investigación y entrega",
+    "eyebrow": "Cómo funciona",
+    "kind": "steps",
+    "steps": [
+     {
+      "title": "Encargo",
+      "text": "Nos envía el identificador, el relato y sus capturas, y firmamos la hoja de encargo.",
+      "img": "paso-encargo"
+     },
+     {
+      "title": "Pago",
+      "text": "Pago por adelantado del presupuesto cerrado.",
+      "img": "paso-pago"
+     },
+     {
+      "title": "Investigación",
+      "text": "Preservamos, analizamos y correlacionamos.",
+      "img": "paso-investigacion"
+     },
+     {
+      "title": "Entrega",
+      "text": "Le enviamos el informe cifrado y lo comentamos con usted.",
+      "img": "paso-entrega"
+     }
+    ],
+    "tone": "gray"
+   },
+   {
+    "h2": "",
+    "eyebrow": "",
+    "kind": "notdo",
+    "text": "No investigamos la vida privada, el paradero ni el patrimonio de personas. Esos encargos están reservados por ley a detectives privados habilitados; si su caso lo necesita, se lo diremos y le derivaremos a un profesional colaborador.",
+    "tone": "gray"
+   },
+   {
+    "h2": "Preguntas frecuentes",
+    "eyebrow": "",
+    "kind": "faq",
+    "faq": [
+     {
+      "q": "¿Qué pasa si no encontráis lo que busco?",
+      "a": "Se cobra por el alcance, no por el resultado. Siempre le entregamos lo encontrado y lo que no se ha podido determinar."
+     },
+     {
+      "q": "¿Es legal?",
+      "a": "Sí. Trabajamos con fuentes públicas y legítimas, sobre empresas, infraestructuras e identificadores digitales. No investigamos la vida privada de personas."
+     },
+     {
+      "q": "¿Sirve como prueba en un juicio?",
+      "a": "El rastreo orienta la denuncia y las diligencias. Para aportar la prueba al procedimiento existe el servicio de evidencia digital para juicio."
+     },
+     {
+      "q": "¿Es confidencial?",
+      "a": "Sí. Acuerdo de confidencialidad por defecto, envío cifrado del informe y borrado de los datos de trabajo al cerrar el caso."
+     }
+    ],
+    "tone": "white"
+   },
+   {
+    "kind": "form"
+   }
+  ],
+  "closing": {
+   "text": "Este caso se resuelve con nuestro servicio de **Rastreo de huella digital**.",
+   "link": {
+    "label": "Conozca el servicio completo →",
+    "href": "/ciberinteligencia/rastreo-huella-digital"
+   }
+  }
+ },
+ "suplantacion-de-marca-web-falsa": {
+  "name": "suplantacion-de-marca-web-falsa",
+  "path": "/suplantacion-de-marca-web-falsa",
+  "kind": "landing",
+  "seo": {
+   "title": "Suplantación de marca y webs falsas | GreenLock",
+   "description": "¿Una web falsa o un perfil usa su marca? Preservamos la prueba, analizamos la infraestructura y el registro del dominio, y le entregamos el rastro documentado y las diligencias a pedir.",
+   "jsonld": [
+    {
+     "@context": "https://schema.org",
+     "@type": "Service",
+     "name": "Rastreo de huella digital",
+     "serviceType": "Rastreo de huella digital",
+     "areaServed": "ES",
+     "url": "https://greenlock.tech/suplantacion-de-marca-web-falsa/",
+     "provider": {
+      "@type": "Organization",
+      "name": "GreenLock Cybersecurity",
+      "url": "https://greenlock.tech/",
+      "telephone": "+34603358517"
+     }
+    },
+    {
+     "@context": "https://schema.org",
+     "@type": "FAQPage",
+     "mainEntity": [
+      {
+       "@type": "Question",
+       "name": "¿Qué pasa si no encontráis lo que busco?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Se cobra por el alcance, no por el resultado. Siempre le entregamos lo encontrado y lo que no se ha podido determinar."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "¿Es legal?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sí. Trabajamos con fuentes públicas y legítimas, sobre empresas, infraestructuras e identificadores digitales. No investigamos la vida privada de personas."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "¿Sirve como prueba en un juicio?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "El rastreo orienta la denuncia y las diligencias. Para aportar la prueba al procedimiento existe el servicio de evidencia digital para juicio."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "¿Es confidencial?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sí. Acuerdo de confidencialidad por defecto, envío cifrado del informe y borrado de los datos de trabajo al cerrar el caso."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  "hero": {
+   "crumbs": null,
+   "eyebrow": "Rastreo de huella digital",
+   "h1": "Alguien está usando su marca. Reunimos el rastro y la prueba.",
+   "sub": "Analizamos la web, el dominio o el perfil que suplanta a su empresa, preservamos el contenido y le entregamos el rastro documentado para actuar.",
+   "cta": {
+    "label": "Solicitar presupuesto",
+    "href": "#encargo"
+   },
+   "img": "lp-suplantacion-marca"
+  },
+  "form": {
+   "eyebrow": "Encargo",
+   "title": "Cuéntenos su caso",
+   "intro": "Cuéntenos el caso. Le llamamos en menos de 24 h hábiles y le enviamos un presupuesto cerrado.",
+   "cta": "Solicitar presupuesto",
+   "linea": "Rastreo de huella digital",
+   "colab": false,
+   "slug": "suplantacion-de-marca-web-falsa",
+   "identLabel": "Web, dominio o perfil",
+   "identPlaceholder": "https://… o @usuario"
+  },
+  "sections": [
+   {
+    "h2": "Casos habituales",
+    "eyebrow": "Situaciones habituales",
+    "kind": "grid",
+    "intro": [],
+    "cards": [
+     {
+      "text": "Una web copia su marca y vende en su nombre."
+     },
+     {
+      "text": "Sus clientes reciben correos que parecen suyos y piden pagos a otra cuenta."
+     },
+     {
+      "text": "Aparecen perfiles en redes que se hacen pasar por su empresa."
+     }
+    ],
+    "notes": [],
+    "variant": "situations",
+    "tone": "white"
+   },
+   {
+    "h2": "Lo que revisamos",
+    "eyebrow": "Qué hacemos",
+    "kind": "grid",
+    "intro": [],
+    "cards": [
+     {
+      "title": "Preservar",
+      "items": [
+       "Guardamos el contenido antes de que desaparezca"
+      ]
+     },
+     {
+      "title": "Analizar",
+      "items": [
+       "Infraestructura y registro del identificador",
+       "Filtraciones y bases públicas"
+      ]
+     },
+     {
+      "title": "Correlacionar",
+      "items": [
+       "Otros perfiles, alias y cuentas",
+       "Cronología de los hechos"
+      ]
+     }
+    ],
+    "notes": [
+     {
+      "kind": "dark",
+      "title": "Se cobra por el trabajo realizado, no por el resultado.",
+      "text": "Siempre se entrega lo encontrado, con el grado de atribución alcanzado."
+     }
+    ],
+    "variant": "checks",
+    "tone": "gray"
+   },
+   {
+    "h2": "Contenido del informe",
+    "eyebrow": "Qué recibe",
+    "kind": "report",
+    "mock": {
+     "kind": "INFORME DE RASTREO",
+     "title": "Huella digital",
+     "subtitle": "Caso ilustrativo",
+     "risk": false
+    },
+    "items": [
+     "Grado de atribución: alto, medio, bajo o no determinado",
+     "Cronología de los hechos",
+     "Evidencias preservadas con su fecha y su origen",
+     "Qué diligencias pedir al juzgado o a las plataformas"
+    ],
+    "intro": [],
+    "tone": "white"
+   },
+   {
+    "h2": "Encargo, pago, investigación y entrega",
+    "eyebrow": "Cómo funciona",
+    "kind": "steps",
+    "steps": [
+     {
+      "title": "Encargo",
+      "text": "Nos envía el identificador, el relato y sus capturas, y firmamos la hoja de encargo.",
+      "img": "paso-encargo"
+     },
+     {
+      "title": "Pago",
+      "text": "Pago por adelantado del presupuesto cerrado.",
+      "img": "paso-pago"
+     },
+     {
+      "title": "Investigación",
+      "text": "Preservamos, analizamos y correlacionamos.",
+      "img": "paso-investigacion"
+     },
+     {
+      "title": "Entrega",
+      "text": "Le enviamos el informe cifrado y lo comentamos con usted.",
+      "img": "paso-entrega"
+     }
+    ],
+    "tone": "gray"
+   },
+   {
+    "h2": "",
+    "eyebrow": "",
+    "kind": "notdo",
+    "text": "No investigamos la vida privada, el paradero ni el patrimonio de personas. Esos encargos están reservados por ley a detectives privados habilitados; si su caso lo necesita, se lo diremos y le derivaremos a un profesional colaborador.",
+    "tone": "gray"
+   },
+   {
+    "h2": "Preguntas frecuentes",
+    "eyebrow": "",
+    "kind": "faq",
+    "faq": [
+     {
+      "q": "¿Qué pasa si no encontráis lo que busco?",
+      "a": "Se cobra por el alcance, no por el resultado. Siempre le entregamos lo encontrado y lo que no se ha podido determinar."
+     },
+     {
+      "q": "¿Es legal?",
+      "a": "Sí. Trabajamos con fuentes públicas y legítimas, sobre empresas, infraestructuras e identificadores digitales. No investigamos la vida privada de personas."
+     },
+     {
+      "q": "¿Sirve como prueba en un juicio?",
+      "a": "El rastreo orienta la denuncia y las diligencias. Para aportar la prueba al procedimiento existe el servicio de evidencia digital para juicio."
+     },
+     {
+      "q": "¿Es confidencial?",
+      "a": "Sí. Acuerdo de confidencialidad por defecto, envío cifrado del informe y borrado de los datos de trabajo al cerrar el caso."
+     }
+    ],
+    "tone": "white"
+   },
+   {
+    "kind": "form"
+   }
+  ],
+  "closing": {
+   "text": "Este caso se resuelve con nuestro servicio de **Rastreo de huella digital**.",
+   "link": {
+    "label": "Conozca el servicio completo →",
+    "href": "/ciberinteligencia/rastreo-huella-digital"
+   }
+  }
+ },
+ "estafa-online-identificar-autor": {
+  "name": "estafa-online-identificar-autor",
+  "path": "/estafa-online-identificar-autor",
+  "kind": "landing",
+  "seo": {
+   "title": "Estafa online: reconstruimos el rastro para su denuncia | GreenLock",
+   "description": "¿Le han estafado por internet? Preservamos las pruebas, rastreamos la web, el perfil, el correo o la wallet y le entregamos el rastro documentado para su denuncia.",
+   "jsonld": [
+    {
+     "@context": "https://schema.org",
+     "@type": "Service",
+     "name": "Rastreo de huella digital",
+     "serviceType": "Rastreo de huella digital",
+     "areaServed": "ES",
+     "url": "https://greenlock.tech/estafa-online-identificar-autor/",
+     "provider": {
+      "@type": "Organization",
+      "name": "GreenLock Cybersecurity",
+      "url": "https://greenlock.tech/",
+      "telephone": "+34603358517"
+     }
+    },
+    {
+     "@context": "https://schema.org",
+     "@type": "FAQPage",
+     "mainEntity": [
+      {
+       "@type": "Question",
+       "name": "¿Qué pasa si no encontráis lo que busco?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Se cobra por el alcance, no por el resultado. Siempre le entregamos lo encontrado y lo que no se ha podido determinar."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "¿Recuperáis el dinero?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Reconstruimos el rastro y lo documentamos para que su abogado o la policía puedan actuar."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "¿Es legal?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sí. Trabajamos con fuentes públicas y legítimas, sobre empresas, infraestructuras e identificadores digitales. No investigamos la vida privada de personas."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "¿Sirve como prueba en un juicio?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "El rastreo orienta la denuncia y las diligencias. Para aportar la prueba al procedimiento existe el servicio de evidencia digital para juicio."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  "hero": {
+   "crumbs": null,
+   "eyebrow": "Rastreo de huella digital",
+   "h1": "Le han estafado por internet. Reconstruimos el rastro para su denuncia.",
+   "sub": "Partimos de la web, el perfil, el correo, el teléfono o la wallet de la estafa, buscamos identificar al autor y le entregamos lo encontrado con su grado de fiabilidad.",
+   "cta": {
+    "label": "Solicitar presupuesto",
+    "href": "#encargo"
+   },
+   "img": "lp-estafa-online"
+  },
+  "form": {
+   "eyebrow": "Encargo",
+   "title": "Cuéntenos su caso",
+   "intro": "Cuéntenos el caso. Le llamamos en menos de 24 h hábiles y le enviamos un presupuesto cerrado.",
+   "cta": "Solicitar presupuesto",
+   "linea": "Rastreo de huella digital",
+   "colab": false,
+   "slug": "estafa-online-identificar-autor",
+   "identLabel": "Web, perfil, correo, teléfono o wallet",
+   "identPlaceholder": "El dato de partida de la estafa"
+  },
+  "sections": [
+   {
+    "h2": "Casos habituales",
+    "eyebrow": "Situaciones habituales",
+    "kind": "grid",
+    "intro": [],
+    "cards": [
+     {
+      "text": "Compró en una tienda online que nunca le envió el pedido."
+     },
+     {
+      "text": "Le convencieron para invertir en una plataforma que ha desaparecido."
+     },
+     {
+      "text": "Pagó a alguien que le contactó por redes sociales o por WhatsApp."
+     }
+    ],
+    "notes": [],
+    "variant": "situations",
+    "tone": "white"
+   },
+   {
+    "h2": "Lo que revisamos",
+    "eyebrow": "Qué hacemos",
+    "kind": "grid",
+    "intro": [],
+    "cards": [
+     {
+      "title": "Preservar",
+      "items": [
+       "Guardamos el contenido antes de que desaparezca"
+      ]
+     },
+     {
+      "title": "Analizar",
+      "items": [
+       "Infraestructura y registro del identificador",
+       "Filtraciones y bases públicas"
+      ]
+     },
+     {
+      "title": "Correlacionar",
+      "items": [
+       "Otros perfiles, alias y cuentas",
+       "Cronología de los hechos"
+      ]
+     }
+    ],
+    "notes": [
+     {
+      "kind": "dark",
+      "title": "Se cobra por el trabajo realizado, no por el resultado.",
+      "text": "Siempre se entrega lo encontrado, con el grado de atribución alcanzado."
+     }
+    ],
+    "variant": "checks",
+    "tone": "gray"
+   },
+   {
+    "h2": "Contenido del informe",
+    "eyebrow": "Qué recibe",
+    "kind": "report",
+    "mock": {
+     "kind": "INFORME DE RASTREO",
+     "title": "Huella digital",
+     "subtitle": "Caso ilustrativo",
+     "risk": false
+    },
+    "items": [
+     "Grado de atribución: alto, medio, bajo o no determinado",
+     "Cronología de los hechos",
+     "Evidencias preservadas con su fecha y su origen",
+     "Qué diligencias pedir al juzgado o a las plataformas"
+    ],
+    "intro": [],
+    "tone": "white"
+   },
+   {
+    "h2": "Encargo, pago, investigación y entrega",
+    "eyebrow": "Cómo funciona",
+    "kind": "steps",
+    "steps": [
+     {
+      "title": "Encargo",
+      "text": "Nos envía el identificador, el relato y sus capturas, y firmamos la hoja de encargo.",
+      "img": "paso-encargo"
+     },
+     {
+      "title": "Pago",
+      "text": "Pago por adelantado del presupuesto cerrado.",
+      "img": "paso-pago"
+     },
+     {
+      "title": "Investigación",
+      "text": "Preservamos, analizamos y correlacionamos.",
+      "img": "paso-investigacion"
+     },
+     {
+      "title": "Entrega",
+      "text": "Le enviamos el informe cifrado y lo comentamos con usted.",
+      "img": "paso-entrega"
+     }
+    ],
+    "tone": "gray"
+   },
+   {
+    "h2": "",
+    "eyebrow": "",
+    "kind": "notdo",
+    "text": "No investigamos la vida privada, el paradero ni el patrimonio de personas. Esos encargos están reservados por ley a detectives privados habilitados; si su caso lo necesita, se lo diremos y le derivaremos a un profesional colaborador.",
+    "tone": "gray"
+   },
+   {
+    "h2": "Preguntas frecuentes",
+    "eyebrow": "",
+    "kind": "faq",
+    "faq": [
+     {
+      "q": "¿Qué pasa si no encontráis lo que busco?",
+      "a": "Se cobra por el alcance, no por el resultado. Siempre le entregamos lo encontrado y lo que no se ha podido determinar."
+     },
+     {
+      "q": "¿Recuperáis el dinero?",
+      "a": "No. Reconstruimos el rastro y lo documentamos para que su abogado o la policía puedan actuar."
+     },
+     {
+      "q": "¿Es legal?",
+      "a": "Sí. Trabajamos con fuentes públicas y legítimas, sobre empresas, infraestructuras e identificadores digitales. No investigamos la vida privada de personas."
+     },
+     {
+      "q": "¿Sirve como prueba en un juicio?",
+      "a": "El rastreo orienta la denuncia y las diligencias. Para aportar la prueba al procedimiento existe el servicio de evidencia digital para juicio."
+     }
+    ],
+    "tone": "white"
+   },
+   {
+    "kind": "form"
+   }
+  ],
+  "closing": {
+   "text": "Este caso se resuelve con nuestro servicio de **Rastreo de huella digital**.",
+   "link": {
+    "label": "Conozca el servicio completo →",
+    "href": "/ciberinteligencia/rastreo-huella-digital"
+   }
+  }
+ },
+ "prueba-digital-para-juicio": {
+  "name": "prueba-digital-para-juicio",
+  "path": "/prueba-digital-para-juicio",
+  "kind": "landing",
+  "seo": {
+   "title": "Prueba digital para juicio: más que capturas de pantalla | GreenLock",
+   "description": "Las capturas de pantalla se impugnan con facilidad. Preservamos la prueba digital con hash y cadena de custodia y la documentamos en un informe técnico para el procedimiento.",
+   "jsonld": [
+    {
+     "@context": "https://schema.org",
+     "@type": "Service",
+     "name": "Evidencia digital para juicio",
+     "serviceType": "Evidencia digital para juicio",
+     "areaServed": "ES",
+     "url": "https://greenlock.tech/prueba-digital-para-juicio/",
+     "provider": {
+      "@type": "Organization",
+      "name": "GreenLock Cybersecurity",
+      "url": "https://greenlock.tech/",
+      "telephone": "+34603358517"
+     }
+    },
+    {
+     "@context": "https://schema.org",
+     "@type": "FAQPage",
+     "mainEntity": [
+      {
+       "@type": "Question",
+       "name": "¿Qué pasa si la evidencia ya no está accesible?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Lo sabrá en el estudio de viabilidad, antes de encargar la segunda fase."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "¿Y la ratificación en juicio?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Se presupuesta aparte cuando hay señalamiento."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "¿Es confidencial?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sí. Acuerdo de confidencialidad por defecto, envío cifrado del informe y borrado de los datos de trabajo al cerrar el caso."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "¿Es legal?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sí. Trabajamos con fuentes públicas y legítimas, sobre empresas, infraestructuras e identificadores digitales. No investigamos la vida privada de personas."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  "hero": {
+   "crumbs": null,
+   "eyebrow": "Evidencia digital para juicio",
+   "h1": "Capturas de pantalla no bastan. Preservamos la prueba con método.",
+   "sub": "Primero estudiamos en 3 días hábiles qué evidencias existen y qué valor tendrían. Después las preservamos con hash y cadena de custodia y las documentamos en un informe técnico.",
+   "cta": {
+    "label": "Solicitar estudio de viabilidad",
+    "href": "#encargo"
+   },
+   "img": "ci-abogado"
+  },
+  "form": {
+   "eyebrow": "Encargo",
+   "title": "Cuéntenos su caso",
+   "intro": "Cuéntenos el caso. Le llamamos en menos de 24 h hábiles y le enviamos un presupuesto cerrado.",
+   "cta": "Solicitar estudio de viabilidad",
+   "linea": "Evidencia digital para juicio",
+   "colab": false,
+   "slug": "prueba-digital-para-juicio",
+   "identLabel": "Evidencia o identificador",
+   "identPlaceholder": "Perfil, URL, conversación, correo…"
+  },
+  "sections": [
+   {
+    "h2": "Casos habituales",
+    "eyebrow": "Situaciones habituales",
+    "kind": "grid",
+    "intro": [],
+    "cards": [
+     {
+      "text": "Las capturas de pantalla de su cliente han sido impugnadas."
+     },
+     {
+      "text": "La otra parte ha borrado publicaciones o mensajes clave."
+     },
+     {
+      "text": "Necesita acreditar conversaciones o publicaciones con fecha y origen."
+     }
+    ],
+    "notes": [],
+    "variant": "situations",
+    "tone": "white"
+   },
+   {
+    "h2": "El servicio en dos fases",
+    "eyebrow": "Qué hacemos",
+    "kind": "grid",
+    "intro": [],
+    "cards": [
+     {
+      "title": "Fase 1: Viabilidad",
+      "items": [
+       "Qué evidencias existen y si siguen accesibles",
+       "Cómo obtenerlas y qué valor probatorio tendrían",
+       "Recomendación y presupuesto cerrado"
+      ]
+     },
+     {
+      "title": "Fase 2: Informe técnico",
+      "items": [
+       "Preservación con hash y cadena de custodia",
+       "Análisis de las evidencias",
+       "Informe técnico para el procedimiento"
+      ]
+     }
+    ],
+    "notes": [
+     {
+      "kind": "plain",
+      "text": "La ratificación en juicio se presupuesta aparte cuando hay señalamiento."
+     }
+    ],
+    "variant": "checks",
+    "tone": "gray"
+   },
+   {
+    "h2": "Contenido del informe",
+    "eyebrow": "Qué recibe",
+    "kind": "report",
+    "mock": {
+     "kind": "INFORME TÉCNICO",
+     "title": "Evidencias digitales",
+     "subtitle": "Procedimiento ilustrativo",
+     "risk": false
+    },
+    "items": [
+     "Evidencias preservadas con hash",
+     "Cadena de custodia documentada",
+     "Metodología que se puede revisar",
+     "Conclusiones técnicas claras"
+    ],
+    "intro": [],
+    "tone": "white"
+   },
+   {
+    "h2": "Encargo, pago, investigación y entrega",
+    "eyebrow": "Cómo funciona",
+    "kind": "steps",
+    "steps": [
+     {
+      "title": "Encargo",
+      "text": "Nos explica el procedimiento y firmamos la hoja de encargo.",
+      "img": "paso-encargo"
+     },
+     {
+      "title": "Viabilidad",
+      "text": "Pago por adelantado y estudio de las evidencias.",
+      "img": "paso-viabilidad"
+     },
+     {
+      "title": "Obtención",
+      "text": "Pago del 50 %, preservación y análisis.",
+      "img": "paso-investigacion"
+     },
+     {
+      "title": "Entrega",
+      "text": "Informe técnico y pago del 50 % restante.",
+      "img": "paso-entrega"
+     }
+    ],
+    "tone": "gray"
+   },
+   {
+    "h2": "",
+    "eyebrow": "",
+    "kind": "notdo",
+    "text": "No investigamos la vida privada, el paradero ni el patrimonio de personas. Esos encargos están reservados por ley a detectives privados habilitados; si su caso lo necesita, se lo diremos y le derivaremos a un profesional colaborador.",
+    "tone": "gray"
+   },
+   {
+    "h2": "Preguntas frecuentes",
+    "eyebrow": "",
+    "kind": "faq",
+    "faq": [
+     {
+      "q": "¿Qué pasa si la evidencia ya no está accesible?",
+      "a": "Lo sabrá en el estudio de viabilidad, antes de encargar la segunda fase."
+     },
+     {
+      "q": "¿Y la ratificación en juicio?",
+      "a": "Se presupuesta aparte cuando hay señalamiento."
+     },
+     {
+      "q": "¿Es confidencial?",
+      "a": "Sí. Acuerdo de confidencialidad por defecto, envío cifrado del informe y borrado de los datos de trabajo al cerrar el caso."
+     },
+     {
+      "q": "¿Es legal?",
+      "a": "Sí. Trabajamos con fuentes públicas y legítimas, sobre empresas, infraestructuras e identificadores digitales. No investigamos la vida privada de personas."
+     }
+    ],
+    "tone": "white"
+   },
+   {
+    "kind": "form"
+   }
+  ],
+  "closing": {
+   "text": "Este caso se resuelve con nuestro servicio de **Evidencia digital para juicio**.",
+   "link": {
+    "label": "Conozca el servicio completo →",
+    "href": "/ciberinteligencia/evidencia-digital-juicio"
+   }
+  }
+ }
+}

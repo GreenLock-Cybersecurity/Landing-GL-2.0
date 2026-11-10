@@ -1,0 +1,40 @@
+---
+// Cabecera mínima de las landings de campaña: logo y, a la derecha, el contacto (slot).
+import { Image } from 'astro:assets';
+import logoImg from '@assets/icons/Logo.webp';
+---
+
+<header class="lt">
+  <div class="container-custom lt-inner">
+    <span class="lt-logo">
+      <Image src={logoImg} alt="GreenLock" width={30} height={30} class="lt-logo-img" loading="eager" />
+      <span>Green<span class="lt-logo-accent">Lock</span></span>
+    </span>
+    <slot />
+  </div>
+</header>
+
+<style>
+  .lt {
+    background: #fff;
+    border-bottom: 1px solid #eef0f2;
+  }
+  .lt-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding-top: 14px;
+    padding-bottom: 14px;
+  }
+  .lt-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 20px;
+    font-weight: 700;
+    color: #111827;
+  }
+  .lt-logo-img { width: 30px; height: 30px; object-fit: contain; }
+  .lt-logo-accent { color: #16a34a; }
+</style>

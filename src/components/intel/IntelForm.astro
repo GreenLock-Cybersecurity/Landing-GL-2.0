@@ -1,0 +1,316 @@
+---
+// Formulario de encargo de ciberinteligencia (POST {LEADS_URL}/lead/inteligencia).
+// Con `colab`, es el alta de despacho colaborador (persona de contacto, despacho,
+// áreas y volumen). Tras enviar, lleva a /gracias/?servicio=<slug>.
+import { LINEAS, FINALIDADES, VOLUMENES, PHONE, PHONE_HREF, type IntelForm } from '@data/intel';
+
+interface Props {
+  form: IntelForm;
+}
+const { form } = Astro.props;
+const identLabel = form.identLabel ?? 'Sociedad o identificador';
+---
+
+<section id="encargo" class="if-section">
+  <div class="container-custom if-inner">
+    <div class="if-copy">
+      <p class="if-eyebrow">{form.eyebrow}</p>
+      <h2 class="if-title">{form.title}</h2>
+      {form.intro && <p class="if-intro">{form.intro}</p>}
+      <p class="if-tel">También puede llamarnos: <a href={PHONE_HREF}>{PHONE}</a></p>
+    </div>
+
+    <form class="if-form" data-intel-form data-slug={form.slug} data-colab={form.colab ? '1' : undefined} novalidate data-astro-reload>
+      <input type="text" name="website" class="if-hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+      {form.colab ? (
+        <div class="if-grid">
+          <label class="if-field">
+            <span class="if-label">Persona de contacto *</span>
+            <input class="if-input" name="name" required maxlength="100" autocomplete="name" />
+          </label>
+          <label class="if-field">
+            <span class="if-label">Despacho *</span>
+            <input class="if-input" name="empresa" required maxlength="140" autocomplete="organization" />
+          </label>
+          <label class="if-field">
+            <span class="if-label">Correo *</span>
+            <input class="if-input" name="email" type="email" required maxlength="160" autocomplete="email" />
+          </label>
+          <label class="if-field">
+            <span class="if-label">Teléfono *</span>
+            <input class="if-input" name="phone" type="tel" required maxlength="30" autocomplete="tel" />
+          </label>
+          <label class="if-field">
+            <span class="if-label">Áreas de práctica</span>
+            <input class="if-input" name="areas" maxlength="200" placeholder="Mercantil, penal, derecho digital…" />
+          </label>
+          <label class="if-field">
+            <span class="if-label">Volumen aproximado de casos</span>
+            <select class="if-input" name="volumen">
+              {VOLUMENES.map((v) => <option value={v}>{v}</option>)}
+            </select>
+          </label>
+          <label class="if-field if-field--full">
+            <span class="if-label">Mensaje</span>
+            <textarea class="if-input if-textarea" name="message" rows="4" maxlength="1000"></textarea>
+          </label>
+        </div>
+      ) : (
+        <div class="if-grid">
+          <label class="if-field if-field--full">
+            <span class="if-label">Servicio *</span>
+            <select class="if-input" name="linea" required>
+              {LINEAS.map((l) => <option value={l} selected={l === form.linea}>{l}</option>)}
+            </select>
+          </label>
+          <label class="if-field">
+            <span class="if-label">Nombre *</span>
+            <input class="if-input" name="name" required maxlength="100" autocomplete="name" />
+          </label>
+          <label class="if-field">
+            <span class="if-label">Empresa o despacho</span>
+            <input class="if-input" name="empresa" maxlength="140" autocomplete="organization" placeholder="Opcional para particulares" />
+          </label>
+          <label class="if-field">
+            <span class="if-label">Correo *</span>
+            <input class="if-input" name="email" type="email" required maxlength="160" autocomplete="email" />
+          </label>
+          <label class="if-field">
+            <span class="if-label">Teléfono *</span>
+            <input class="if-input" name="phone" type="tel" required maxlength="30" autocomplete="tel" />
+          </label>
+          <label class="if-field">
+            <span class="if-label">Finalidad *</span>
+            <select class="if-input" name="finalidad" required>
+              <option value="">Seleccione…</option>
+              {FINALIDADES.map((f) => <option value={f}>{f}</option>)}
+            </select>
+          </label>
+          <label class="if-field">
+            <span class="if-label">Urgencia</span>
+            <select class="if-input" name="urgencia">
+              <option value="Normal">Normal</option>
+              <option value="Urgente">Urgente</option>
+            </select>
+          </label>
+          <label class="if-field if-field--full">
+            <span class="if-label">{identLabel}</span>
+            <input class="if-input" name="identificador" maxlength="300" placeholder={form.identPlaceholder ?? undefined} />
+          </label>
+          <label class="if-field if-field--full">
+            <span class="if-label">Breve descripción</span>
+            <textarea class="if-input if-textarea" name="message" rows="4" maxlength="1000" aria-describedby={`if-hint-${form.slug}`}></textarea>
+            <span class="if-hint" id={`if-hint-${form.slug}`}>No incluya datos personales sensibles; los recogeremos de forma segura si el encargo sigue adelante.</span>
+          </label>
+        </div>
+      )}
+
+      <label class="if-check">
+        <input type="checkbox" name="rgpd" required />
+        <span>He leído y acepto la <a href="/legal/privacidad">política de privacidad</a>.</span>
+      </label>
+
+      <button type="submit" class="gl-btn-primary if-submit" data-label={form.cta}>{form.cta}</button>
+      <p class="if-error" role="alert" hidden></p>
+    </form>
+  </div>
+</section>
+
+<script>
+  import { submitIntel, track } from '@lib/leads';
+
+  const RGPD_MSG = 'Marque la casilla de privacidad para continuar.';
+  const NET_MSG = 'No se ha podido enviar. Inténtelo de nuevo o llámenos al +34 603 35 85 17.';
+  const FIELDS_MSG = 'Revise los campos marcados con * antes de enviar.';
+
+  // Escuchas delegadas una sola vez: sobreviven a la navegación con ViewTransitions.
+  const w = window as unknown as { __intelForm?: boolean };
+  if (!w.__intelForm) {
+    w.__intelForm = true;
+
+    document.addEventListener('focusin', (e) => {
+      const form = (e.target as HTMLElement).closest<HTMLFormElement>('[data-intel-form]');
+      if (!form || form.dataset.started) return;
+      form.dataset.started = '1';
+      track('form_start', { servicio: form.dataset.slug });
+    });
+
+    document.addEventListener('submit', async (e) => {
+      const form = (e.target as HTMLElement).closest<HTMLFormElement>('[data-intel-form]');
+      if (!form) return;
+      e.preventDefault();
+      if (form.dataset.sending) return;
+
+      const error = form.querySelector<HTMLElement>('.if-error')!;
+      const button = form.querySelector<HTMLButtonElement>('.if-submit')!;
+      const show = (msg: string) => { error.textContent = msg; error.hidden = false; };
+      error.hidden = true;
+
+      const data = new FormData(form);
+      if ((data.get('website') as string)?.trim()) return; // honeypot
+      if (!form.checkValidity()) {
+        const rgpd = form.querySelector<HTMLInputElement>('input[name="rgpd"]')!;
+        const others = [...form.querySelectorAll<HTMLInputElement>('[required]')].filter((el) => el !== rgpd && !el.checkValidity());
+        if (others.length) { others[0].focus(); others[0].reportValidity(); show(FIELDS_MSG); }
+        else show(RGPD_MSG);
+        return;
+      }
+
+      const slug = form.dataset.slug || '';
+      const values: Record<string, string> = { variante: slug };
+      data.forEach((v, k) => { if (k !== 'rgpd' && typeof v === 'string') values[k] = v; });
+      if (form.dataset.colab) values.linea = 'Despacho colaborador';
+
+      form.dataset.sending = '1';
+      button.disabled = true;
+      button.textContent = 'Enviando…';
+      const ok = await submitIntel(values);
+      if (ok) {
+        window.location.href = `/gracias/?servicio=${encodeURIComponent(slug)}`;
+        return;
+      }
+      delete form.dataset.sending;
+      button.disabled = false;
+      button.textContent = button.dataset.label || 'Enviar';
+      show(NET_MSG);
+    });
+  }
+</script>
+
+<style>
+  .if-section {
+    background: #f0fdf4;
+    border-top: 1px solid #eef0f2;
+    scroll-margin-top: 80px;
+  }
+  .if-inner {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr));
+    gap: clamp(32px, 5vw, 64px);
+    align-items: start;
+    padding-top: clamp(4rem, 7vw, 6rem);
+    padding-bottom: clamp(4rem, 7vw, 6rem);
+  }
+  .if-eyebrow {
+    margin-bottom: 14px;
+    color: #22c55e;
+    font-size: clamp(1rem, 1.8vw, 1.25rem);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .if-title {
+    margin-bottom: 18px;
+    font-size: clamp(1.75rem, 3.4vw, 2.5rem);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: #0f172a;
+    text-wrap: balance;
+  }
+  .if-intro {
+    margin-bottom: 20px;
+    font-size: 17px;
+    line-height: 1.65;
+    color: #64748b;
+  }
+  .if-tel {
+    font-size: 15px;
+    color: #334155;
+  }
+  .if-tel a {
+    color: #16a34a;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .if-tel a:hover { color: #15803d; }
+
+  .if-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding: clamp(20px, 3vw, 32px);
+    background: #fff;
+    min-width: 0;
+  }
+  .if-hp {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+  }
+  .if-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+  .if-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+  }
+  .if-field--full { grid-column: 1 / -1; }
+  .if-label {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #1f2937;
+  }
+  .if-input {
+    width: 100%;
+    border: 1px solid #d1d5db;
+    border-radius: 0;
+    background: #fff;
+    padding: 12px 14px;
+    font-size: 16px;
+    color: #111827;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .if-input::placeholder { color: #6b7280; }
+  .if-input:focus,
+  .if-input:focus-visible {
+    border-color: #22c55e;
+    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2);
+  }
+  .if-textarea { resize: vertical; }
+  .if-hint {
+    font-size: 12.5px;
+    line-height: 1.5;
+    color: #64748b;
+  }
+  .if-check {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 14px;
+    color: #334155;
+    cursor: pointer;
+  }
+  .if-check input {
+    margin-top: 3px;
+    width: 16px;
+    height: 16px;
+    accent-color: #16a34a;
+    flex: none;
+  }
+  .if-check a { color: #16a34a; }
+  .if-submit {
+    width: 100%;
+    padding: 16px;
+    font-size: 17px;
+    cursor: pointer;
+  }
+  .if-submit:disabled { opacity: 0.75; cursor: wait; }
+  .if-error {
+    margin: 0;
+    font-size: 14px;
+    color: #dc2626;
+  }
+
+  @media (max-width: 559px) {
+    .if-grid { grid-template-columns: minmax(0, 1fr); }
+  }
+</style>

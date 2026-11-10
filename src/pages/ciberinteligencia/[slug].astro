@@ -1,98 +1,30 @@
 ---
+// Servicios de Ciberinteligencia: due diligence de empresa, rastreo de huella digital,
+// evidencia digital para juicio y servicio para despachos de abogados.
 import BaseLayout from '@layouts/BaseLayout.astro';
 import PageHero from '@components/pages/PageHero.astro';
-import ItemsGrid from '@components/pages/ItemsGrid.astro';
-import ListPanel from '@components/pages/ListPanel.astro';
-import SectionHeading from '@components/pages/SectionHeading.astro';
-import CardGrid from '@components/pages/CardGrid.astro';
-import CtaDark from '@components/pages/CtaDark.astro';
-import { cases, caseBySlug, caseHref, type InvestigationCase } from '@data/cases';
-import { breadcrumbSchema } from '@lib/seo';
+import IntelSections from '@components/intel/IntelSections.astro';
+import { intelServices, intelService, intelImage, PHONE, PHONE_HREF } from '@data/intel';
 
 export function getStaticPaths() {
-  return cases.map((c) => ({ params: { slug: c.slug } }));
+  return intelServices.map((slug) => ({ params: { slug } }));
 }
 
-const item = caseBySlug(Astro.params.slug!)!;
-const path = caseHref(item.slug);
-const crumbs = [
-  { label: 'Inicio', href: '/' },
-  { label: 'Investigación digital', href: '/ciberinteligencia' },
-  { label: item.name },
-];
-// El formulario de investigación de la home se abre con este caso ya marcado
-const formHref = `/#contar-caso-${item.caseIndex}`;
-const wa = 'https://wa.me/34603358517?text=Hola%2C%20quiero%20contaros%20mi%20caso%20(investigaci%C3%B3n)';
-const waRef = `WEB-CASO-${item.slug.toUpperCase()}`;
-const related = item.related
-  .map(caseBySlug)
-  .filter((r): r is InvestigationCase => !!r)
-  .map((r) => ({ href: caseHref(r.slug), title: r.card.title, text: r.card.text, img: r.card.img }));
+const page = intelService(Astro.params.slug!);
+const hero = page.hero;
 ---
 
-<BaseLayout
-  title={item.seo.title}
-  exactTitle
-  description={item.seo.description}
-  schemas={[breadcrumbSchema(crumbs, path), ...item.schema]}
->
-  <PageHero
-    crumbs={crumbs}
-    eyebrow={item.hero.eyebrow}
-    title={item.hero.h1}
-    sub={item.hero.sub}
-    primary={{ label: 'Contar mi caso', href: formHref }}
-    wa={{ label: 'Cuéntanoslo por WhatsApp', href: wa, ref: waRef }}
-    img={item.hero.img}
-  />
-
-  <ListPanel eyebrow={item.signals.eyebrow} title={item.signals.title} items={item.signals.items} />
-
-  <ItemsGrid eyebrow={item.todo.eyebrow} title={item.todo.title} items={item.todo.items} tone="gray" />
-
-  <section class="case-help">
-    <div class="container-custom case-inner">
-      <SectionHeading eyebrow={item.help.eyebrow} title={item.help.title} lead={item.help.lead} width={820} />
-      <p class="case-help-link"><a href="/ciberinteligencia">Cómo funciona la investigación digital (OSINT) →</a></p>
-    </div>
-  </section>
-
-  <section class="case-related">
-    <div class="container-custom case-inner">
-      <h2 class="gl-section-title case-related-title">Otros casos en los que ayudamos</h2>
-      <CardGrid cards={related} />
-    </div>
-  </section>
-
-  <CtaDark
-    eyebrow={item.cta.eyebrow}
-    title={item.cta.title}
-    text={item.cta.text}
-    primary={{ label: 'Contar mi caso', href: formHref }}
-    wa={{ href: wa, ref: `${waRef}-CTA` }}
-  />
+<BaseLayout title={page.seo.title} exactTitle description={page.seo.description} schemas={page.seo.jsonld}>
+  <div data-servicio={page.form.slug}>
+    <PageHero
+      crumbs={hero.crumbs}
+      eyebrow={hero.eyebrow}
+      title={hero.h1}
+      sub={hero.sub}
+      primary={hero.cta}
+      img={intelImage(hero.img)}
+      tel={{ text: 'Le llamamos en menos de 24 h hábiles:', label: PHONE, href: PHONE_HREF }}
+    />
+    <IntelSections page={page} />
+  </div>
 </BaseLayout>
-
-<style>
-  .case-help { background: #fff; }
-  .case-related {
-    background: #fff;
-    border-top: 1px solid #eef0f2;
-  }
-  .case-inner {
-    padding-top: clamp(4rem, 7vw, 6rem);
-    padding-bottom: clamp(4rem, 7vw, 6rem);
-  }
-  .case-help-link {
-    margin-top: 32px;
-    font-size: 17px;
-  }
-  .case-help-link a,
-  .case-related a.case-all {
-    font-weight: 500;
-    color: #16a34a;
-    text-decoration: none;
-  }
-  .case-help-link a:hover { color: #15803d; }
-  .case-related-title { margin-bottom: 40px; }
-</style>

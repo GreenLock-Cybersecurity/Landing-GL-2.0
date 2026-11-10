@@ -1,0 +1,169 @@
+---
+// Página de confirmación tras enviar un formulario de ciberinteligencia (noindex).
+// Muestra el servicio según ?servicio=<slug>.
+import { Image } from 'astro:assets';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { GRACIAS_SERVICIO, PHONE, PHONE_HREF, intelImage } from '@data/intel';
+
+const img = intelImage('detective');
+const steps = [
+  'Revisamos lo que nos ha contado.',
+  'Le llamamos para concretar el alcance y la finalidad.',
+  'Le enviamos la hoja de encargo con el presupuesto cerrado.',
+];
+---
+
+<BaseLayout title="Hemos recibido su solicitud | GreenLock" exactTitle description="Hemos recibido su solicitud. Le llamamos en menos de 24 h hábiles." noindex>
+  <section class="gr">
+    <div class="gr-circle" aria-hidden="true"></div>
+    <div class="container-custom gr-inner">
+      <div class="gr-copy">
+        <span class="gr-badge" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+        </span>
+        <h1 class="gr-title">Hemos recibido su solicitud</h1>
+        <p class="gr-servicio" data-gr-servicio hidden></p>
+        <p class="gr-sub">Le llamamos en menos de 24 h hábiles.</p>
+        <ol class="gr-steps">
+          {steps.map((s, i) => (
+            <li><span class="gr-num">{i + 1}</span>{s}</li>
+          ))}
+        </ol>
+        <p class="gr-urgent">¿Es urgente? Llámenos al <a href={PHONE_HREF}>{PHONE}</a>.</p>
+        <a href="/" class="gl-btn-ghost-green gr-back">Volver al inicio</a>
+      </div>
+      <div class="gr-visual">
+        <Image src={img.src} alt={img.alt} height={360} densities={[1, 2]} class="gr-img" loading="eager" />
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script define:vars={{ map: GRACIAS_SERVICIO }}>
+  function fillServicio() {
+    const el = document.querySelector('[data-gr-servicio]');
+    if (!el) return;
+    const slug = new URLSearchParams(location.search).get('servicio') || '';
+    const name = map[slug];
+    if (name) { el.textContent = name; el.hidden = false; }
+  }
+  fillServicio();
+  document.addEventListener('astro:after-swap', fillServicio);
+</script>
+
+<style>
+  .gr {
+    position: relative;
+    overflow: hidden;
+    background: #f3f4f6;
+  }
+  .gr-circle {
+    position: absolute;
+    right: -12%;
+    top: 50%;
+    width: min(760px, 110vw);
+    aspect-ratio: 1;
+    transform: translateY(-50%);
+    border-radius: 50%;
+    background: #fff;
+  }
+  .gr-inner {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr));
+    align-items: center;
+    gap: clamp(24px, 4vw, 56px);
+    padding-top: clamp(3rem, 6vw, 5rem);
+    padding-bottom: clamp(3rem, 6vw, 5rem);
+  }
+  .gr-copy {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+    min-width: 0;
+  }
+  .gr-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    color: #fff;
+  }
+  .gr-badge svg { width: 22px; height: 22px; }
+  .gr-title {
+    font-size: clamp(2.25rem, 4.6vw, 3.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    font-weight: 700;
+    color: #030712;
+    text-wrap: balance;
+  }
+  .gr-servicio {
+    font-size: 15px;
+    font-weight: 600;
+    color: #16a34a;
+  }
+  .gr-sub {
+    font-size: 18px;
+    color: #64748b;
+  }
+  .gr-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .gr-steps li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 16px;
+    color: #1f2937;
+  }
+  .gr-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+    width: 30px;
+    height: 30px;
+    border: 1px solid #bbf7d0;
+    background: #fff;
+    font-weight: 700;
+    color: #16a34a;
+  }
+  .gr-urgent {
+    font-size: 15px;
+    color: #334155;
+  }
+  .gr-urgent a {
+    color: #16a34a;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .gr-back {
+    padding: 14px 30px;
+    font-size: 16px;
+  }
+  .gr-visual {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .gr-img {
+    display: block;
+    height: clamp(220px, 28vw, 360px);
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
+    animation: glFloat 6s ease-in-out infinite;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .gr-img { animation: none; }
+  }
+</style>

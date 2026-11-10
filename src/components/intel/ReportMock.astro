@@ -1,0 +1,129 @@
+---
+// Maqueta del informe que se entrega (portada ilustrativa, sin datos reales).
+interface Props {
+  kind: string;
+  title: string;
+  subtitle: string;
+  /** Semáforo de riesgo (due diligence) */
+  risk?: boolean;
+}
+const { kind, title, subtitle, risk = false } = Astro.props;
+---
+
+<div class="rm-panel" aria-hidden="true">
+  <div class="rm-doc">
+    <div class="rm-head"><span>GreenLock</span><span>Confidencial</span></div>
+    <div class="rm-rule"></div>
+    <span class="rm-kind">{kind}</span>
+    <span class="rm-title">{title}</span>
+    <span class="rm-sub">{subtitle}</span>
+    {risk && (
+      <div class="rm-risk">
+        <span class="rm-dot rm-dot--green"></span>
+        <span class="rm-dot rm-dot--amber"></span>
+        <span class="rm-dot rm-dot--red"></span>
+        <span class="rm-risk-label">Riesgo</span>
+      </div>
+    )}
+    <div class="rm-lines">
+      <span style="width: 100%"></span>
+      <span style="width: 86%"></span>
+      <span style="width: 92%"></span>
+      <span style="width: 64%"></span>
+    </div>
+    <div class="rm-rule"></div>
+    <div class="rm-foot"><span>Ejemplo ilustrativo</span><span>greenlock.tech</span></div>
+  </div>
+</div>
+
+<style>
+  .rm-panel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(28px, 5vw, 56px) clamp(20px, 4vw, 48px);
+    background: #f0fdf4;
+  }
+  .rm-doc {
+    display: flex;
+    flex-direction: column;
+    width: min(100%, 300px);
+    aspect-ratio: 3 / 4;
+    padding: 28px 26px;
+    background: #fff;
+    box-shadow: 0 30px 70px -20px rgba(15, 23, 42, 0.45);
+  }
+  .rm-head,
+  .rm-foot {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #64748b;
+  }
+  .rm-foot {
+    letter-spacing: 0.04em;
+    text-transform: none;
+  }
+  .rm-rule {
+    height: 2px;
+    margin: 10px 0 0;
+    background: #22c55e;
+  }
+  .rm-kind {
+    margin-top: 28px;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #64748b;
+  }
+  .rm-title {
+    margin-top: 8px;
+    font-size: 20px;
+    line-height: 1.25;
+    font-weight: 600;
+    color: #0f172a;
+  }
+  .rm-sub {
+    margin-top: 6px;
+    font-size: 12px;
+    font-style: italic;
+    color: #64748b;
+  }
+  .rm-risk {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 14px;
+  }
+  .rm-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+  .rm-dot--green { background: #22c55e; }
+  .rm-dot--amber { background: var(--color-amber-500); }
+  .rm-dot--red { background: #dc2626; }
+  .rm-risk-label {
+    margin-left: 4px;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #64748b;
+  }
+  .rm-lines {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: auto;
+    padding-top: 24px;
+    margin-bottom: 14px;
+  }
+  .rm-lines span {
+    height: 6px;
+    background: #e5e7eb;
+  }
+  .rm-foot { margin-top: 10px; }
+</style>

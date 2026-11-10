@@ -1,0 +1,504 @@
+---
+// Pinta las secciones de una página de ciberinteligencia a partir de `intel-pages.json`:
+// rejillas (situaciones, comprobaciones, enlaces), informe, pasos, «lo que no hacemos»,
+// banda para despachos, preguntas frecuentes y formulario de encargo.
+import { Image } from 'astro:assets';
+import ReportMock from './ReportMock.astro';
+import IntelForm from './IntelForm.astro';
+import { intelImage, type IntelPage } from '@data/intel';
+
+interface Props {
+  page: IntelPage;
+}
+const { page } = Astro.props;
+const bold = (t = '') => t.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+---
+
+{page.sections.map((s) => {
+  if (s.kind === 'form') return <IntelForm form={page.form} />;
+  const tone = s.tone ?? 'white';
+  return (
+    <section class:list={['is', `is--${tone}`]}>
+      <div class="container-custom is-inner">
+        {s.kind === 'grid' && (
+          <>
+            {s.h2 && (
+              <div class="is-head">
+                {s.eyebrow && <p class="is-eyebrow">{s.eyebrow}</p>}
+                <h2 class:list={['is-title', { 'is-title--sm': !s.eyebrow }]}>{s.h2}</h2>
+                {s.intro.map((p) => <p class="is-lead">{p}</p>)}
+              </div>
+            )}
+            <div class:list={['is-grid', `is-grid--${s.variant}`]}>
+              {s.cards.map((c) => {
+                if (s.variant === 'situations') return <div class="is-sit"><p>{c.text}</p></div>;
+                if (s.variant === 'links') {
+                  const pic = c.img ? intelImage(c.img) : null;
+                  return (
+                    <a href={c.href} class:list={['is-link', { 'is-link--img': pic, 'is-link--plain': !pic && !s.eyebrow }]}>
+                      {pic && (
+                        <span class="is-link-visual">
+                          <Image src={pic.src} alt={pic.alt} height={190} densities={[1, 2]} class="is-link-img" loading="lazy" decoding="async" />
+                        </span>
+                      )}
+                      <span class="is-link-title">{c.title}</span>
+                      <span class="is-link-text">{c.text}</span>
+                      <span class="is-link-more">{c.linkLabel}</span>
+                    </a>
+                  );
+                }
+                return (
+                  <div class="is-card">
+                    {c.title && <h3 class="is-card-title">{c.title}</h3>}
+                    {c.text && <p class="is-card-text">{c.text}</p>}
+                    {c.items && (
+                      <ul class="is-checks">
+                        {c.items.map((it) => (
+                          <li>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                            <span>{it}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+            {s.notes.map((n) => {
+              if (n.kind === 'plain') return <p class="is-note-plain" set:html={bold(n.text)} />;
+              if (n.kind === 'dark') return (
+                <div class="is-note-dark"><p class="is-note-dark-title">{n.title}</p><p class="is-note-dark-text">{n.text}</p></div>
+              );
+              if (n.kind === 'chips') return (
+                <div class="is-chips">
+                  <span class="is-chips-title">{n.title}</span>
+                  <div class="is-chips-row">{n.chips.map((c) => <span class="is-chip">{c}</span>)}</div>
+                </div>
+              );
+              return (
+                <div class="is-note">
+                  <h3 class="is-note-title">{n.title}</h3>
+                  <p class="is-note-text">{n.text}</p>
+                  {n.small && <p class="is-note-small">{n.small}</p>}
+                </div>
+              );
+            })}
+          </>
+        )}
+
+        {s.kind === 'report' && (
+          <div class="is-report">
+            <div class="is-report-copy">
+              <p class="is-eyebrow">{s.eyebrow}</p>
+              <h2 class="is-title">{s.h2}</h2>
+              {s.intro.map((p) => <p class="is-lead">{p}</p>)}
+              {s.items.length > 0 && (
+                <ul class="is-checks is-checks--lg">
+                  {s.items.map((it) => (
+                    <li>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                      <span>{it}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+            <ReportMock kind={s.mock.kind} title={s.mock.title} subtitle={s.mock.subtitle} risk={s.mock.risk} />
+          </div>
+        )}
+
+        {s.kind === 'steps' && (
+          <>
+            <div class="is-head">
+              <p class="is-eyebrow">{s.eyebrow}</p>
+              <h2 class="is-title">{s.h2}</h2>
+            </div>
+            <ol class="is-steps">
+              {s.steps.map((st, i) => {
+                const pic = intelImage(st.img);
+                return (
+                  <li class="is-step">
+                    <span class="is-step-visual">
+                      <Image src={pic.src} alt="" height={130} densities={[1, 2]} class="is-step-img" loading="lazy" decoding="async" />
+                    </span>
+                    <span class="is-step-num">{i + 1}</span>
+                    <h3 class="is-step-title">{st.title}</h3>
+                    <p class="is-step-text">{st.text}</p>
+                  </li>
+                );
+              })}
+            </ol>
+          </>
+        )}
+
+        {s.kind === 'notdo' && (
+          <div class="is-notdo">
+            <h3 class="is-note-title">Lo que no hacemos</h3>
+            <p class="is-note-text">{s.text}</p>
+          </div>
+        )}
+
+        {s.kind === 'band' && (
+          <div class="is-band">
+            <div>
+              <p class="is-eyebrow">{s.eyebrow}</p>
+              <h2 class="is-band-title">{s.h2}</h2>
+              {s.intro.map((p) => <p class="is-band-text">{p}</p>)}
+            </div>
+            <a href={s.link.href} class="gl-btn-primary is-band-btn" data-cta="secundario">{s.link.label}</a>
+          </div>
+        )}
+
+        {s.kind === 'faq' && (
+          <div class="is-faq">
+            <h2 class="is-title">{s.h2}</h2>
+            {s.faq.map((f) => (
+              <details class="is-faq-item">
+                <summary>{f.q}<span class="is-faq-icon" aria-hidden="true">+</span></summary>
+                <p>{f.a}</p>
+              </details>
+            ))}
+          </div>
+        )}
+      </div>
+    </section>
+  );
+})}
+
+<style>
+  .is { border-top: 1px solid #eef0f2; }
+  .is--white { background: #fff; }
+  .is--gray { background: #f3f4f6; }
+  .is--dark { background: #0f172a; border-top: 0; }
+  .is-inner {
+    padding-top: clamp(3.5rem, 6vw, 5.5rem);
+    padding-bottom: clamp(3.5rem, 6vw, 5.5rem);
+  }
+  .is-head {
+    max-width: 760px;
+    margin-bottom: 36px;
+  }
+  .is-eyebrow {
+    margin-bottom: 14px;
+    color: #22c55e;
+    font-size: clamp(1rem, 1.8vw, 1.25rem);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .is-title {
+    font-size: clamp(1.75rem, 3.4vw, 2.5rem);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: #0f172a;
+    text-wrap: balance;
+  }
+  .is-title--sm { font-size: clamp(1.5rem, 2.6vw, 2rem); }
+  .is-lead {
+    margin-top: 18px;
+    font-size: 17px;
+    line-height: 1.7;
+    color: #64748b;
+    text-wrap: pretty;
+  }
+
+  .is-grid {
+    display: grid;
+    gap: 18px;
+  }
+  .is-grid--situations { grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); }
+  .is-grid--checks,
+  .is-grid--plain,
+  .is-grid--links { grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); }
+
+  .is-sit {
+    padding: 22px 24px;
+    background: #f9fafb;
+    font-size: 15.5px;
+    line-height: 1.6;
+    color: #475569;
+  }
+
+  .is-card {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 26px;
+    background: #fff;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .is-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px -28px rgba(15, 23, 42, 0.35);
+  }
+  .is-card-title {
+    font-size: 19px;
+    font-weight: 700;
+    color: #111827;
+  }
+  .is-card-text {
+    font-size: 15.5px;
+    line-height: 1.6;
+    color: #64748b;
+  }
+  .is-checks {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .is-checks li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 15.5px;
+    line-height: 1.5;
+    color: #334155;
+  }
+  .is-checks svg {
+    flex: none;
+    width: 16px;
+    height: 16px;
+    margin-top: 3px;
+    color: #16a34a;
+  }
+  .is-checks--lg { margin-top: 24px; }
+  .is-checks--lg li { font-size: 16.5px; }
+
+  .is-link {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 24px;
+    background: #f9fafb;
+    color: inherit;
+    text-decoration: none;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .is-link:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px -28px rgba(15, 23, 42, 0.35);
+  }
+  .is-link--plain {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+  }
+  .is-link-visual {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 8px;
+  }
+  .is-link-img {
+    display: block;
+    height: 170px;
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
+  }
+  .is-link-title {
+    font-size: 19px;
+    font-weight: 700;
+    color: #111827;
+  }
+  .is-link-text {
+    font-size: 15px;
+    line-height: 1.6;
+    color: #64748b;
+  }
+  .is-link-more {
+    margin-top: auto;
+    padding-top: 4px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #16a34a;
+  }
+
+  .is-note,
+  .is-notdo {
+    margin-top: 18px;
+    padding: 26px 28px;
+    background: #fff;
+  }
+  .is-notdo {
+    margin-top: 0;
+    max-width: 860px;
+  }
+  .is-note-title {
+    margin-bottom: 8px;
+    font-size: 18px;
+    font-weight: 700;
+    color: #111827;
+  }
+  .is-note-text {
+    font-size: 15.5px;
+    line-height: 1.65;
+    color: #334155;
+  }
+  .is-note-small {
+    margin-top: 8px;
+    font-size: 13px;
+    color: #64748b;
+  }
+  .is-note-dark {
+    margin-top: 18px;
+    padding: 22px 26px;
+    background: #0f172a;
+  }
+  .is-note-dark-title {
+    font-size: 16.5px;
+    font-weight: 700;
+    color: #fff;
+  }
+  .is-note-dark-text {
+    margin-top: 6px;
+    font-size: 14.5px;
+    color: #cbd5e1;
+  }
+  .is-note-plain {
+    margin-top: 16px;
+    font-size: 14px;
+    color: #64748b;
+  }
+  .is-chips {
+    margin-top: 18px;
+    padding: 22px 26px;
+    background: #fff;
+  }
+  .is-chips-title {
+    display: block;
+    margin-bottom: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #111827;
+  }
+  .is-chips-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .is-chip {
+    padding: 6px 12px;
+    border: 1px solid #bbf7d0;
+    background: #f0fdf4;
+    font-size: 14px;
+    color: #15803d;
+  }
+
+  .is-report {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 400px), 1fr));
+    gap: clamp(32px, 5vw, 64px);
+    align-items: center;
+  }
+  .is-report-copy { min-width: 0; }
+
+  .is-steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+    gap: 18px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .is-step {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 24px;
+    background: #fff;
+  }
+  .is-step-visual {
+    display: flex;
+    justify-content: center;
+    height: 130px;
+    margin-bottom: 6px;
+  }
+  .is-step-img {
+    display: block;
+    height: 130px;
+    width: auto;
+    object-fit: contain;
+  }
+  .is-step-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+  }
+  .is-step-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #111827;
+  }
+  .is-step-text {
+    font-size: 15px;
+    line-height: 1.6;
+    color: #64748b;
+  }
+
+  .is-band {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px 48px;
+  }
+  .is-band > div { max-width: 640px; }
+  .is-band-title {
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+    font-weight: 700;
+    line-height: 1.2;
+    color: #fff;
+  }
+  .is-band-text {
+    margin-top: 12px;
+    font-size: 16.5px;
+    line-height: 1.6;
+    color: #cbd5e1;
+  }
+  .is-band-btn {
+    padding: 16px 32px;
+    font-size: 16px;
+  }
+
+  .is-faq { max-width: 860px; }
+  .is-faq .is-title { margin-bottom: 24px; }
+  .is-faq-item { border-top: 1px solid #e5e7eb; }
+  .is-faq-item:last-child { border-bottom: 1px solid #e5e7eb; }
+  .is-faq-item summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 0;
+    font-size: 17px;
+    font-weight: 600;
+    color: #111827;
+    cursor: pointer;
+    list-style: none;
+  }
+  .is-faq-item summary::-webkit-details-marker { display: none; }
+  .is-faq-icon {
+    flex: none;
+    font-size: 22px;
+    font-weight: 400;
+    color: #16a34a;
+    transition: transform 0.2s;
+  }
+  .is-faq-item[open] .is-faq-icon { transform: rotate(45deg); }
+  .is-faq-item p {
+    padding: 0 0 20px;
+    font-size: 16px;
+    line-height: 1.7;
+    color: #475569;
+  }
+</style>

@@ -1,16 +1,16 @@
 ---
 // Captación de leads de la home: pop up de informe gratuito, modales de
-// auditoría, investigación (OSINT) y partner, y mascota con bocadillo.
+// auditoría y partner, y mascota con bocadillo.
 // Se montan una sola vez en index.astro y se abren con delegación de clics
-// sobre [data-open="osint|auditoria|partner|informe"] (opcional: data-opt="N"
+// sobre [data-open="auditoria|partner|informe"] (opcional: data-opt="N"
 // para la opción marcada de entrada) o con un hash al llegar a la home:
-// #solicitar-auditoria(-N), #contar-caso(-N) y #ser-partner.
+// #solicitar-auditoria(-N) y #ser-partner. Los enlaces antiguos a
+// #contar-caso(-N) llevan al formulario de ciberinteligencia.
 // Los formularios llevan data-astro-reload para que el router de
 // ViewTransitions no intercepte el submit (lo gestiona el script de abajo).
 import type { ImageMetadata } from 'astro';
 import { Image } from 'astro:assets';
 import { LEAD_LIMITS, LEAD_OPTIONS } from '@lib/leads';
-import detectiveImg from '@assets/detective.webp';
 import img360 from '@assets/360.webp';
 import marcaImg from '@assets/marca.webp';
 import llaveImg from '@assets/partner-llave.webp';
@@ -24,7 +24,7 @@ interface Field {
 }
 
 interface LeadModal {
-  key: 'osint' | 'auditoria' | 'partner';
+  key: 'auditoria' | 'partner';
   eyebrow: string;
   title: string;
   /** Pregunta encima de las opciones */
@@ -51,19 +51,6 @@ const phone: Field = { name: 'phone', placeholder: 'Teléfono', type: 'tel', aut
 const message = (placeholder: string): Field => ({ name: 'message', placeholder, textarea: true });
 
 const modals: LeadModal[] = [
-  {
-    key: 'osint',
-    eyebrow: 'Investigación · Confidencial',
-    title: 'Cuéntanos tu caso',
-    hint: '¿Qué ha pasado?',
-    options: LEAD_OPTIONS.osint,
-    selected: 0,
-    fields: [name, email, phone, message('Cuéntanos brevemente qué ha pasado')],
-    submit: 'Enviar mi caso',
-    wa: { href: `${WA}Hola%2C%20quiero%20contaros%20mi%20caso%20(investigaci%C3%B3n)`, ref: 'WEB-MODAL-OSINT' },
-    successImg: detectiveImg,
-    successText: 'Te contactaremos en menos de 24 horas.',
-  },
   {
     key: 'auditoria',
     eyebrow: 'Auditoría de ciberseguridad',
@@ -345,7 +332,6 @@ const modals: LeadModal[] = [
         e.preventDefault();
         const key = opener.dataset.open || '';
         if (key === 'informe') markSeen(SEEN_INFORME);
-        if (key === 'osint') door = 'caso';
         if (key === 'auditoria') door = 'empresa';
         open(key, opener.dataset.opt !== undefined ? Number(opener.dataset.opt) : undefined);
         return;
@@ -432,13 +418,14 @@ const modals: LeadModal[] = [
       partnersObserver.observe(partners);
     }
 
-    // Enlaces desde otras páginas: /#solicitar-auditoria(-N), /#contar-caso(-N), /#ser-partner
+    // Enlaces desde otras páginas: /#solicitar-auditoria(-N), /#ser-partner y, de versiones
+    // anteriores, /#contar-caso(-N), que ahora lleva al encargo de ciberinteligencia
     const openFromHash = () => {
       const hash = window.location.hash;
       const caso = hash.match(/^#contar-caso(?:-(\d))?$/);
       const audit = hash.match(/^#solicitar-auditoria(?:-(\d))?$/);
       if (audit) { door = 'empresa'; open('auditoria', audit[1] ? Number(audit[1]) : undefined); }
-      else if (caso) { door = 'caso'; open('osint', caso[1] ? Number(caso[1]) : undefined); }
+      else if (caso) { window.location.replace('/ciberinteligencia#encargo'); }
       else if (hash === '#ser-partner') open('partner');
     };
     openFromHash();

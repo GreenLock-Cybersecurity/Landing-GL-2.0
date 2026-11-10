@@ -6,38 +6,45 @@ import type { Pic } from '@data/services';
 import type { Crumb } from '@lib/seo';
 
 interface Props {
-  crumbs: Crumb[];
+  /** Sin migas en las landings de campaña */
+  crumbs?: Crumb[];
   eyebrow: string;
   title: string;
   sub: string;
   primary: { label: string; href: string };
-  wa: { label: string; href: string; ref: string };
+  wa?: { label: string; href: string; ref: string };
   img: Pic;
+  /** Nota bajo los botones con el teléfono (ciberinteligencia) en vez de la de 24 horas */
+  tel?: { text: string; label: string; href: string };
 }
 
-const { crumbs, eyebrow, title, sub, primary, wa, img } = Astro.props;
+const { crumbs, eyebrow, title, sub, primary, wa, img, tel } = Astro.props;
 ---
 
 <section class="ph">
   <div class="ph-circle" aria-hidden="true"></div>
   <div class="ph-inner container-custom">
     <div class="ph-copy">
-      <nav class="ph-crumbs" aria-label="Migas de pan">
+      {crumbs && <nav class="ph-crumbs" aria-label="Migas de pan">
         {crumbs.map((c, i) => (
           <>
             {i > 0 && <span aria-hidden="true">/</span>}
             {c.href ? <a href={c.href}>{c.label}</a> : <span class="ph-crumb-current" aria-current="page">{c.label}</span>}
           </>
         ))}
-      </nav>
+      </nav>}
       <p class="ph-eyebrow">{eyebrow}</p>
       <h1 class="ph-title">{title}</h1>
       <p class="ph-sub">{sub}</p>
       <div class="ph-ctas">
-        <a href={primary.href} class="gl-btn-primary ph-cta">{primary.label}</a>
-        <a href={wa.href} data-ref={wa.ref} target="_blank" rel="noopener noreferrer" class="gl-btn-ghost-green ph-cta-wa">{wa.label}</a>
+        <a href={primary.href} class="gl-btn-primary ph-cta" data-cta="hero">{primary.label}</a>
+        {wa && <a href={wa.href} data-ref={wa.ref} target="_blank" rel="noopener noreferrer" class="gl-btn-ghost-green ph-cta-wa">{wa.label}</a>}
       </div>
-      <p class="ph-note">Te contactaremos en menos de 24 horas.</p>
+      {tel ? (
+        <p class="ph-note">{tel.text} <a href={tel.href} class="ph-tel">{tel.label}</a></p>
+      ) : (
+        <p class="ph-note">Te contactaremos en menos de 24 horas.</p>
+      )}
     </div>
     <div class="ph-visual">
       <Image src={img.src} alt={img.alt} height={440} densities={[1, 2]} class="ph-img" loading="eager" decoding="async" fetchpriority="high" />
@@ -131,6 +138,12 @@ const { crumbs, eyebrow, title, sub, primary, wa, img } = Astro.props;
     font-size: 14px;
     color: #64748b;
   }
+  .ph-tel {
+    color: #16a34a;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .ph-tel:hover { color: #15803d; }
   .ph-visual {
     display: flex;
     align-items: center;

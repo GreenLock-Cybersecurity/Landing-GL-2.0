@@ -3,8 +3,14 @@ import { Image } from 'astro:assets';
 import logoImg from '@assets/icons/Logo.webp';
 
 import gestionadaImg from '@assets/mascota-proteccion-gestionada.webp';
-import detectiveImg from '@assets/detective.webp';
 import { servicesIn, serviceHref } from '@data/services';
+
+// Ciberinteligencia: tres servicios + despachos (submenú y menú móvil)
+const intelLinks = [
+  { label: 'Due diligence de empresa', text: 'Sepa con quién va a firmar.', href: '/ciberinteligencia/due-diligence-empresas' },
+  { label: 'Rastreo de huella digital', text: 'Quién está detrás de un perfil, una web o un correo.', href: '/ciberinteligencia/rastreo-huella-digital' },
+  { label: 'Evidencia digital para juicio', text: 'La prueba, preservada para el procedimiento.', href: '/ciberinteligencia/evidencia-digital-juicio' },
+];
 
 // Navegación por público. Las anclas apuntan a secciones de la home.
 const auditServices = servicesIn('auditoria').map((s) => ({ label: s.name, href: serviceHref(s.slug) }));
@@ -15,7 +21,8 @@ const mobileLinks = [
     { label: 'Formación', href: '/ciberseguridad/concienciacion-phishing' },
   ] },
   { label: 'Ciberinteligencia', href: '/ciberinteligencia', sub: [
-    { label: 'Investigación OSINT', href: '/ciberinteligencia', strong: true },
+    ...intelLinks.map((l) => ({ label: l.label, href: l.href })),
+    { label: 'Para despachos de abogados', href: '/ciberinteligencia/abogados' },
   ] },
   { label: 'Partners', href: '/#partners' },
   { label: 'Equipo', href: '/#equipo' },
@@ -24,7 +31,7 @@ const mobileLinks = [
 // En la home abren el formulario (data-open lo gestiona LeadModals); en el resto llevan a la home con el hash
 const contactOptions = [
   { title: 'Quiero proteger mi empresa', text: 'Ciberseguridad gestionada, auditoría y pentesting', href: '/#solicitar-auditoria', open: 'auditoria' },
-  { title: 'Tengo un caso para investigar', text: 'Investigación digital OSINT', href: '/#contar-caso', open: 'osint' },
+  { title: 'Tengo un caso para investigar', text: 'Due diligence, rastreo de huella digital o evidencia digital', href: '/ciberinteligencia#encargo', open: undefined },
   { title: 'Quiero ser partner', text: 'MSSP, consultora o despacho', href: '/#ser-partner', open: 'partner' },
 ];
 ---
@@ -112,13 +119,14 @@ const contactOptions = [
           </a>
           <div class="nav-dd-panel">
             <div class="nav-dd-box nav-dd-box--narrow">
-              <a href="/ciberinteligencia" class="nav-dd-feature nav-dd-feature--row">
-                <Image src={detectiveImg} alt="" height={56} densities={[1, 2]} class="nav-dd-feature-icon" loading="lazy" decoding="async" />
-                <span class="nav-dd-feature-body">
-                  <span class="nav-dd-feature-title">Investigación OSINT</span>
-                  <span class="nav-dd-feature-text">Seguimos el rastro digital y lo convertimos en prueba.</span>
-                </span>
-              </a>
+              {intelLinks.map((l) => (
+                <a href={l.href} class="nav-dd-link">
+                  {l.label}
+                  <span class="nav-dd-link-text">{l.text}</span>
+                </a>
+              ))}
+              <a href="/ciberinteligencia/abogados" class="nav-dd-link">Para despachos de abogados</a>
+              <a href="/ciberinteligencia" class="nav-dd-all">Ver ciberinteligencia →</a>
             </div>
           </div>
         </div>
@@ -459,7 +467,9 @@ const contactOptions = [
     padding: 26px 28px;
   }
   .nav-dd-box--narrow {
-    width: 280px;
+    display: flex;
+    flex-direction: column;
+    width: 320px;
     padding: 14px;
   }
   .nav-dd-col {
@@ -515,27 +525,10 @@ const contactOptions = [
     transition: background 0.2s;
   }
   .nav-dd-feature:hover { background: #dcfce7; }
-  .nav-dd-feature--row {
-    flex-direction: row;
-    align-items: center;
-    gap: 14px;
-    padding: 12px;
-  }
   .nav-dd-feature-img {
     width: 100%;
     height: 110px;
     object-fit: contain;
-  }
-  .nav-dd-feature-icon {
-    flex: none;
-    width: 56px;
-    height: 56px;
-    object-fit: contain;
-  }
-  .nav-dd-feature-body {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
   }
   .nav-dd-feature-title {
     font-size: 16px;

@@ -1,23 +1,17 @@
 ---
 import { Image } from 'astro:assets';
-import estafadorImg from '@assets/estafador.webp';
-import marcaImg from '@assets/marca.webp';
 import detectiveImg from '@assets/detective.webp';
-import complianceImg from '@assets/partner-compliance.webp';
+import estafadorImg from '@assets/estafador.webp';
+import abogadoImg from '@assets/ci-abogado.webp';
 
+// Ciberinteligencia en la home: los tres servicios enlazan a su página.
 // Legal: GreenLock no tiene licencia de detective. Esa palabra no puede
 // aparecer en ningún texto visible ni en los alt (el nombre de archivo sí).
-// Cada tarjeta abre el formulario de investigación con su caso ya marcado
-// (data-opt = índice en LEAD_OPTIONS.osint).
 const items = [
-  { title: 'Estafas y fraude online', desc: 'Tiendas falsas, inversiones fraudulentas o falsos bancos.', img: estafadorImg },
-  { title: 'Suplantación de marca o identidad', desc: 'Alguien usa tu marca, tu web o tu nombre.', img: marcaImg },
-  { title: 'Acoso desde cuentas anónimas', desc: 'Te insultan, amenazan o difaman sin dar la cara.', img: detectiveImg },
-  { title: 'Pruebas para un juicio', desc: 'Evidencia digital documentada para denunciar o ir a juicio.', img: complianceImg, scale: 1.5 },
+  { title: 'Due diligence de empresa', desc: 'Revisamos a la otra empresa antes de que firmes, inviertas o reclames.', img: detectiveImg, href: '/ciberinteligencia/due-diligence-empresas' },
+  { title: 'Rastreo de huella digital', desc: 'Quién está detrás de un perfil falso, una web fraudulenta o una estafa.', img: estafadorImg, href: '/ciberinteligencia/rastreo-huella-digital' },
+  { title: 'Evidencia digital para juicio', desc: 'La prueba digital, preservada con método para el procedimiento.', img: abogadoImg, href: '/ciberinteligencia/evidencia-digital-juicio' },
 ];
-
-const ctaHref =
-  'https://wa.me/34603358517?text=Hola%2C%20quiero%20contaros%20mi%20caso%20(investigaci%C3%B3n)';
 ---
 
 <section id="osint" class="os">
@@ -25,43 +19,37 @@ const ctaHref =
 
     <div class="mb-16 max-w-3xl">
       <p class="uppercase mb-4" style="color: #22c55e; font-size: clamp(1.25rem, 2.4vw, 1.625rem); font-weight: 700; letter-spacing: 0.04em;">
-        Ciberinteligencia · Investigación OSINT
+        Ciberinteligencia
       </p>
       <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-dark-900 mb-5 leading-tight">
-        Detrás de cada caso hay <span style="color: #22c55e;">un rastro.</span><br/>
-        Lo seguimos y lo convertimos en <span style="color: #22c55e;">prueba.</span>
+        Antes de firmar, invertir o reclamar,<br/>
+        <span style="color: #22c55e;">conoce con quién tratas.</span>
       </h2>
       <p class="text-lg text-dark-500 leading-relaxed">
-        Investigamos con OSINT (inteligencia de fuentes abiertas) estafas, suplantaciones, cuentas anónimas o cualquier caso que necesite pruebas digitales, y te entregamos un informe pericial listo para tu abogado o tu denuncia.
+        Y si ya hay conflicto, te entregamos la prueba. Inteligencia digital y evidencias con alcance y plazo cerrados.
       </p>
     </div>
 
     <div class="os-grid">
-      {items.map((item, i) => (
-        <button type="button" class="os-card" data-open="osint" data-opt={i}>
+      {items.map((item) => (
+        <a href={item.href} class="os-card">
           <span class="os-visual">
-            <Image src={item.img} alt={item.title} width={180} densities={[1, 2]} class="os-img" loading="lazy" decoding="async" style={item.scale ? `transform: scale(${item.scale});` : undefined} />
+            <Image src={item.img} alt={item.title} width={180} densities={[1, 2]} class="os-img" loading="lazy" decoding="async" />
           </span>
           <span class="os-body">
             <span class="os-title">{item.title}</span>
             <span class="os-desc">{item.desc}</span>
-            <span class="os-link">Es mi caso →</span>
+            <span class="os-link">Ver servicio →</span>
           </span>
-        </button>
+        </a>
       ))}
     </div>
 
     <div class="os-foot">
       <div class="os-foot-ctas">
-        <button type="button" class="gl-btn-primary os-cta" data-open="osint" data-opt="0">
-          Contar mi caso
-        </button>
-        <a href={ctaHref} data-ref="WEB-OSINT" target="_blank" rel="noopener noreferrer" class="gl-btn-ghost-green os-cta">
-          Cuéntanoslo por WhatsApp
-        </a>
+        <a href="/ciberinteligencia" class="gl-btn-primary os-cta">Ver ciberinteligencia</a>
       </div>
-      <p class="os-foot-note">Confidencial · Te contactaremos en menos de 24 horas.</p>
-      <a href="/ciberinteligencia" class="os-foot-link">Cómo funciona la investigación digital →</a>
+      <a href="/ciberinteligencia/abogados" class="os-foot-link">¿Eres abogado? Servicio para despachos →</a>
     </div>
 
   </div>
@@ -88,7 +76,7 @@ const ctaHref =
     background: none;
     text-align: center;
     color: #111827;
-    cursor: pointer;
+    text-decoration: none;
     transition: transform 0.3s;
   }
   .os-card:hover { transform: translateY(-3px); }
@@ -149,11 +137,6 @@ const ctaHref =
     padding: 18px 40px;
     font-size: 17px;
     cursor: pointer;
-  }
-  .os-cta.gl-btn-ghost-green { padding: 16px 36px; }
-  .os-foot-note {
-    font-size: 14px;
-    color: #64748b;
   }
   .os-foot-link {
     font-size: 16px;

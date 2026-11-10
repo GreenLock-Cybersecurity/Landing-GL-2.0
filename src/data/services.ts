@@ -302,7 +302,7 @@ export const services: Service[] = [
       eyebrow: "Qué revisamos",
       title: "Lo que comprobamos en tu empresa",
       items: [
-        { title: "Revisiones mensuales", text: "Cada mes revisamos de nuevo tu superficie expuesta." },
+        { title: "Revisiones periódicas", text: "Revisiones periódicas a medida de cada empresa sobre tu superficie expuesta." },
         { title: "Nuevas vulnerabilidades", text: "Aviso cuando aparece un fallo que te afecta." },
         { title: "Seguimiento de correcciones", text: "Comprobamos que lo corregido sigue corregido." },
         { title: "Informe periódico", text: "Estado de tu seguridad y evolución en el tiempo." },

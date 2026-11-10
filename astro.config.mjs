@@ -23,8 +23,8 @@ export default defineConfig({
         !/\/legal\/(aviso-legal|privacidad|cookies)/.test(page) &&
         !page.includes('/404') &&
         !page.includes('/gracias') &&
-        // Landings de Google Ads: noindex y fuera del sitemap
-        !page.includes('/ciberinteligencia/caso/'),
+        // Landing de Google Ads de pentesting: noindex y fuera del sitemap
+        !page.includes('/auditoria-pentesting'),
       i18n: {
         defaultLocale: 'es',
         locales: {

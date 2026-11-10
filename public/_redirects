@@ -1,0 +1,23 @@
+# Páginas antiguas de investigación (entrega v6) → servicios y landings de ciberinteligencia (v7)
+/ciberinteligencia/estafa-online            /estafa-online-identificar-autor        301
+/ciberinteligencia/estafa-online/           /estafa-online-identificar-autor/       301
+/ciberinteligencia/perfil-falso             /perfil-falso-quien-esta-detras         301
+/ciberinteligencia/perfil-falso/            /perfil-falso-quien-esta-detras/        301
+/ciberinteligencia/acoso-difamacion         /perfil-falso-quien-esta-detras         301
+/ciberinteligencia/acoso-difamacion/        /perfil-falso-quien-esta-detras/        301
+/ciberinteligencia/suplantacion-identidad   /suplantacion-de-marca-web-falsa        301
+/ciberinteligencia/suplantacion-identidad/  /suplantacion-de-marca-web-falsa/       301
+/ciberinteligencia/prueba-digital-juicio    /prueba-digital-para-juicio             301
+/ciberinteligencia/prueba-digital-juicio/   /prueba-digital-para-juicio/            301
+
+# Landing de Ads anterior (/ciberinteligencia/caso/<variante>)
+/ciberinteligencia/caso/generica            /ciberinteligencia/                     301
+/ciberinteligencia/caso/generica/           /ciberinteligencia/                     301
+/ciberinteligencia/caso/quien               /perfil-falso-quien-esta-detras/        301
+/ciberinteligencia/caso/quien/              /perfil-falso-quien-esta-detras/        301
+/ciberinteligencia/caso/suplantacion        /suplantacion-de-marca-web-falsa/       301
+/ciberinteligencia/caso/suplantacion/       /suplantacion-de-marca-web-falsa/       301
+/ciberinteligencia/caso/estafa              /estafa-online-identificar-autor/       301
+/ciberinteligencia/caso/estafa/             /estafa-online-identificar-autor/       301
+/ciberinteligencia/caso/juicio              /prueba-digital-para-juicio/            301
+/ciberinteligencia/caso/juicio/             /prueba-digital-para-juicio/            301

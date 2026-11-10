@@ -1,0 +1,119 @@
+---
+// Landings de campaña de Ciberinteligencia (Google Ads): sin menú, logo + teléfono,
+// un único botón de acción (al formulario) y botón fijo en móvil. Indexables.
+import LandingLayout from '@layouts/LandingLayout.astro';
+import LandingTop from '@components/landing/LandingTop.astro';
+import LandingBar from '@components/landing/LandingBar.astro';
+import PageHero from '@components/pages/PageHero.astro';
+import IntelSections from '@components/intel/IntelSections.astro';
+import { intelLandings, intelLanding, intelImage, PHONE, PHONE_HREF } from '@data/intel';
+
+export function getStaticPaths() {
+  return intelLandings.map((landing) => ({ params: { landing } }));
+}
+
+const page = intelLanding(Astro.params.landing!);
+const hero = page.hero;
+const slug = page.form.slug;
+const wa = {
+  href: 'https://wa.me/34603358517?text=Hola%2C%20quiero%20contaros%20un%20caso%20(ciberinteligencia)',
+  ref: `ADS-CI-${slug}`,
+};
+const closing = page.closing;
+const closingHtml = closing?.text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+---
+
+<LandingLayout title={page.seo.title} description={page.seo.description} noindex={false} schemas={page.seo.jsonld}>
+  <div data-servicio={slug}>
+    <LandingTop>
+      <a href={PHONE_HREF} class="lp-phone">{PHONE}</a>
+    </LandingTop>
+
+    <PageHero
+      eyebrow={hero.eyebrow}
+      title={hero.h1}
+      sub={hero.sub}
+      primary={hero.cta}
+      img={intelImage(hero.img)}
+      tel={{ text: 'Le llamamos en menos de 24 h hábiles:', label: PHONE, href: PHONE_HREF }}
+    />
+
+    <IntelSections page={page} />
+
+    {closing && (
+      <section class="lp-closing">
+        <div class="container-custom lp-closing-inner">
+          <p set:html={closingHtml} />
+          <a href={closing.link.href}>{closing.link.label}</a>
+        </div>
+      </section>
+    )}
+
+    <footer class="lp-foot">
+      <div class="container-custom lp-foot-inner">
+        <p>© {new Date().getFullYear()} GreenLock Cybersecurity E.S.P.J. · NIF: E22754246</p>
+        <nav aria-label="Legal">
+          <a href="/legal/aviso-legal">Aviso legal</a>
+          <a href="/legal/privacidad">Privacidad</a>
+          <a href="/legal/cookies">Cookies</a>
+        </nav>
+      </div>
+    </footer>
+
+    <LandingBar label={page.form.cta} href="#encargo" wa={wa} />
+  </div>
+</LandingLayout>
+
+<style>
+  .lp-phone {
+    font-size: 16px;
+    font-weight: 700;
+    color: #111827;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .lp-phone:hover { color: #16a34a; }
+
+  .lp-closing {
+    background: #fff;
+    border-top: 1px solid #eef0f2;
+  }
+  .lp-closing-inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px 32px;
+    padding-top: 28px;
+    padding-bottom: 28px;
+    font-size: 16px;
+    color: #334155;
+  }
+  .lp-closing-inner a {
+    font-weight: 600;
+    color: #16a34a;
+    text-decoration: none;
+  }
+  .lp-closing-inner a:hover { color: #15803d; }
+
+  .lp-foot { background: #111827; }
+  .lp-foot-inner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 12px 24px;
+    padding-top: 28px;
+    padding-bottom: 28px;
+    font-size: 13.5px;
+    color: #94a3b8;
+  }
+  .lp-foot nav {
+    display: flex;
+    gap: 18px;
+  }
+  .lp-foot a {
+    color: #94a3b8;
+    text-decoration: none;
+  }
+  .lp-foot a:hover { color: #22c55e; }
+</style>

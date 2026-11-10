@@ -1,16 +1,21 @@
 ---
-// Layout aislado para landings de campaña (Google Ads): sin menú, sin footer de
-// enlaces, sin pop ups ni widget de WhatsApp. Siempre noindex.
+// Layout aislado para landings de campaña (Google Ads): sin menú ni footer de enlaces
+// y sin pop ups. Con WhatsApp flotante (en móvil, el botón fijo de la landing lo sustituye).
 import '../../app.css';
 import HeadCommon from '@components/layout/HeadCommon.astro';
 import TrackingScripts from '@components/layout/TrackingScripts.astro';
 import CookieBanner from '@components/layout/CookieBanner.astro';
+import WhatsAppWidget from '@components/layout/WhatsAppWidget.astro';
 
 interface Props {
   title: string;
   description: string;
+  /** Landings solo para anuncios: fuera de Google. Las de ciberinteligencia sí se indexan. */
+  noindex?: boolean;
+  schemas?: Record<string, unknown>[];
 }
-const { title, description } = Astro.props;
+const { title, description, noindex = true, schemas = [] } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
 ---
 
 <!DOCTYPE html>
@@ -21,13 +26,34 @@ const { title, description } = Astro.props;
     <HeadCommon />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <meta name="robots" content="noindex, nofollow" />
+    {noindex ? (
+      <meta name="robots" content="noindex, nofollow" />
+    ) : (
+      <>
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href={canonical} />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:url" content={canonical} />
+        <meta property="og:locale" content="es_ES" />
+      </>
+    )}
+    {schemas.map((schema) => <script type="application/ld+json" set:html={JSON.stringify(schema)} />)}
   </head>
   <body class="bg-white text-dark-900 font-sans antialiased">
     <!--email_off-->
     <TrackingScripts />
     <slot />
+    <div class="lp-wa"><WhatsAppWidget /></div>
     <CookieBanner />
     <!--/email_off-->
   </body>
 </html>
+
+<style>
+  /* En móvil la landing lleva su barra fija con WhatsApp */
+  @media (max-width: 759px) {
+    .lp-wa { display: none; }
+  }
+</style>

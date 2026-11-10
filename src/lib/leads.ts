@@ -5,7 +5,7 @@
 // ============================================================================
 
 /** Modo de la interfaz: qué formulario se ha rellenado. */
-export type LeadMode = 'osint' | 'auditoria' | 'partner' | 'informe';
+export type LeadMode = 'auditoria' | 'partner' | 'informe';
 
 const LEADS_URL = (
   import.meta.env.PUBLIC_LEADS_URL || 'https://greenlock-leads.greenlockspain.workers.dev'
@@ -26,12 +26,6 @@ export const LEAD_LIMITS = {
  * lo que valida el Worker (`tipo`, `caso` y `servicio` solo admiten esos valores).
  */
 export const LEAD_OPTIONS = {
-  osint: [
-    { label: 'Estafa o fraude online', value: 'Estafa o fraude online' },
-    { label: 'Suplantación de marca', value: 'Suplantación de marca' },
-    { label: 'Cuentas anónimas y acoso', value: 'Perfilado y reputación' },
-    { label: 'Otro', value: 'Otro' },
-  ],
   auditoria: [
     { label: 'Ciberseguridad gestionada', value: 'Ciberseguridad gestionada' },
     { label: 'Auditoría perimetral', value: 'Auditoría perimetral' },
@@ -51,7 +45,7 @@ export const LEAD_OPTIONS = {
 type Values = Record<string, string>;
 
 /** Campo propio de cada tipo, además de nombre, email, teléfono y mensaje. */
-const OPTION_FIELD = { osint: 'caso', auditoria: 'servicio', partner: 'tipo' } as const;
+const OPTION_FIELD = { auditoria: 'servicio', partner: 'tipo' } as const;
 
 function leadMeta(): Values {
   try {
@@ -100,5 +94,44 @@ export async function submitLead(mode: LeadMode, values: Values, option = 0): Pr
   const w = window as unknown as { dataLayer?: unknown[] };
   w.dataLayer = w.dataLayer || [];
   w.dataLayer.push({ event: `lead_${mode}`, lead_type: mode, lead_detail: detail, ...(data.variante ? { variante: data.variante } : {}) });
+  return true;
+}
+
+/** Empuja un evento al dataLayer de GTM sin romper si no existe. */
+export function track(event: string, data: Record<string, unknown> = {}) {
+  try {
+    const w = window as unknown as { dataLayer?: unknown[] };
+    w.dataLayer = w.dataLayer || [];
+    w.dataLayer.push({ event, ...data });
+  } catch {
+    /* sin dataLayer */
+  }
+}
+
+/**
+ * Formulario de ciberinteligencia (`/lead/inteligencia`): `linea` es obligatoria y
+ * `variante` lleva el slug de la página de origen. Si el Worker responde 200,
+ * registra `form_submit` y `lead_inteligencia` (este último lo recoge la etiqueta
+ * de GTM que escucha `^lead_`).
+ */
+export async function submitIntel(values: Values): Promise<boolean> {
+  const data: Values = {};
+  for (const [k, val] of Object.entries(values)) {
+    const v = (val || '').trim();
+    if (v) data[k] = v;
+  }
+  try {
+    const res = await fetch(`${LEADS_URL}/lead/inteligencia`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ...leadMeta(), ...data, website: data.website || '' }),
+    });
+    if (res.status !== 200) return false;
+  } catch {
+    return false;
+  }
+  const detail = { servicio: data.variante, linea: data.linea, finalidad: data.finalidad || '' };
+  track('form_submit', detail);
+  track('lead_inteligencia', { lead_type: 'inteligencia', lead_detail: data.linea, variante: data.variante, finalidad: data.finalidad || '' });
   return true;
 }
